@@ -5,6 +5,7 @@ import "./Register.css"
 export default function Register() {
 
     const [Password, SetPassword] = useState()
+
     const [Email, SetEmail] = useState()
     const [Name, SetName] = useState()
     const [Address, SetAddress] = useState()
@@ -12,16 +13,32 @@ export default function Register() {
     const [HIPLicense, SetHIPLicense] = useState()
 
     // This is Showing Current status of Register page Register button is CLicked
-    const [Status, SetStatus] = useState("Loading")
+    const [Status, SetStatus] = useState("Validating...")
 
     document.addEventListener('click', () => {
         document.querySelector('.StatusAfterSubmitBtn').classList.add("DiplayNone")
         document.querySelector('.HIP_RegisterContainer').classList.remove("DisplayOpacity")
+        SetStatus("Validating...")
     })
 
+
+
+
+    
     function RegisterAPIGOESHere(e) {
         e.preventDefault();
-
+    
+        
+        
+        if(document.querySelector("#Registration_Password").value!= document.querySelector("#Registration_CheckPassword").value){
+            document.querySelector("#RegisterPasswordStatus").textContent = "Password Do Not Match :("
+            document.querySelector("#RegisterPasswordStatus").classList.remove("DiplayNone")
+            document.querySelector("#RegisterPasswordStatus").style.color = "red";
+            // console.log(document.querySelector("#Registration_Password").value, document.querySelector("#Registration_CheckPassword").value)
+            return;
+        }
+        document.querySelector("#RegisterPasswordStatus").classList.add("DiplayNone")
+        
         document.querySelector('.HIP_RegisterContainer').classList.add("DisplayOpacity")
         document.querySelector('.StatusAfterSubmitBtn').classList.remove("DiplayNone")
 
@@ -44,13 +61,14 @@ export default function Register() {
                 console.log(data)
                 if(data.message){
                     SetStatus("Given Data is Incorrect")
+                    console.log(data);
                     return;
                 }
-                SetStatus("Registration Is Successfull")
+                SetStatus("Registration Is Successfull! Please Login :)")
             })
             .catch((err) => {
                 console.log(err)
-                SetStatus(err.message)
+                SetStatus("Could Not Connect To Server :(")
             })
     }
 
@@ -77,15 +95,16 @@ export default function Register() {
                         <input type="email" placeholder="Enter Your Email" onChange={(e) => SetEmail(e.target.value)} required />
                         <br></br>
                         <label>Password :</label>
-                        <input type="password" placeholder="Enter Your Password" required />
+                        <input type="password" placeholder="Enter Your Password" id="Registration_Password" required />
                         <br></br>
                         <label>Password Again :</label>
-                        <input type="password" placeholder="Enter Your Password Again" onChange={(e) => SetPassword(e.target.value)} required />
-
+                        <input type="password" placeholder="Enter Your Password Again" id="Registration_CheckPassword" onChange={(e) => SetPassword(e.target.value)} required />
+                        <p id="RegisterPasswordStatus" className="DiplayNone"></p>
 
                         <div className="Registerbtn DisplayFlexjustifyAlignitem">
                             <button>Register</button>
                         </div>
+
                     </form>
 
                     <div>
@@ -95,10 +114,9 @@ export default function Register() {
                 </div>
             </div>
 
-            <div className="StatusAfterSubmitBtn DiplayNone">
+            <div className="StatusAfterSubmitBtn DiplayNone DisplayFlexjustifyAlignitem">
                 <h1>{Status}</h1>
             </div>
-
 
         </>
     )
