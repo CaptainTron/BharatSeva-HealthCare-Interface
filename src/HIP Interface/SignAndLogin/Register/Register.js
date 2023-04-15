@@ -4,13 +4,6 @@ import "./Register.css"
 
 export default function Register() {
 
-    const [Password, SetPassword] = useState()
-
-    const [Email, SetEmail] = useState()
-    const [Name, SetName] = useState()
-    const [Address, SetAddress] = useState()
-    const [HIPNumber, SetHIPNumber] = useState()
-    const [HIPLicense, SetHIPLicense] = useState()
 
     // This is Showing Current status of Register page Register button is CLicked
     const [Status, SetStatus] = useState("Validating...")
@@ -24,13 +17,20 @@ export default function Register() {
 
 
 
-    
+    const [Password, SetPassword] = useState()
+
+    const [Email, SetEmail] = useState()
+    const [Name, SetName] = useState()
+    const [Address, SetAddress] = useState()
+    const [HIPNumber, SetHIPNumber] = useState()
+    const [HIPLicense, SetHIPLicense] = useState()
+
     function RegisterAPIGOESHere(e) {
         e.preventDefault();
-    
-        
-        
-        if(document.querySelector("#Registration_Password").value!= document.querySelector("#Registration_CheckPassword").value){
+
+
+
+        if (document.querySelector("#Registration_Password").value != document.querySelector("#Registration_CheckPassword").value) {
             document.querySelector("#RegisterPasswordStatus").textContent = "Password Do Not Match :("
             document.querySelector("#RegisterPasswordStatus").classList.remove("DiplayNone")
             document.querySelector("#RegisterPasswordStatus").style.color = "red";
@@ -38,44 +38,50 @@ export default function Register() {
             return;
         }
         document.querySelector("#RegisterPasswordStatus").classList.add("DiplayNone")
-        
+
         document.querySelector('.HIP_RegisterContainer').classList.add("DisplayOpacity")
         document.querySelector('.StatusAfterSubmitBtn').classList.remove("DiplayNone")
 
-        fetch('http://localhost:5000/api/v1/hipAuth/register', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'Application/json'
-            },
-            body: JSON.stringify({
-                name: Name,
-                hip_number: HIPNumber,
-                hip_license: HIPLicense,
-                hip_address: Address,
-                email: Email,
-                password: Password
+        // Fetching Data From Backend Servers !!
+            fetch('http://localhost:5000/api/v1/hipAuth/register', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'Application/json'
+                },
+                body: JSON.stringify({
+                    name: Name,
+                    hip_number: HIPNumber,
+                    hip_license: HIPLicense,
+                    hip_address: Address,
+                    email: Email,
+                    password: Password
+                })
             })
-        })
-            .then((result) => result.json())
-            .then((data) => {
-                console.log(data)
-                if(data.message){
-                    SetStatus("Given Data is Incorrect")
-                    console.log(data);
-                    return;
-                }
-                SetStatus("Registration Is Successfull! Please Login :)")
-            })
-            .catch((err) => {
-                console.log(err)
-                SetStatus("Could Not Connect To Server :(")
-            })
+                .then((result) => result.json())
+                .then((data) => {
+                    console.log(data)
+                    if (data.message) {
+                        SetStatus("Given Data is Incorrect")
+                        console.log(data);
+                        return;
+                    }
+                    SetStatus("Registration Is Successfull! Please Login :)")
+                })
+                .catch((err) => {
+                    console.log(err)
+                    SetStatus("Could Not Connect To Server :(")
+                })
     }
 
 
     return (
         <>
+
             <div className="HIP_RegisterContainer DisplayFlexjustifyAlignitem">
+                <div className="RegisterLable">
+                    <p>HealthCare Registration 🩺</p>
+                    <p><span><strong>Note</strong></span> : After Successfull Registration <br></br> You have to Login for Dashboard.</p>
+                </div>
                 <div className="RegisterBox">
                     <p className="WelcomeGreetings">Welcome To Registration Portal</p>
                     <form onSubmit={RegisterAPIGOESHere}>
