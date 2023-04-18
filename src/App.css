@@ -7,3 +7,6 @@ body{
   justify-content: center;
   align-items: center;
 }
+.transition4OneSecond{
+  transition: 0.5s linear;
+}

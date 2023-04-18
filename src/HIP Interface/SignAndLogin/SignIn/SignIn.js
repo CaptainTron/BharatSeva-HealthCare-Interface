@@ -75,8 +75,8 @@ export default function SignIN() {
                         <form onSubmit={LoginHealthCare}>
                             <p>Welcome To HealthCare Login Portal</p>
 
-                            <label>HIP Number :</label>
-                            <input type="number" placeholder="HIP Number" maxLength="30" onChange={(e) => SethipNumber(e.target.value)} required />
+                            <label>Health Care Number :</label>
+                            <input type="number" placeholder="Health Care Number" maxLength="30" onChange={(e) => SethipNumber(e.target.value)} required />
                             <br></br>
                             <label>License Number :</label>
                             <input type="number" placeholder="License Number" maxLength="30" required onChange={(e) => SetlcenseNumber(e.target.value)} />

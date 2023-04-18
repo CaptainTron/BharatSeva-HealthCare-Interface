@@ -87,7 +87,10 @@ input:focus{
     color: white;
     background-color: rgb(61, 61, 61);
 }
-
+.Registerbtn button:active{
+    background-color: green;
+    color: black;
+}
 /* Login Button Redirect here */
 .LoginbtnRedirect{
     font-size: 2.4vh;

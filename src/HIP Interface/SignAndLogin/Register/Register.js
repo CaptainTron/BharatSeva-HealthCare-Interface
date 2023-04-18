@@ -85,23 +85,23 @@ export default function Register() {
                 <div className="RegisterBox">
                     <p className="WelcomeGreetings">Welcome To Registration Portal</p>
                     <form onSubmit={RegisterAPIGOESHere}>
-                        <label>HIP Name :</label>
-                        <input type="text" placeholder="Enter Your Full Name" onChange={(e) => SetName(e.target.value)} required />
+                        <label>Health Care Name :</label>
+                        <input type="text" placeholder="Enter Health Care Name" onChange={(e) => SetName(e.target.value)} required />
                         <br></br>
-                        <label>HIP Number :</label>
-                        <input type="number" placeholder="Enter Your HIP Number" onChange={(e) => SetHIPNumber(e.target.value)} required />
+                        <label>Health Care Number :</label>
+                        <input type="number" placeholder="Enter Health Care Number" onChange={(e) => SetHIPNumber(e.target.value)} required />
                         <br></br>
                         <label>License Number :</label>
-                        <input type="number" placeholder="Enter Your License Number" onChange={(e) => SetHIPLicense(e.target.value)} required />
+                        <input type="number" placeholder="Enter License Number" onChange={(e) => SetHIPLicense(e.target.value)} required />
                         <br></br>
                         <label>Full Address :</label>
-                        <input type="text" placeholder="Enter Your Full Address" onChange={(e) => SetAddress(e.target.value)} required />
+                        <input type="text" placeholder="Enter Full Address" onChange={(e) => SetAddress(e.target.value)} required />
                         <br></br>
                         <label>Email :</label>
-                        <input type="email" placeholder="Enter Your Email" onChange={(e) => SetEmail(e.target.value)} required />
+                        <input type="email" placeholder="Enter Email" onChange={(e) => SetEmail(e.target.value)} required />
                         <br></br>
                         <label>Password :</label>
-                        <input type="password" placeholder="Enter Your Password" id="Registration_Password" required />
+                        <input type="password" placeholder="Enter Password" id="Registration_Password" required />
                         <br></br>
                         <label>Password Again :</label>
                         <input type="password" placeholder="Enter Your Password Again" id="Registration_CheckPassword" onChange={(e) => SetPassword(e.target.value)} required />
