@@ -1,7 +1,7 @@
 import "./NavBar.css"
 
 
-export default function NavBar() {
+export default function NavBar({toggleSideBar}) {
 
     function ToggleNotificationPopOver() {
         document.querySelector(".HealthCare_AccountPopOver").classList.add("DisplayNone")
@@ -19,12 +19,12 @@ export default function NavBar() {
                 <div className="HomePageNavBarContainer DisplayFlexjustifyAlignitem">
 
                     <div className="LeftSideNavBar DisplayFlexjustifyAlignitem">
-                        <i className="fa-solid fa-bars"></i>
+                        <i className="fa-solid fa-bars" onClick={()=>toggleSideBar()}></i>
                         <p>Bharat सेवा</p>
                     </div>
 
                     <div className="LeftSideNavBar_NameTag DisplayFlexjustifyAlignitem">
-                        <p>Health Care InterFace</p>
+                        <p><i className="fa-solid fa-user-doctor"></i> Health Care InterFace</p>
                     </div>
 
                     <div className="LeftSideNavBar_AccountAndNotification DisplayFlexjustifyAlignitem">

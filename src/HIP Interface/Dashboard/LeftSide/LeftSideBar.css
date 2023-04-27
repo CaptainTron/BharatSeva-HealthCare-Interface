@@ -1,0 +1,42 @@
+.LeftSideBarContainer{
+    margin: 0;
+    color: white;
+    height: 94vh;
+    width: 0vw;
+    background-color: rgb(41, 41, 41);
+    transition: 0.2s linear;
+}
+.ToggleTo0{
+    width: 20vw;
+}
+
+.LeftSide_textContainer ul{
+    width: 20vw;
+    padding: 0;
+}
+.LeftSide_textContainer ul li:nth-child(n){
+    transition: 0.3s linear;
+    border-radius: 1vh;
+    cursor: pointer;
+    width: 20vw;
+    height: 4vh;
+    padding: 0.5vh;
+    
+    list-style-type: none;
+}
+.LeftSide_textContainer ul li:nth-child(n) i{
+    margin: 0 1vw 0 0.7vw;
+}
+
+
+.LeftSide_textContainer ul li:nth-child(n):hover{
+    background-color: rgb(71, 71, 71);
+}
+
+/* Setting DropDown Starts From Here */
+.SettingDropDownMenu{
+    font-size: 1.9vh;
+    background-color: gray;
+    margin: 3vh;
+    display: none;
+}

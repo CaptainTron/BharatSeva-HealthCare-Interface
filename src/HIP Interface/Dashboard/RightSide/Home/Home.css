@@ -1,0 +1,40 @@
+.HomeContainer {
+    background-color: rgb(102, 100, 100);
+    padding: 4vh;
+    border-radius: 1vh;
+    width: 50vw;
+
+    margin: 7vh;
+    margin-top: 10vh;
+}
+
+.HomeContainer h2 {
+    text-align: center;
+    margin-top: 0;
+}
+
+/* .HomeContainer h2::after {
+    content: '';
+    width: 32vw;
+    height: 0.4vh;
+    margin-left: 10vw;
+    background-color: red;
+    position: absolute;
+    display: block;
+} */
+.HomeContainer_UL {
+    list-style-type: none;
+    padding: 0;
+}
+
+.AboutMe ul li p:nth-child(n) {
+    display: inline-block;
+    width: 13vw;
+    margin: 0.5vh;
+}
+
+.Health_ServicesRecords_UL li p:nth-child(n) {
+    display: inline-block;
+    width: 13vw;
+    margin: 0.5vh;
+}
