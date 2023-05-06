@@ -10,11 +10,12 @@ export default function RightSide(){
 
     return(
         <>
-        <div className="RightSideBar DisplayFlexjustifyAlignitem">
+        <div className="RightSideBar DisplayFlexJustify">
 
         {/* <Home/> */}
         {/* <ViewRecord/> */}
-        <CreatePatientRecord/>
+        {/* <CreatePatientRecord/> */}
+        <ViewRecord/>
 
         </div>
         </>

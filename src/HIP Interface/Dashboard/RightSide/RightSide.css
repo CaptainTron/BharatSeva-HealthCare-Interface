@@ -25,3 +25,8 @@
 .ToggleTo100{
     width: 100vw;
 }
+
+.DisplayFlexJustify{
+    display: flex;
+    justify-content: space-around;
+}

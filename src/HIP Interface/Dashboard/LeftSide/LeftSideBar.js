@@ -15,7 +15,7 @@ export default function LefSideBar() {
                 <li><i className="fa-solid fa-house"></i>Home</li>
                 <li><i className="fa-brands fa-creative-commons-by"></i>Create Patient Record</li>
                 <li><i className="fa-regular fa-paste"></i>View Patient Record</li>
-                <li><i className="fa-solid fa-hospital-user"></i>Update Patient Record</li>
+                <li><i className="fa-solid fa-hospital-user"></i>View Patient Bio-Data</li>
                 <li><i className="fa-solid fa-newspaper"></i>Genrate Record</li>
                 <li><i className="fa-solid fa-gear"></i>Setting <i className="fa-solid fa-chevron-down"></i>
                 
