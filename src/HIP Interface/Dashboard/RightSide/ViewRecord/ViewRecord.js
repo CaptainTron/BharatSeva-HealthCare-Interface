@@ -21,16 +21,16 @@ export default function ViewRecord() {
             .then((data) => {
                 SetPatientData(data)
             })
+            .catch((err)=>{
+                alert(err)
+                SetIsShow(false)
+            })
             .finally(() => {
                 SetIs_Fetched(true)
                 console.log(PatientData)
             })
 
     }
-
-    useEffect(() => {
-        // GetPatientData()
-    }, [])
 
     let Patient_data
     if ((PatientData)) {
@@ -58,7 +58,7 @@ export default function ViewRecord() {
     function GetData() {
         SetPatientData(null)
         SetIs_Fetched(false)
-        if ((document.getElementById("HID_input").value) && ((document.getElementById("HID_input").value).toString().length) === 10) {
+        if (((document.getElementById("HID_input").value).toString().length) === 10) {
             GetPatientData(document.getElementById("HID_input").value)
             SetIsShow(true)
             return;

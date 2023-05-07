@@ -1,0 +1,22 @@
+#HID_inputBIOData {
+    width: 24vw;
+    height: 4vh;
+    padding: 1vh;
+    font-size: 2.5vh;
+    border: none;
+    border-radius: 0.5vh;
+    transition: 0.2s linear;
+}
+#HID_inputBIOData:is(:hover, :focus){
+    box-shadow: 5px 5px 9px rgb(39, 39, 39);
+    transform: scale(1.02);
+}
+.PatientBioData{
+    width: 40vw;
+    text-align: left;
+    font-size: 2.5vh;
+}
+.PatientBioData div p:nth-child(odd){
+    /* background-color: skyblue; */
+    width: 20vw;
+}

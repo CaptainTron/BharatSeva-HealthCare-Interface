@@ -1,5 +1,6 @@
 .ViewPR{
     width: 70vw;
+    margin-bottom: 10vh;
 }
 .ViewPR h2:nth-child(1){
     text-decoration: underline;
@@ -64,7 +65,7 @@
 
 
 .ViewPatient_Re{
-    background-color: gray;
+    background-color: rgb(94, 94, 94);
     padding: 2vh;
     margin-top: 2vh;
     width: 70vw;
