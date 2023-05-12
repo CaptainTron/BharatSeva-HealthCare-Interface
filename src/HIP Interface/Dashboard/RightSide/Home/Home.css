@@ -1,40 +1,37 @@
 .HomeContainer {
-    background-color: rgb(102, 100, 100);
-    padding: 4vh;
+    background-color: rgb(97, 96, 96);
+    margin: 1.3vh 4vh;
+    padding: 1vh 5vh;
     border-radius: 1vh;
-    width: 50vw;
-
-    margin: 7vh;
-    margin-top: 10vh;
 }
 
 .HomeContainer h2 {
     text-align: center;
     margin-top: 0;
 }
-
-/* .HomeContainer h2::after {
-    content: '';
-    width: 32vw;
-    height: 0.4vh;
-    margin-left: 10vw;
-    background-color: red;
-    position: absolute;
-    display: block;
-} */
 .HomeContainer_UL {
     list-style-type: none;
     padding: 0;
 }
-
+.HomeContainer_UL li:nth-child(odd){
+    background-color: gray;
+    border-radius: 0.6vh;
+}
 .AboutMe ul li p:nth-child(n) {
     display: inline-block;
-    width: 13vw;
+    width: 16vw;
     margin: 0.5vh;
+}
+
+.Health_ServicesRecords{
+    background-color: gray;
+    border-radius: 1vh;
+    padding: 0.3vh 5vh;
+    box-shadow: 3px 3px 9px rgb(41, 40, 40);
 }
 
 .Health_ServicesRecords_UL li p:nth-child(n) {
     display: inline-block;
-    width: 13vw;
+    width: 14vw;
     margin: 0.5vh;
 }

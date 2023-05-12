@@ -1,4 +1,5 @@
 import CreatePatientRecord from "./CreatePatientRecord/Cr_PatientRecord"
+import CreatePatientD from "./Create_PatientD/CreatePatient"
 import Home from "./Home/Home"
 import "./RightSide.css"
 import ViewRecord from "./ViewRecord/ViewRecord"
@@ -13,10 +14,11 @@ export default function RightSide(){
         <>
         <div className="RightSideBar DisplayFlexJustify">
 
-        {/* <Home/> */}
+        <Home/>
         {/* <CreatePatientRecord/> */}
         {/* <ViewRecord/> */}
-        < ViewPatientBioData />
+        {/* < ViewPatientBioData />  */}
+        {/* <CreatePatientD/> */}
         </div>
         </>
     )

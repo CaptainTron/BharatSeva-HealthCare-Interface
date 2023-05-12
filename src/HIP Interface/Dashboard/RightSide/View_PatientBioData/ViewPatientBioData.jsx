@@ -60,7 +60,9 @@ export default function ViewPatientBioData() {
             // console.log(data[1]) 
             Patient_Biodata =
                 (
-                    <div className="ViewPatient_Re PatientBioData">
+                    <div className="ViewPatient_BiO PatientBioData">
+                        <div className="ViewPatientDataContainer">
+
                         <div key={1}><p>HealthID:</p><p>{Pat_BioData.health_id}</p></div>
                         <div key={2}><p>Fname:</p><p>{Pat_BioData.fname}</p></div>
                         <div key={3}><p>Middle Name:</p><p>{Pat_BioData.middlename}</p></div>
@@ -73,11 +75,16 @@ export default function ViewPatientBioData() {
                         <div key={10}><p>BMI:</p><p>{Pat_BioData.BMI}</p></div>
                         <div key={11}><p>Twin:</p><p>{Pat_BioData.twin}</p></div>
                         <div key={12}><p>Primary From :</p><p>{Pat_BioData.Plocation}</p></div>
+                        <div key={120}><p>Created By:</p><p>{Pat_BioData.createdBy}</p></div>
                         <div key={13}><p>Created At:</p><p>{Pat_BioData.createdAt}</p></div>
                         <div key={14}><p>Aadhar Number:</p><p>{Pat_BioData.aadharNumber}</p></div>
                         <div key={15}><p>Marriage Status:</p><p>{Pat_BioData.MarriageStatus}</p></div>
                         <div key={16}><p>Mobile Number:</p><p>{Pat_BioData.mobilenumber}</p></div>
                         <div key={17}><p>Email:</p><p>{Pat_BioData.email}</p></div>
+                        <div key={18}><p>Father Name:</p><p>{Pat_BioData.fathername}</p></div>
+                        <div key={19}><p>Mother Name:</p><p>{Pat_BioData.mothername}</p></div>
+                        <div key={20}><p>Emergency Number:</p><p>{Pat_BioData.emergencynumber}</p></div>
+                        </div>
                     </div>
                 )
 

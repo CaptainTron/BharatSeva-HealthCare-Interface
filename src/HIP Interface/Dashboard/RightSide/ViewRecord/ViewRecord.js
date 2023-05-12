@@ -80,6 +80,7 @@ export default function ViewRecord() {
 
                 </div>
 
+                <div className="FetchedPatientRecords">
 
                 {IsShow ?
                     (Is_Fetched ?
@@ -94,6 +95,7 @@ export default function ViewRecord() {
                         ) : <h3>Loading...</h3>)
                     : <p>{GetDetaDetails}</p>
                 }
+                </div>
 
             </div>
         </>

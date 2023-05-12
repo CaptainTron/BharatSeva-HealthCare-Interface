@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import "./Cr_PatientRecord.css"
 import Select from 'react-select'
 
+let DisplayText = document.querySelector(".PatientProblemRecord_view")
 
 
 export default function CreatePatientRecord() {
@@ -13,6 +14,8 @@ export default function CreatePatientRecord() {
         medical_severity: null,
         HIP_name: "Vaibhav Hospital"
     })
+    const[IsLoading, SetIsLoading] = useState();
+    const[IsLoaded, SetIsLoaded] = useState(false);
 
     function OnHandleChange(e) {
         const { name, value } = e.target
@@ -31,10 +34,13 @@ export default function CreatePatientRecord() {
 
     function Putdata(e) {
         e.preventDefault();
-        console.log(PRCreator)
-        localStorage.setItem("HIPName", "VaibhavYadav")
-        const HIPName = localStorage.getItem("HIPName")
-        console.log(HIPName)
+
+        // localStorage.setItem("HIPName", "VaibhavYadav")
+        // const HIPName = localStorage.getItem("HIPName")
+
+        DisplayText.classList.add("Display_none") 
+
+        SetIsLoaded(true)
         fetch(`http://localhost:5000/api/v1/hip/createpatientproblem`, {
             method: "POST",
             headers: {
@@ -45,12 +51,15 @@ export default function CreatePatientRecord() {
         })
             .then((data) => data.json())
             .then(res => {
-                console.log(res)
-                if (res.Message) {
-                    alert(res.Message)
-                    return
-                }
-                alert(res.status)
+                SetIsLoading(res.message)
+            })
+            .catch((err)=>{
+                // alert(err)
+                SetIsLoading(err.message)
+            })
+            .finally(()=>{
+                SetIsLoaded(false)
+                DisplayText.classList.remove("Display_none")
             })
     }
 
@@ -60,29 +69,34 @@ export default function CreatePatientRecord() {
         { value: "Low", label: "Low" },
     ]
 
-
-
     return (
         <>
             <div className="PatientProblemRecord">
-                <h2>Create Patient Record</h2>
-                <form onSubmit={Putdata}>
+                <div className="PatientProblemRecordCreator">
+                    <h2>Create Patient Record</h2>
 
-                    <label>Health ID</label>
-                    <input type="number" name="health_id" onChange={OnHandleChange}></input><br></br>
+                    <form onSubmit={Putdata}>
 
-                    <label>Issue</label>
-                    <textarea onChange={OnHandleChange} name="p_problem"></textarea><br></br>
+                        <label>Health ID</label>
+                        <input type="number" name="health_id" onChange={OnHandleChange} required></input><br></br>
 
-                    <label>Description</label>
-                    <textarea onChange={OnHandleChange} name="description"></textarea><br></br>
+                        <label>Medical Severity</label>
+                        <Select className="SelectOptions" options={options} name="medical_severity" onChange={handlechange} required></Select>
 
-                    <label>Medical Severity</label>
-                    <Select className="SelectOptions" options={options} name="medical_severity" onChange={handlechange}></Select>
+                        <label>Issue</label>
+                        <textarea onChange={OnHandleChange} name="p_problem" required></textarea><br></br>
 
-                    <button type="submit">Create Record</button>
+                        <label>Description</label>
+                        <textarea onChange={OnHandleChange} name="description" required></textarea><br></br>
 
-                </form>
+                        <button id="CreateRecordBtn">{IsLoaded ? "Validating...." : "Create"}</button>
+                    </form>
+
+                </div>
+            </div>
+
+            <div className="PatientProblemRecord_view Display_none">
+                <p>{IsLoading}</p>
             </div>
         </>
     )
