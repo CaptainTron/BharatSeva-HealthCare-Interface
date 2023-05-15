@@ -1,0 +1,55 @@
+.settcontain{
+    width: 50vw;
+
+}
+.SettingContainer h2::after {
+    content: '';
+    position: relative;
+    display: block;
+    width: 45vw;
+    height: 0.31vh;
+    background-color: yellow;
+}
+
+.SettingContainer {
+    border-radius: 0.8vh;
+    margin-top: 1vh;
+    background-color: rgb(95, 95, 95);
+    padding: 1vh 2vw;
+
+}
+.textDecoration{
+    text-decoration: underline;
+    text-underline-offset: 1vh;
+}
+.SettingContainer header h2 {
+    margin: 0;
+}
+
+.SettingPreferances h3:first-child {
+    margin: 5vh 0 1vh 0;
+}
+.DeleteAccountContainer button {
+    box-sizing: border-box;
+    border: none;
+    padding: 2vh;
+    border-radius: 1vh;
+    cursor: pointer;
+    background-color: rgb(189, 7, 7);
+    color: white;
+    transition: 0.4s linear;
+}
+
+.DeleteAccountContainer button:hover {
+    box-shadow: 0 0 9px rgb(161, 1, 1);
+    color: rgb(236, 101, 101);
+    background-color: transparent;
+    
+}
+.DeleteAccountContainer p{
+    font-size: 2vh;
+    color: rgba(241, 245, 17, 0.993);
+}
+.Settingarticle article{
+    font-size: 2vh;
+}

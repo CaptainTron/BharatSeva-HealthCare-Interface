@@ -40,3 +40,24 @@
     margin: 3vh;
     display: none;
 }
+
+.TextContainerDownSide{
+    margin: 56vh 0 0 0;
+    /* background-color: yellow; */
+    width: 20vw;
+    display: flex;
+    flex-wrap: wrap;
+    color: rgb(216, 216, 216);
+    border-top: 1px solid gray;
+}
+.TextContainerDownSide p{
+    font-size: 1.5vh;
+    margin: 0;
+    width: 5vw;
+    /* background-color: gray; */
+    text-align: center;
+}
+.TextContainerDownSide p:hover{
+    cursor: pointer;
+    color: gray;
+}

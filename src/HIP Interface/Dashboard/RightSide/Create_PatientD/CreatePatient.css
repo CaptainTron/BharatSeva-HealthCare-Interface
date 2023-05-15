@@ -66,11 +66,6 @@
     background-color: gray;
 }
 
-/* After Darta has been created */
-.CreatePatientContainer {
-    /* position: relative; */
-}
-
 .CreatePatient_viewAfterSuccess {
     position: absolute;
     top: 9vh;
@@ -83,18 +78,19 @@
     font-size: 2.5vh;
     box-shadow: 4px 4px 9px rgb(31, 31, 31);
     max-width: 40vw;
+    /* animation: DisplayMeOnSuccess 5s ease-in 1; */
+    /* animation-fill-mode: forwards; */
+}
+.Display_none{
+    visibility: hidden;
 }
 
-/* display: none; */
-.DiplayCreate_ViewAfterSuccess {
-    animation: DisplayMeOnSuccess 15s ease-in 1;
-    animation-fill-mode: forwards;
-}
 
 @keyframes DisplayMeOnSuccess {
     from {
         opacity: 1;
     }
+
     to {
         opacity: 0;
     }

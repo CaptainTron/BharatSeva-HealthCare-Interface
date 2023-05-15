@@ -5,56 +5,55 @@ import { useEffect, useState } from "react";
 
 export default function SignIN() {
 
-    const [hipNumber, SethipNumber] = useState();
-    const [lcenseNumber, SetlcenseNumber] = useState();
-    const [Password, SetPassword] = useState();
-    const [Email, SetEmail] = useState();
+    const [FormData, SetFormData] = useState({
+        hip_number: "",
+        hip_license: "",
+        email: "",
+        password: ""
+    })
+    const [IsLoaded, SetIsLoaded] = useState(false)
+    const [Statustxt, SetStatustxt] = useState()
 
+    function OnChange(e) {
+        const { name, value } = e.target
+        SetFormData((prev) => ({
+            ...prev,
+            [name]: value
+        }))
+    }
 
     function LoginHealthCare(e) {
-        document.querySelector(".LoginMessageHealthCare").classList.add("DisplayNone")
         e.preventDefault();
-        document.querySelector(".LoginMessageHealthCare").classList.remove("DisplayNone")
-        
-        
-        
+
+
+        SetIsLoaded(true)
         fetch('http://localhost:5000/api/v1/hipAuth/login', {
             method: "POST",
             headers: {
                 'Content-Type': "application/json",
             },
-            body: JSON.stringify({
-                "hip_number": hipNumber,
-                "hip_license": lcenseNumber,
-                "email": Email,
-                "password": Password
-            })
+            body: JSON.stringify(FormData)
         })
             .then((res) => res.json())
             .then((data) => {
                 console.log(data)
-                if (data.message) {
-                    document.querySelector(".LoginMessageHealthCare").classList.remove("DisplayNone")
-                    document.querySelector(".LoginMessageHealthCare p").textContent = data.message
-                    return;
-                }
-                document.querySelector(".LoginMessageHealthCare").classList.remove("DisplayNone")
-                document.querySelector(".LoginMessageHealthCare p").textContent = "Login Successfull"
+                SetStatustxt(data.message)
             })
             .catch((err) => {
-                document.querySelector(".LoginMessageHealthCare").classList.remove("DisplayNone")
-                document.querySelector(".LoginMessageHealthCare p").textContent = "Failed To Connect With Server"
+                console.log(err.message)
+                SetStatustxt(data.message)
             }
             )
-            
-            document.querySelector(".LoginMessageHealthCare p").textContent = "Validating..."
+            .finally(() => {
+                SetIsLoaded(false)
+            })
     }
 
 
     return (
         <>
-            <div className="LoginMessageHealthCare DisplayNone">
-                <p>Validating...</p>
+            <div className="LoginMessageHealthCare">
+                <p>{Statustxt}</p>
             </div>
 
             <div className="LoginPageContainer">
@@ -76,18 +75,18 @@ export default function SignIN() {
                             <p>Welcome To HealthCare Login Portal</p>
 
                             <label>Health Care Number :</label>
-                            <input type="number" placeholder="Health Care Number" maxLength="30" onChange={(e) => SethipNumber(e.target.value)} required />
+                            <input type="number" placeholder="Health Care Number" name="hip_number" onChange={OnChange} required />
                             <br></br>
                             <label>License Number :</label>
-                            <input type="number" placeholder="License Number" maxLength="30" required onChange={(e) => SetlcenseNumber(e.target.value)} />
+                            <input type="number" placeholder="License Number" name="hip_license" required onChange={OnChange} />
                             <br></br>
                             <label>Email :</label>
-                            <input type="email" placeholder="Email" maxLength="30" required onChange={(e) => SetEmail(e.target.value)} />
+                            <input type="email" placeholder="Email" maxLength="30" name="email" required onChange={OnChange} />
                             <br></br>
                             <label>Password :</label>
-                            <input type="password" placeholder="Password" maxLength="30" required onChange={(e) => SetPassword(e.target.value)} />
+                            <input type="password" placeholder="Password" maxLength="30" name="password" required onChange={OnChange} />
 
-                            <input type="submit" id="LoginBtn" value="Login" maxLength="30" required />
+                            <input type="submit" id="LoginBtn" value={IsLoaded ? "Validating..." : "Login"} maxLength="30" required />
 
                         </form>
                         <div className="NotRegisteredRedirectbtn">

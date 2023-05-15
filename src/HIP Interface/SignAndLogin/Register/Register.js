@@ -3,10 +3,19 @@ import "./Register.css"
 
 
 export default function Register() {
+    let PasswordStatus =  document.querySelector("#RegisterPasswordStatus")
 
 
     // This is Showing Current status of Register page Register button is CLicked
     const [Status, SetStatus] = useState("Validating...")
+    const[FormData, SetFormData] = useState({
+        name:"",
+        hip_number:"",
+        hip_license:"",
+        hip_address:"",
+        email:"",
+        password:""
+    })
 
     document.addEventListener('click', () => {
         document.querySelector('.StatusAfterSubmitBtn').classList.add("DiplayNone")
@@ -16,14 +25,14 @@ export default function Register() {
 
 
 
+    function OnclickChange(e){
+        const { name , value} = e.target
+        SetFormData(prev =>({
+            ...prev,
+            [name]:value
+        }))
+    }
 
-    const [Password, SetPassword] = useState()
-
-    const [Email, SetEmail] = useState()
-    const [Name, SetName] = useState()
-    const [Address, SetAddress] = useState()
-    const [HIPNumber, SetHIPNumber] = useState()
-    const [HIPLicense, SetHIPLicense] = useState()
 
     function RegisterAPIGOESHere(e) {
         e.preventDefault();
@@ -31,13 +40,13 @@ export default function Register() {
 
 
         if (document.querySelector("#Registration_Password").value != document.querySelector("#Registration_CheckPassword").value) {
-            document.querySelector("#RegisterPasswordStatus").textContent = "Password Do Not Match :("
-            document.querySelector("#RegisterPasswordStatus").classList.remove("DiplayNone")
-            document.querySelector("#RegisterPasswordStatus").style.color = "red";
+            PasswordStatus.textContent = "Password Do Not Match :("
+            PasswordStatus.classList.remove("DiplayNone")
+            PasswordStatus.style.color = "red";
             // console.log(document.querySelector("#Registration_Password").value, document.querySelector("#Registration_CheckPassword").value)
             return;
         }
-        document.querySelector("#RegisterPasswordStatus").classList.add("DiplayNone")
+        PasswordStatus.classList.add("DiplayNone")
 
         document.querySelector('.HIP_RegisterContainer').classList.add("DisplayOpacity")
         document.querySelector('.StatusAfterSubmitBtn').classList.remove("DiplayNone")
@@ -48,20 +57,13 @@ export default function Register() {
                 headers: {
                     'Content-Type': 'Application/json'
                 },
-                body: JSON.stringify({
-                    name: Name,
-                    hip_number: HIPNumber,
-                    hip_license: HIPLicense,
-                    hip_address: Address,
-                    email: Email,
-                    password: Password
-                })
+                body: JSON.stringify(FormData)
             })
                 .then((result) => result.json())
                 .then((data) => {
                     console.log(data)
                     if (data.message) {
-                        SetStatus("Given Data is Incorrect")
+                        SetStatus(data.message)
                         console.log(data);
                         return;
                     }
@@ -86,25 +88,25 @@ export default function Register() {
                     <p className="WelcomeGreetings">Welcome To Registration Portal</p>
                     <form onSubmit={RegisterAPIGOESHere}>
                         <label>Health Care Name :</label>
-                        <input type="text" placeholder="Enter Health Care Name" onChange={(e) => SetName(e.target.value)} required />
+                        <input type="text" placeholder="Enter Health Care Name" name="name" onChange={OnclickChange} required />
                         <br></br>
                         <label>Health Care Number :</label>
-                        <input type="number" placeholder="Enter Health Care Number" onChange={(e) => SetHIPNumber(e.target.value)} required />
+                        <input type="number" placeholder="Enter Health Care Number" name="hip_number" onChange={OnclickChange} required />
                         <br></br>
                         <label>License Number :</label>
-                        <input type="number" placeholder="Enter License Number" onChange={(e) => SetHIPLicense(e.target.value)} required />
+                        <input type="number" placeholder="Enter License Number" name="hip_license" onChange={OnclickChange} required />
                         <br></br>
                         <label>Full Address :</label>
-                        <input type="text" placeholder="Enter Full Address" onChange={(e) => SetAddress(e.target.value)} required />
+                        <input type="text" placeholder="Enter Full Address" name="hip_address" onChange={OnclickChange} required />
                         <br></br>
                         <label>Email :</label>
-                        <input type="email" placeholder="Enter Email" onChange={(e) => SetEmail(e.target.value)} required />
+                        <input type="email" placeholder="Enter Email" name="email" onChange={OnclickChange} required />
                         <br></br>
                         <label>Password :</label>
-                        <input type="password" placeholder="Enter Password" id="Registration_Password" required />
+                        <input type="password" placeholder="Enter Password"  id="Registration_Password" required />
                         <br></br>
                         <label>Password Again :</label>
-                        <input type="password" placeholder="Enter Your Password Again" id="Registration_CheckPassword" onChange={(e) => SetPassword(e.target.value)} required />
+                        <input type="password" placeholder="Enter Your Password Again" name="password" id="Registration_CheckPassword" onChange={OnclickChange} required />
                         <p id="RegisterPasswordStatus" className="DiplayNone"></p>
 
                         <div className="Registerbtn DisplayFlexjustifyAlignitem">

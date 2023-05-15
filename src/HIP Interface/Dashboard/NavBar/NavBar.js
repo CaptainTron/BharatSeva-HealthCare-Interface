@@ -32,6 +32,8 @@ export default function NavBar({toggleSideBar}) {
                             <div className="HealthCare_NotificationPopOver DisplayNone">
                                 <ul>
                                     <li>Welcome to Bharat Seva HealthCare Dashboard</li>
+                                    <li>This App is still Under-development :)</li>
+                                    <li>Star this project!</li>
                                 </ul>
                             </div>
                         </p>

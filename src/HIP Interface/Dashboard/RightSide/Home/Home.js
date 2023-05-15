@@ -18,7 +18,7 @@ export default function Home() {
     
     if(hip){
         Hipsarrays = (
-            <ul className="HomeContainer_UL">
+            <ul className="HomeContainer_UL Home_ContainerUL">
                 <li><p>Name: </p>{hip.name}</li>
                 <li><p>Address: </p>{hip.address}</li>
                 <li><p>Type: </p>{hip.Type}</li>

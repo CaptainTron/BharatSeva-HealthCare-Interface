@@ -13,8 +13,8 @@
     list-style-type: none;
     padding: 0;
 }
-.HomeContainer_UL li:nth-child(odd){
-    background-color: gray;
+.Home_ContainerUL li:nth-child(odd){
+    background-color: rgb(75, 75, 75);
     border-radius: 0.6vh;
 }
 .AboutMe ul li p:nth-child(n) {

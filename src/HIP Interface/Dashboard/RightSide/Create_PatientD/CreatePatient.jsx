@@ -4,7 +4,8 @@ import { useState } from "react"
 
 export default function CreatePatientD() {
     const Togglesuccesstxt = document.querySelector(".CreatePatient_viewAfterSuccess")
-    const [SituationContainer, SetSituationContainer] = useState("A");
+    const [SituationContainer, SetSituationContainer] = useState("");
+    const [IsLoaded, SetIsLoaded] = useState(false);
     const [CPFormData, SetDPFormData] = useState({
         health_id: "",
         fname: "",
@@ -50,8 +51,8 @@ export default function CreatePatientD() {
     }
 
     function FetchDataForPBD() {
-        Togglesuccesstxt.classList.remove("DiplayCreate_ViewAfterSuccess")
-        SetSituationContainer("Validating...")
+        Togglesuccesstxt.classList.add("Display_none")
+        SetIsLoaded(true)
         fetch(`http://localhost:5000/api/v1/hip/createpatientbiodata`, {
             method: "POST",
             headers: {
@@ -64,13 +65,16 @@ export default function CreatePatientD() {
             .then((res) => {
                 console.log("Response Goes Here", res);
                 SetSituationContainer(res.message)
+                alert(res.message)
             })
             .catch((err) => {
                 console.log(err)
+                alert(err.message)
                 SetSituationContainer(err.message)
             })
-            .finally(()=>{
-                Togglesuccesstxt.classList.add("DiplayCreate_ViewAfterSuccess")
+            .finally(() => {
+                Togglesuccesstxt.classList.remove("Display_none")
+                SetIsLoaded(false)
             })
     }
 
@@ -80,7 +84,7 @@ export default function CreatePatientD() {
 
     const twin = [{ "label": "Yes", "value": "Yes", "name": "twin" }, { "label": "No", "value": "No", "name": "twin" }]
     const sibling = [{ "label": "Yes", "value": "Yes", "name": "sibling" }, { "label": "No", "value": "No", "name": "sibling" }]
-    const sex = [{ "label": "☕", "value": "☕", "name": "sex" }, { "label": "😎", "value": "😎", "name": "sex" }, {"label": "🙄","value":"🙄", "name":"sex"}]
+    const sex = [{ "label": "☕", "value": "☕", "name": "sex" }, { "label": "😎", "value": "😎", "name": "sex" }, { "label": "🙄", "value": "🙄", "name": "sex" }]
     const Marriage = [{ "label": "Single", "value": "Single", "name": "MarriageStatus" }, { "label": "Dharti Ka Bhoj", "value": "Dharti Ka Bhoj", "name": "MarriageStatus" }]
     return (
         <>
@@ -149,13 +153,13 @@ export default function CreatePatientD() {
                             <label>Emergency Contact Number</label><br></br>
                             <input type="text" className="PDContainer" name="emergencynumber" placeholder="Emergency Number" required onChange={OnChangeCPRData} /><br></br>
 
-                            <input type="submit" id="SubmitBtnPDC" value="Create" />
+                            <input type="submit" id="SubmitBtnPDC" value={IsLoaded ? "Validating.." : "Create"} />
                         </form>
                     </div>
                 </div>
 
-                <div className="CreatePatient_viewAfterSuccess DisplayFlexJustify DiplayCreate_ViewAfterSuccess">
-                    <p style={{color:"yellow"}}>{SituationContainer}</p>
+                <div className="CreatePatient_viewAfterSuccess DisplayFlexJustify Display_none">
+                    <p style={{ color: "yellow" }}>{SituationContainer}</p>
                 </div>
             </div>
         </>

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react"
 import "./Cr_PatientRecord.css"
 import Select from 'react-select'
 
-let DisplayText = document.querySelector(".PatientProblemRecord_view")
 
 
 export default function CreatePatientRecord() {
+    let DisplayText = document.querySelector(".PatientProblemRecord_view")
 
     const [PRCreator, SetPRCreator] = useState({
         health_id: null,
@@ -14,8 +14,8 @@ export default function CreatePatientRecord() {
         medical_severity: null,
         HIP_name: "Vaibhav Hospital"
     })
-    const[IsLoading, SetIsLoading] = useState();
-    const[IsLoaded, SetIsLoaded] = useState(false);
+    const [IsLoading, SetIsLoading] = useState();
+    const [IsLoaded, SetIsLoaded] = useState(false);
 
     function OnHandleChange(e) {
         const { name, value } = e.target
@@ -38,7 +38,7 @@ export default function CreatePatientRecord() {
         // localStorage.setItem("HIPName", "VaibhavYadav")
         // const HIPName = localStorage.getItem("HIPName")
 
-        DisplayText.classList.add("Display_none") 
+        DisplayText.classList.add("Display_none")
 
         SetIsLoaded(true)
         fetch(`http://localhost:5000/api/v1/hip/createpatientproblem`, {
@@ -53,20 +53,22 @@ export default function CreatePatientRecord() {
             .then(res => {
                 SetIsLoading(res.message)
             })
-            .catch((err)=>{
+            .catch((err) => {
                 // alert(err)
                 SetIsLoading(err.message)
             })
-            .finally(()=>{
+            .finally(() => {
                 SetIsLoaded(false)
                 DisplayText.classList.remove("Display_none")
             })
     }
 
     const options = [
-        { value: "High", label: "High" },
-        { value: "Mid", label: "Mid" },
-        { value: "Low", label: "Low" },
+        { label: "Dangerous - 9/8", value: "Dangerous"},
+        { label: "High - 7/6", value: "High" },
+        { label: "Mid  - 5/4", value: "Mid" },
+        { label: "Semi-Mid - 3/2", value: "Semi-Mid" },
+        { label: "Low - 1/0", value: "Low" },
     ]
 
     return (
@@ -92,6 +94,7 @@ export default function CreatePatientRecord() {
                         <button id="CreateRecordBtn">{IsLoaded ? "Validating...." : "Create"}</button>
                     </form>
 
+                    <p className="WarningCr_patient"><strong>Note : </strong> Only One Record Can Be Created at a Time!</p>
                 </div>
             </div>
 
