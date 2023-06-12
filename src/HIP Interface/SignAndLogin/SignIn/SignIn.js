@@ -38,6 +38,7 @@ export default function SignIN() {
             .then((data) => {
                 console.log(data)
                 SetStatustxt(data.message)
+                localStorage.setItem("HealthCare_TOKEN", data.token)
             })
             .catch((err) => {
                 console.log(err.message)

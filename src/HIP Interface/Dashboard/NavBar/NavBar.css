@@ -107,18 +107,41 @@
     right: 1vw;
     border-radius: 1vh;
     /* max-height: 10vh; */
-    height: 30vh;
-    width: 16vw;
+    height: 40vh;
+    width: 18vw;
     background-color: rgb(34, 34, 34);
+
+    box-shadow:2px 2px 9px black;
 }
 
 .HealthCare_AccountPopOver ul {
     list-style-type: none;
     padding: 0;
-    margin: 3vh 0 0 4vh;
+    margin: 2vh 3vh 0 1vh; 
+
 }
+.HealthCare_AccountPopOver ul li:nth-child(n){
+    /* margin: 1vh; */
+    padding: 0.4vh 1vw;
+    border-radius: 1vh;
+    
+}
+.HealthCare_AccountPopOver ul li:nth-child(n+3):hover{
+    background-color: rgb(66, 66, 66);
+    cursor: pointer;
+}
+
 
 .HealthCare_AccountPopOver ul li:nth-child(1),
 .HealthCare_AccountPopOver ul li:nth-child(2) {
     text-align: left;
+}
+.HealthCare_AccountPopOver ul li:nth-child(7){
+    color: rgb(250, 57, 57);
+    /* background-color: rgba(255, 68, 68, 0.356); */
+}
+
+.HealthCare_AccountPopOver a{
+    color: white;
+    text-decoration: none;
 }

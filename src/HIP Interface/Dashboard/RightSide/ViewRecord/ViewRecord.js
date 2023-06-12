@@ -2,8 +2,8 @@ import { useEffect, useState } from "react"
 import "./ViewRecord.css"
 
 
-export default function ViewRecord() {
 
+export default function ViewRecord() {
 
     const [PatientData, SetPatientData] = useState()
     const [Is_Fetched, SetIs_Fetched] = useState(false)
@@ -14,12 +14,13 @@ export default function ViewRecord() {
             method: "GET",
             headers: {
                 'content-type': "application/json",
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2NDUxNjY3YzIyZWFhMGE3MDA3MmZjNDUiLCJuYW1lIjoiVmFpYmhhdiBIT3NwaXRhbCIsImlhdCI6MTY4MzA1NjI1MywiZXhwIjoxNjg1NjQ4MjUzfQ.ieVxas27BBOBkwjAPXA0cGMO-lx7kB-HQEg0t4TYLa0"
+                "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`
             }
         })
             .then((res) => res.json())
             .then((data) => {
                 SetPatientData(data)
+                console.log("Records Successfully Fetched")
             })
             .catch((err)=>{
                 alert(err)
@@ -27,8 +28,22 @@ export default function ViewRecord() {
             })
             .finally(() => {
                 SetIs_Fetched(true)
-                console.log(PatientData)
             })
+
+        
+        fetch(`http://localhost:5000/api/v1/healthcare/firebase/RecordsViewed`,{
+            method:"GET",
+            headers:{
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`,
+                "health_id":`${localStorage.getItem("Health_Id")}`
+            }
+        })
+        .then((res)=>res.json())
+        .then((data)=>{
+            console.log("Records Views Updated")
+        })
+
 
     }
 

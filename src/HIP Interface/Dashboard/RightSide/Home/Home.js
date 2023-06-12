@@ -4,19 +4,40 @@ import "./Home.css"
 export default function Home() {
 
     const [hip, Sethip] = useState();
+    const [stats, Setstats] = useState();
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/api/v1/healthcare/firebase/GET`, {
+            method: "GET",
+            headers: {
+                "health_id": localStorage.getItem("Health_Id"),
+                "Authorization": localStorage.getItem("HealthCare_TOKEN")
+            }
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                Setstats(data.Data)
+                // console.log(data.Data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [])
 
     useEffect(() => {
         fetch(`http://localhost:5000/api/v1/hipinfo/getdata`)
             .then((res) => res.json())
             .then((data) => {
                 Sethip(data.data)
-                console.log(data)
+                // console.log(data)
             })
     }, [])
+
+
     let Hipsarrays;
     let hipTotalRecords = [];
-    
-    if(hip){
+
+    if (hip && stats) {
         Hipsarrays = (
             <ul className="HomeContainer_UL Home_ContainerUL">
                 <li><p>Name: </p>{hip.name}</li>
@@ -34,11 +55,12 @@ export default function Home() {
         hipTotalRecords = (
             <ul className="HomeContainer_UL Health_ServicesRecords_UL">
                 <li><p>Registered Since: </p>{hip.dateOfRegistration}</li>
-                <li><p>Records Created: </p>{hip.records_created}</li>
-                <li><p>Records Updated: </p>{hip.records_updated}</li>
-                <li><p>Records Viewed: </p>{hip.records_viewed}</li>
+                <li><p>Records Created: </p>{stats.RecordsCreated}</li>
+                <li><p>Bio Data Created: </p>{stats.HealthID_Created}</li>
+                <li><p>Records Viewed: </p>{stats.RecordsViewed}</li>
+                <li><p>BioData Viewed: </p>{stats.BioDV}</li>
             </ul>
-    
+
         )
     }
 
@@ -47,7 +69,7 @@ export default function Home() {
 
     return (
         <>
-           { hip ? ( <div className="HomeContainer">
+            {hip && stats ? (<div className="HomeContainer">
                 <h2>About</h2>
                 <div className="AboutMe ">
                     {Hipsarrays}
@@ -58,7 +80,7 @@ export default function Home() {
                     <div className="Health_ServicesRecords Healthcontainerbox">
                         {hipTotalRecords}
                     </div>
-                </div> 
+                </div>
 
             </div>) : <h3> Loading....</h3>}
         </>

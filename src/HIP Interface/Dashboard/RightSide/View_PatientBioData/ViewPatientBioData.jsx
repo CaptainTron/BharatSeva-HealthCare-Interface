@@ -18,7 +18,7 @@ export default function ViewPatientBioData() {
             method: "GET",
             headers: {
                 'Content-Type': "application/json",
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2NDUxNjY3YzIyZWFhMGE3MDA3MmZjNDUiLCJuYW1lIjoiVmFpYmhhdiBIT3NwaXRhbCIsImlhdCI6MTY4MzA1NjI1MywiZXhwIjoxNjg1NjQ4MjUzfQ.ieVxas27BBOBkwjAPXA0cGMO-lx7kB-HQEg0t4TYLa0"
+                "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`
             }
         })
             .then((res) => res.json())

@@ -45,7 +45,7 @@ export default function CreatePatientRecord() {
             method: "POST",
             headers: {
                 'content-type': "application/json",
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2NDUxNjY3YzIyZWFhMGE3MDA3MmZjNDUiLCJuYW1lIjoiVmFpYmhhdiBIT3NwaXRhbCIsImlhdCI6MTY4MzA1NjI1MywiZXhwIjoxNjg1NjQ4MjUzfQ.ieVxas27BBOBkwjAPXA0cGMO-lx7kB-HQEg0t4TYLa0"
+                "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`
             },
             body: JSON.stringify(PRCreator)
         })
@@ -61,6 +61,22 @@ export default function CreatePatientRecord() {
                 SetIsLoaded(false)
                 DisplayText.classList.remove("Display_none")
             })
+
+
+            // This is One Will Push the Changes The Log into Firebase
+            fetch(`http://localhost:5000/api/v1/healthcare/firebase/RecordsCreated`,{
+                method:"GET",
+                headers:{
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`,
+                    "health_id":`${localStorage.getItem("Health_Id")}`
+                }
+            })
+            .then((res)=>res.json())
+            .then((data)=>{
+                console.log("Log --Records Created Updated")
+            })
+    
     }
 
     const options = [

@@ -4,14 +4,9 @@ import { useEffect, useState } from 'react'
 import { doc, docs } from "firebase/firestore"
 
 
+
 export default function Setting() {
 
-    const [Isloaded, SetIsloaded] = useState();
-
-    const [Formdata, SetFormData] = useState({
-        "available": "true",
-        "email": "daily"
-    })
 
     function OnchangeData(e) {
         const { name, value } = e.target;
@@ -23,9 +18,9 @@ export default function Setting() {
             method: "POST",
             headers: {
                 "content-type": "application/json",
-                "Authorization": "Bearer YourToken"
+                "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`
             },
-            body: JSON.stringify({ [name]: value, HealthId: "2021071042" })
+            body: JSON.stringify({ [name]: value, HealthId: localStorage.getItem("Health_Id") })
         })
             .then((data) => {
                 console.log("Data has Been Updated....")
@@ -34,11 +29,6 @@ export default function Setting() {
                 console.log("Something went Wrong in Updating the data...", err.message)
             })
     }
-
-
-    // useEffect(() => {
-    //     UpdateData();
-    // }, [])
 
     async function UpdateData() {
 
@@ -65,52 +55,40 @@ export default function Setting() {
 
     useEffect(() => {
         GetData();
-    }, []) 
+    }, [])
 
     async function GetData(e) {
-        const data = await Hospitals.GetAllRecords()
 
-       const Data = await fetch('http://localhost:5000/api/v1/healthcare/firebase/GET',{
-            method:"GET",
-            headers:{
-                "Content-Type":"application/json",
-                "Authorization":"Bearer TOKEN"
+        const Data = await fetch('http://localhost:5000/api/v1/healthcare/firebase/GET', {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`,
+                "Health_Id": localStorage.getItem("Health_Id")
             }
         })
         const Dataas = await Data.json()
-        console.log(Dataas.Data.docs);
+        console.log(Dataas);
 
-        SetIsloaded(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-        // console.log(Isloaded[0].id, Isloaded)
-        // console.log(data.docs)
-   
-    
-  
-        // const GetRadioButton = document.getElementsByName("available")
-        // if (Isloaded[0].available === true) {
-        //     GetRadioButton[0].checked = true
-        // } else {
-        //     GetRadioButton[1].checked = true
-        // }
-
-        // const GetEmailButton = document.getElementByName("email")
-        // if (Isloaded[0].email === "Everytime") {
-        //     GetEmailButton[0].checked = true
-        // } else if (Isloaded[0].email === "Weekly") {
-        //     GetEmailButton[1].checked = true
-        // } else {
-        //     GetEmailButton[2].checked = true
-        // }
+        CheckForRadioButton(Dataas)
 
     }
 
-    function CheckForRadioButton() {
+    function CheckForRadioButton(Dataas) {
         const GetRadioButton = document.getElementsByName("available")
-        if (Isloaded[0].available === true) {
+        if (Dataas.Data.available === "true") {
             GetRadioButton[0].checked = true
         } else {
             GetRadioButton[1].checked = true
         }
+
+        const GetRadioButton_Email = document.getElementsByName("email")
+        if (Dataas.Data.email === "Weekly")
+            GetRadioButton_Email[1].checked = true
+        else if (Dataas.Data.email === "Rare")
+            GetRadioButton_Email[2].checked = true
+        else
+            GetRadioButton_Email[0].checked = true
     }
 
     // CheckForRadioButton();

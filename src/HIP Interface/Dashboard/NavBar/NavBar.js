@@ -13,6 +13,8 @@ export default function NavBar({toggleSideBar}) {
         document.querySelector(".HealthCare_AccountPopOver").classList.toggle("DisplayNone")
     }
 
+    // This Will Get the Hopital Name
+    let HIPName = localStorage.getItem("HIPName")
 
         return (
             <>
@@ -41,14 +43,20 @@ export default function NavBar({toggleSideBar}) {
                         {/* Account Section Goes here */}
                         <p className="DisplayFlexjustifyAlignitem transition4OneSecond" onClick={HealthCare_ToggleAccountPopUp}><i className="fa-solid fa-user"></i> Account
 
+
+                        </p>
                             <div className="HealthCare_AccountPopOver DisplayNone">
                                 <ul>
                                     <li style={{ color: "lime" }}>Signed In As</li>
-                                    <li>Vaibhav Hospital</li>
+                                    <li>{HIPName}</li>
+                                    <hr></hr>
+                                    <li>  <a target="__blank" href="https://github.com/CaptainTron/BharatSeva-User-Interface/discussions">Go to Discussion</a></li>
+                                    <li> <a target="__blank" href="https://github.com/CaptainTron/BharatSeva-HealthCare-Interface">Star this Project ⭐</a></li>
+                                    <li>API Integrations</li>
+                                    <li>Log Out</li>
+                                    
                                 </ul>
                             </div>
-
-                        </p>
                     </div>
 
                 </div>
