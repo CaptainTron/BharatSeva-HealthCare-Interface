@@ -36,6 +36,21 @@ export default function ViewPatientBioData() {
             .finally(() => {
                 SetIsloading(false)
             })
+
+
+            // This One is For Firebase Log Bio Data views Goes here
+            fetch(`http://localhost:5000/api/v1/healthcare/firebase/BioDV`,{
+            method:"GET",
+            headers:{
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`,
+                "health_id":`${localStorage.getItem("Health_Id")}`
+            }
+        })
+        .then((res)=>res.json())
+        .then((data)=>{
+            console.log("Log --Bio Data Views Updated")
+        })
     }
 
 

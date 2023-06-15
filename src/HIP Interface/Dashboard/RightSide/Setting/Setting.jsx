@@ -10,10 +10,6 @@ export default function Setting() {
 
     function OnchangeData(e) {
         const { name, value } = e.target;
-        // SetFormData((prev) => ({
-        //     ...prev,
-        //     [name]: value
-        // }))
         fetch('http://localhost:5000/api/v1/healthcare/firebase/chpre', {
             method: "POST",
             headers: {
@@ -23,10 +19,12 @@ export default function Setting() {
             body: JSON.stringify({ [name]: value, HealthId: localStorage.getItem("Health_Id") })
         })
             .then((data) => {
-                console.log("Data has Been Updated....")
+                console.log("Preference Successfully Changed")
+                alert("Preference Successfully Changed")
             })
             .catch((err) => {
                 console.log("Something went Wrong in Updating the data...", err.message)
+                alert(err.message)
             })
     }
 
@@ -68,7 +66,7 @@ export default function Setting() {
             }
         })
         const Dataas = await Data.json()
-        console.log(Dataas);
+        // console.log(Dataas);
 
         CheckForRadioButton(Dataas)
 

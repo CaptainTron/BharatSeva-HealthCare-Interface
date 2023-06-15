@@ -50,14 +50,14 @@ export default function CreatePatientD() {
         FetchDataForPBD();
     }
 
-    function FetchDataForPBD() {
+    async function FetchDataForPBD() {
         Togglesuccesstxt.classList.add("Display_none")
         SetIsLoaded(true)
         fetch(`http://localhost:5000/api/v1/hip/createpatientbiodata`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2NDUxNjY3YzIyZWFhMGE3MDA3MmZjNDUiLCJuYW1lIjoiVmFpYmhhdiBIT3NwaXRhbCIsImlhdCI6MTY4MzA1NjI1MywiZXhwIjoxNjg1NjQ4MjUzfQ.ieVxas27BBOBkwjAPXA0cGMO-lx7kB-HQEg0t4TYLa0"
+                "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`
             },
             body: JSON.stringify(CPFormData)
         })
@@ -65,7 +65,7 @@ export default function CreatePatientD() {
             .then((res) => {
                 console.log("Response Goes Here", res);
                 SetSituationContainer(res.message)
-                alert(res.message)
+                // alert(res.message)
             })
             .catch((err) => {
                 console.log(err)
@@ -76,6 +76,22 @@ export default function CreatePatientD() {
                 Togglesuccesstxt.classList.remove("Display_none")
                 SetIsLoaded(false)
             })
+
+
+        // if (SituationContainer === "Record has been created Successfully") {
+            fetch(`http://localhost:5000/api/v1/healthcare/firebase/HealthID_Created`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`,
+                    "health_id": `${localStorage.getItem("Health_Id")}`
+                }
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log("Log Bio Data Viewed Updated")
+                })
+        // }
     }
 
     function clickmeTO() {

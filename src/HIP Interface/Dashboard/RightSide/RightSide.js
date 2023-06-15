@@ -15,12 +15,12 @@ export default function RightSide(){
         <>
         <div className="RightSideBar DisplayFlexJustify">
 
-        <Home/>
+        {/* <Home/> */}
         {/* <CreatePatientRecord/> */}
         {/* <ViewRecord/> */}
         {/* < ViewPatientBioData />  */}
         {/* <CreatePatientD/> */}
-        {/* <Setting/> */}
+        <Setting/>
         </div>
         </>
     )
