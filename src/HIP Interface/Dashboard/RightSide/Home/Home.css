@@ -3,6 +3,8 @@
     margin: 1.3vh 4vh;
     padding: 1vh 5vh;
     border-radius: 1vh;
+    width: 60vw;
+    height: 98vh;
 }
 
 .HomeContainer h2 {
@@ -16,15 +18,16 @@
 .Home_ContainerUL li:nth-child(odd){
     background-color: rgb(75, 75, 75);
     border-radius: 0.6vh;
+    /* margin-left: 1vw; */
 }
 .AboutMe ul li p:nth-child(n) {
     display: inline-block;
     width: 16vw;
-    margin: 0.5vh;
+    margin: 0.7vh;
 }
 
 .Health_ServicesRecords{
-    background-color: gray;
+    background-color: rgb(78, 78, 78);
     border-radius: 1vh;
     padding: 0.3vh 5vh;
     box-shadow: 3px 3px 9px rgb(41, 40, 40);

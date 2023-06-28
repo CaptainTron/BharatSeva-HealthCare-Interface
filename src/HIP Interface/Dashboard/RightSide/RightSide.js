@@ -18,9 +18,9 @@ export default function RightSide(){
         {/* <Home/> */}
         {/* <CreatePatientRecord/> */}
         {/* <ViewRecord/> */}
-        {/* < ViewPatientBioData />  */}
+        < ViewPatientBioData /> 
         {/* <CreatePatientD/> */}
-        <Setting/>
+        {/* <Setting/> */}
         </div>
         </>
     )

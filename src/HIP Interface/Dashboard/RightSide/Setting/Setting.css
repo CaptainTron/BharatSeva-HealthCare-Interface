@@ -53,3 +53,20 @@
 .Settingarticle article{
     font-size: 2vh;
 }
+
+/* Account delete btn */
+.AccountDeleteBtn{
+    background-color: rgb(202, 70, 70);
+    padding: 1vh;
+    border-radius: 0.5vh;
+    width: 16vw;
+    cursor: pointer;
+    font-size: 2vh;
+}
+.AccountDeleted{
+    background-color: darkred;
+    color: yellow;
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.4;
+}

@@ -7,13 +7,7 @@ import Select from 'react-select'
 export default function CreatePatientRecord() {
     let DisplayText = document.querySelector(".PatientProblemRecord_view")
 
-    const [PRCreator, SetPRCreator] = useState({
-        health_id: null,
-        p_problem: null,
-        description: null,
-        medical_severity: null,
-        HIP_name: "Vaibhav Hospital"
-    })
+    const [PRCreator, SetPRCreator] = useState({})
     const [IsLoading, SetIsLoading] = useState();
     const [IsLoaded, SetIsLoaded] = useState(false);
 
@@ -34,18 +28,14 @@ export default function CreatePatientRecord() {
 
     function Putdata(e) {
         e.preventDefault();
-
-        // localStorage.setItem("HIPName", "VaibhavYadav")
-        // const HIPName = localStorage.getItem("HIPName")
-
         DisplayText.classList.add("Display_none")
-
+        const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
         SetIsLoaded(true)
-        fetch(`http://localhost:5000/api/v1/hip/createpatientproblem`, {
+        fetch(`http://localhost:5000/api/v1/healthcaredetails/healthcare/createpatientproblem`, {
             method: "POST",
             headers: {
                 'content-type': "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`
+                "Authorization": `Bearer ${HealthCare.token}`
             },
             body: JSON.stringify(PRCreator)
         })
@@ -60,21 +50,6 @@ export default function CreatePatientRecord() {
             .finally(() => {
                 SetIsLoaded(false)
                 DisplayText.classList.remove("Display_none")
-            })
-
-
-            // This is One Will Push the Changes The Log into Firebase
-            fetch(`http://localhost:5000/api/v1/healthcare/firebase/RecordsCreated`,{
-                method:"GET",
-                headers:{
-                    'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`,
-                    "health_id":`${localStorage.getItem("Health_Id")}`
-                }
-            })
-            .then((res)=>res.json())
-            .then((data)=>{
-                console.log("Log --Records Created Updated")
             })
     
     }

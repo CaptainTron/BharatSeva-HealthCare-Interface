@@ -6,79 +6,59 @@ import "./ViewRecord.css"
 export default function ViewRecord() {
 
     const [PatientData, SetPatientData] = useState()
-    const [Is_Fetched, SetIs_Fetched] = useState(false)
-    const [IsShow, SetIsShow] = useState(false)
+    const [Fetched, SetFetched] = useState({
+        IsFetched: false,
+        IsGood: true,
+        Isavailable: false
+    })
+    async function GetPatientData(HID) {
 
-    function GetPatientData(HID) {
-        fetch(`http://localhost:5000/api/v1/hip/patientgetdata/${HID}`, {
-            method: "GET",
-            headers: {
-                'content-type': "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`
+        const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
+        SetFetched((p) => ({ ...p, IsFetched: true }))
+        try {
+            let res = await fetch(`http://localhost:5000/api/v1/healthcare/getpatientrecords?healthId=${HID}`, {
+                method: "GET",
+                headers: {
+                    'content-type': "application/json",
+                    "Authorization": `Bearer ${HealthCare.token}`
+                }
+            })
+            let response = await res.json()
+            if (res.ok) {
+                SetPatientData(response)
+                SetFetched((p) => ({ ...p, Isavailable: true }))
+            } else {
+                // alert(response.status)
+                SetFetched((p) => ({ ...p, Isavailable: false, IsGood: false }))
+
             }
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                SetPatientData(data)
-                console.log("Records Successfully Fetched")
-            })
-            .catch((err)=>{
-                alert(err)
-                SetIsShow(false)
-            })
-            .finally(() => {
-                SetIs_Fetched(true)
-            })
-
-        
-        fetch(`http://localhost:5000/api/v1/healthcare/firebase/RecordsViewed`,{
-            method:"GET",
-            headers:{
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`,
-                "health_id":`${localStorage.getItem("Health_Id")}`
-            }
-        })
-        .then((res)=>res.json())
-        .then((data)=>{
-            console.log("Records Views Updated")
-        })
-
-
-    }
-
-    let Patient_data
-    if ((PatientData)) {
-        if (PatientData.details) {
-            Patient_data = PatientData.details.map((data) => (
-                <div className="ViewPatient_Re">
-                    <div><p>Issue:</p><p>{data.p_problem}</p></div>
-                    <div><p>Description:</p><p>{data.description}</p></div>
-                    <div><p>Date:</p><p>{data.Created_At}</p></div>
-                    <div><p>Medical Severity:</p><p>{data.medical_severity}</p></div>
-                </div>
-            ))
+        } catch (err) {
+            alert(err)
         }
+        SetFetched((p) => ({ ...p, IsFetched: false }))
     }
+    let Patient_data = Fetched.Isavailable ? PatientData.HealthUser.map((data) => (
+        <div className="ViewPatient_Re">
+            <div><p>Issue:</p><p>{data.p_problem}</p></div>
+            <div><p>Description:</p><p>{data.description}</p></div>
+            <div><p>Date:</p><p>{data.Created_At}</p></div>
+            <div><p>HealthCare:</p><p>{data.healthcareName}</p></div>
+            <div><p>Medical Severity:</p><p>{data.medical_severity}</p></div>
+        </div>
+    )) : (<p>Result Will Show Here...</p>)
 
-    let GetDetaDetails = (<p>Records will Show Here...</p>)
-
-    function CallVR(e){
-        if(e.which == 13){
+    function CallVR(e) {
+        if (e.which == 13) {
             GetData()
         }
     }
 
 
     function GetData() {
-        SetPatientData(null)
-        SetIs_Fetched(false)
         if (((document.getElementById("HID_input").value).toString().length) === 10) {
             GetPatientData(document.getElementById("HID_input").value)
-            SetIsShow(true)
             return;
         }
-        SetIsShow(false)
         alert("Enter Correct Health ID To Fetch")
     }
 
@@ -90,26 +70,13 @@ export default function ViewRecord() {
 
                 <div className="ViewPR_inputHID">
                     <label>Enter Patient Health ID</label>
-                    <input id="HID_input" type="number" name="HID" placeholder="Enter Health ID" onKeyUp={CallVR}/>
+                    <input id="HID_input" type="number" name="HID" placeholder="Enter Health ID" onKeyUp={CallVR} />
                     <div className="SearchIcon" onClick={GetData}><i className="fa-solid fa-magnifying-glass"></i></div>
 
                 </div>
 
                 <div className="FetchedPatientRecords">
-
-                {IsShow ?
-                    (Is_Fetched ?
-                        (
-                            <div className="ViewRecordofPatient">
-                               <p>
-                                   { PatientData.details[0] ? (<p>Last Updated : {PatientData.details[0].Created_At}</p>)  :(<p style={{color: "yellow"}}>No One Found With Given Health ID</p>)}
-                                   </p> 
-                                
-                                {Patient_data}
-                            </div>
-                        ) : <h3>Loading...</h3>)
-                    : <p>{GetDetaDetails}</p>
-                }
+                    {Fetched.IsFetched ? (<p>Loading...</p>) : (Fetched.Isavailable ? Patient_data : Fetched.IsGood ? Patient_data : (<p>No Result Found....</p>))}
                 </div>
 
             </div>

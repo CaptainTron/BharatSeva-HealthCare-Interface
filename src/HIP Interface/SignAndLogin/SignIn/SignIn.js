@@ -11,7 +11,7 @@ export default function SignIN() {
         email: "",
         password: ""
     })
-    const [IsLoaded, SetIsLoaded] = useState(false)
+    const [IsLoaded, SetIsLoaded] = useState()
     const [Statustxt, SetStatustxt] = useState()
 
     function OnChange(e) {
@@ -22,32 +22,28 @@ export default function SignIN() {
         }))
     }
 
-    function LoginHealthCare(e) {
+    async function LoginHealthCare(e) {
         e.preventDefault();
-
-
         SetIsLoaded(true)
-        fetch('http://localhost:5000/api/v1/hipAuth/login', {
-            method: "POST",
-            headers: {
-                'Content-Type': "application/json",
-            },
-            body: JSON.stringify(FormData)
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data)
-                SetStatustxt(data.message)
-                localStorage.setItem("HealthCare_TOKEN", data.token)
+        try {
+            let res = await fetch('http://localhost:5000/api/v1/healthcareauth/login', {
+                method: "POST",
+                headers: {
+                    'Content-Type': "application/json",
+                },
+                body: JSON.stringify(FormData)
             })
-            .catch((err) => {
-                console.log(err.message)
-                SetStatustxt(data.message)
+            const response = await res.json()
+            if (res.ok) {
+                sessionStorage.setItem("BharatSevahealthCare", JSON.stringify(response))
+                SetStatustxt("Login Successful")
+            } else {
+                SetStatustxt(response.message)
             }
-            )
-            .finally(() => {
-                SetIsLoaded(false)
-            })
+            SetIsLoaded(false)
+        } catch (err) {
+            SetStatustxt(err.message)
+        }
     }
 
 
@@ -58,7 +54,6 @@ export default function SignIN() {
             </div>
 
             <div className="LoginPageContainer">
-
                 <div className="HealthCareLoginUpperTxt">
                     <p><span>Note :</span> You Need To Register Your Self before Login.</p>
                 </div>
@@ -76,13 +71,10 @@ export default function SignIN() {
                             <p>Welcome To HealthCare Login Portal</p>
 
                             <label>Health Care Number :</label>
-                            <input type="number" placeholder="Health Care Number" name="hip_number" onChange={OnChange} required />
+                            <input type="number" placeholder="Health Care Number" name="healthcareId" onChange={OnChange} required />
                             <br></br>
                             <label>License Number :</label>
-                            <input type="number" placeholder="License Number" name="hip_license" required onChange={OnChange} />
-                            <br></br>
-                            <label>Email :</label>
-                            <input type="email" placeholder="Email" maxLength="30" name="email" required onChange={OnChange} />
+                            <input type="number" placeholder="License Number" name="healthcarelicense" required onChange={OnChange} />
                             <br></br>
                             <label>Password :</label>
                             <input type="password" placeholder="Password" maxLength="30" name="password" required onChange={OnChange} />
@@ -104,8 +96,6 @@ export default function SignIN() {
                     <div className="LoginRideSideImage_Header">
                         <p>Bharat सेवा➕</p>
                     </div>
-
-
                     <div className="LoginRightSideTxtcontainer DisplayFlexjustifyAlignitem">
                         <p>Health Care Login</p>
                         <p>Serving Country With <span>Love</span> and <span>Dedication</span></p>

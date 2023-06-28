@@ -1,3 +1,7 @@
+.RegisterOuterContainerHealthCare{
+    padding: 10vh;
+}
+
 .RegisterLable{
     position: absolute;
     top: 0;
@@ -153,4 +157,21 @@ input:focus{
 #RegisterPasswordStatus{
     text-align: center;
     margin: 0;
+}
+.registerHealthCaretextareaContainer{
+    /* display: inline-block; */
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+.registerHealthCaretextareaContainer label{
+    /* display: inline-block; */
+    /* background-color: yellow; */
+}
+.registerHealthCaretextarea{
+    outline: none;
+    border-radius: 0.5vh;
+    padding: 1vh;
+    font-size: 2vh;
+    text-align: start;
 }
