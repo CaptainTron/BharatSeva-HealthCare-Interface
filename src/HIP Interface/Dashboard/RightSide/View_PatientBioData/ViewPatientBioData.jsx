@@ -5,25 +5,25 @@ import "./ViewPatientBioData.css"
 export default function ViewPatientBioData() {
 
     const [Pat_BioData, SetPat_BioData] = useState()
-    const [Isloading, SetIsloading] = useState(false)
-    const [IsFetched, SetIsFetched] = useState(false)
-
+    const [Isloading, SetIsloading] = useState()
+    const [IsFetched, SetIsFetched] = useState()
 
 
 
 
     function GetPatientBioData(HID) {
+        const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
         SetIsloading(true)
-        fetch(`http://localhost:5000/api/v1/hip/patientBioData/patient/${HID}`, {
+        fetch(`http://localhost:5000/api/v1/healthcare/getuserBiodata/${HID}`, {
             method: "GET",
             headers: {
-                'Content-Type': "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`
+                'content-type': "application/json",
+                "Authorization": `Bearer ${HealthCare.token}`
             }
         })
             .then((res) => res.json())
             .then((data) => {
-                SetPat_BioData(data.Data)
+                SetPat_BioData(data.User)
                 console.log(data)
                 SetIsFetched(true)
             })
@@ -36,21 +36,6 @@ export default function ViewPatientBioData() {
             .finally(() => {
                 SetIsloading(false)
             })
-
-
-            // This One is For Firebase Log Bio Data views Goes here
-            fetch(`http://localhost:5000/api/v1/healthcare/firebase/BioDV`,{
-            method:"GET",
-            headers:{
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`,
-                "health_id":`${localStorage.getItem("Health_Id")}`
-            }
-        })
-        .then((res)=>res.json())
-        .then((data)=>{
-            console.log("Log --Bio Data Views Updated")
-        })
     }
 
 
@@ -78,34 +63,34 @@ export default function ViewPatientBioData() {
                     <div className="ViewPatient_BiO PatientBioData">
                         <div className="ViewPatientDataContainer">
 
-                        <div key={1}><p>HealthID:</p><p>{Pat_BioData.health_id}</p></div>
-                        <div key={2}><p>Fname:</p><p>{Pat_BioData.fname}</p></div>
-                        <div key={3}><p>Middle Name:</p><p>{Pat_BioData.middlename}</p></div>
-                        <div key={4}><p>Lname:</p><p>{Pat_BioData.lname}</p></div>
-                        <div key={5}><p>Sex:</p><p>{Pat_BioData.sex}</p></div>
-                        <div key={6}><p>DOB:</p><p>{Pat_BioData.dob ? Pat_BioData.dob : "--/--"}</p></div>
-                        <div key={7}><p>Blood Group:</p><p>{Pat_BioData.bloodgrp}</p></div>
-                        <div key={8}><p>Siblings:</p><p>{Pat_BioData.sibling}</p></div>
-                        <div key={9}><p>Weight:</p><p>{Pat_BioData.Weight}</p></div>
-                        <div key={10}><p>BMI:</p><p>{Pat_BioData.BMI}</p></div>
-                        <div key={11}><p>Twin:</p><p>{Pat_BioData.twin}</p></div>
-                        <div key={12}><p>Primary From :</p><p>{Pat_BioData.Plocation}</p></div>
-                        <div key={120}><p>Created By:</p><p>{Pat_BioData.createdBy}</p></div>
-                        <div key={13}><p>Created At:</p><p>{Pat_BioData.createdAt}</p></div>
-                        <div key={14}><p>Aadhar Number:</p><p>{Pat_BioData.aadharNumber}</p></div>
-                        <div key={15}><p>Marriage Status:</p><p>{Pat_BioData.MarriageStatus}</p></div>
-                        <div key={16}><p>Mobile Number:</p><p>{Pat_BioData.mobilenumber}</p></div>
-                        <div key={17}><p>Email:</p><p>{Pat_BioData.email}</p></div>
-                        <div key={18}><p>Father Name:</p><p>{Pat_BioData.fathername}</p></div>
-                        <div key={19}><p>Mother Name:</p><p>{Pat_BioData.mothername}</p></div>
-                        <div key={20}><p>Emergency Number:</p><p>{Pat_BioData.emergencynumber}</p></div>
+                            <div key={1}><p>HealthID:</p><p>{Pat_BioData.health_id}</p></div>
+                            <div key={2}><p>Fname:</p><p>{Pat_BioData.fname}</p></div>
+                            <div key={3}><p>Middle Name:</p><p>{Pat_BioData.middlename}</p></div>
+                            <div key={4}><p>Lname:</p><p>{Pat_BioData.lname}</p></div>
+                            <div key={5}><p>Sex:</p><p>{Pat_BioData.sex}</p></div>
+                            <div key={6}><p>DOB:</p><p>{Pat_BioData.dob ? Pat_BioData.dob : "--/--"}</p></div>
+                            <div key={7}><p>Blood Group:</p><p>{Pat_BioData.bloodgrp}</p></div>
+                            <div key={8}><p>Siblings:</p><p>{Pat_BioData.sibling}</p></div>
+                            <div key={9}><p>Weight:</p><p>{Pat_BioData.Weight}</p></div>
+                            <div key={10}><p>BMI:</p><p>{Pat_BioData.BMI}</p></div>
+                            <div key={11}><p>Twin:</p><p>{Pat_BioData.twin}</p></div>
+                            <div key={12}><p>Primary From :</p><p>{Pat_BioData.Plocation}</p></div>
+                            <div key={120}><p>Created By:</p><p>{Pat_BioData.createdBy}</p></div>
+                            <div key={13}><p>Created At:</p><p>{Pat_BioData.createdAt}</p></div>
+                            <div key={14}><p>Aadhar Number:</p><p>{Pat_BioData.aadharNumber}</p></div>
+                            <div key={15}><p>Marriage Status:</p><p>{Pat_BioData.MarriageStatus}</p></div>
+                            <div key={16}><p>Mobile Number:</p><p>{Pat_BioData.mobilenumber}</p></div>
+                            <div key={17}><p>Email:</p><p>{Pat_BioData.email}</p></div>
+                            <div key={18}><p>Father Name:</p><p>{Pat_BioData.fathername}</p></div>
+                            <div key={19}><p>Mother Name:</p><p>{Pat_BioData.mothername}</p></div>
+                            <div key={20}><p>Emergency Number:</p><p>{Pat_BioData.emergencynumber}</p></div>
                         </div>
                     </div>
                 )
 
         }
-    }else{
-        Patient_Biodata = <p style={{color:"yellow"}}>No One Found With Given HealthID</p>
+    } else {
+        Patient_Biodata = <p style={{ color: "yellow" }}>No One Found With Given HealthID</p>
     }
 
 
@@ -123,7 +108,7 @@ export default function ViewPatientBioData() {
 
                 {Isloading ? "Loading..." :
 
-                    IsFetched ? ( <div>{Patient_Biodata}</div> ) : "Records Will Show Up Here"
+                    IsFetched ? (<div>{Patient_Biodata}</div>) : "Records Will Show Up Here"
 
                 }
 

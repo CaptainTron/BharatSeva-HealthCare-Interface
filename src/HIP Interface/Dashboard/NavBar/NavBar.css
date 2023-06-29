@@ -10,7 +10,7 @@
     background-color: rgb(32, 31, 31);
     height: 6vh;
     justify-content: space-between;
-    box-shadow: 0 3px 10px 5px rgb(43, 42, 42);
+    box-shadow: inset 0px 4px 9px 0px black;
 }
 
 .LeftSideNavBar {

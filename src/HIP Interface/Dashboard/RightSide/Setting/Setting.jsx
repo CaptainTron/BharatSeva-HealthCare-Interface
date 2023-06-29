@@ -24,7 +24,6 @@ export default function Setting() {
             let response = await res.json()
             if (res.ok) {
                 alert("Preference Successfully Changed")
-                console.log(response)
             }
         } catch (err) {
             alert("Could Not Connect To server... :(")

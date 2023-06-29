@@ -1,3 +1,4 @@
+import Appointment from "./Appointment/Appointment"
 import CreatePatientRecord from "./CreatePatientRecord/Cr_PatientRecord"
 import CreatePatientD from "./Create_PatientD/CreatePatient"
 import Home from "./Home/Home"
@@ -18,9 +19,12 @@ export default function RightSide(){
         {/* <Home/> */}
         {/* <CreatePatientRecord/> */}
         {/* <ViewRecord/> */}
-        < ViewPatientBioData /> 
+        {/* < ViewPatientBioData />  */}
         {/* <CreatePatientD/> */}
-        {/* <Setting/> */}
+        <Setting/>
+        {/* <Appointment/> */}
+
+
         </div>
         </>
     )

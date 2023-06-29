@@ -9,7 +9,6 @@ export default function HomePage() {
     function toggleSideBar(){
         document.querySelector(".LeftSideBarContainer").classList.toggle("ToggleTo0");
         document.querySelector(".RightSideBar").classList.toggle("ToggleTo100");
-
     }
     
     return (

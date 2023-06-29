@@ -4,15 +4,16 @@ import { useState } from "react"
 
 export default function CreatePatientD() {
     const Togglesuccesstxt = document.querySelector(".CreatePatient_viewAfterSuccess")
-    const [SituationContainer, SetSituationContainer] = useState("");
-    const [IsLoaded, SetIsLoaded] = useState(false);
+
+
+    const [SituationContainer, SetSituationContainer] = useState();
+    const [IsLoaded, SetIsLoaded] = useState();
     const [CPFormData, SetDPFormData] = useState({
         health_id: "",
         fname: "",
         middlename: "",
         lname: "",
         sex: "",
-        createdBy: "",
         dob: "",
         bloodgrp: "",
         BMI: "",
@@ -21,7 +22,7 @@ export default function CreatePatientD() {
         email: "",
         mobilenumber: "",
         aadharNumber: "",
-        Plocation: "",
+        Primarylocation: "",
         sibling: "",
         twin: "",
         fathername: "",
@@ -53,11 +54,12 @@ export default function CreatePatientD() {
     async function FetchDataForPBD() {
         Togglesuccesstxt.classList.add("Display_none")
         SetIsLoaded(true)
-        fetch(`http://localhost:5000/api/v1/hip/createpatientbiodata`, {
+        const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
+        fetch(`http://localhost:5000/api/v1/healthcaredetails/createuserBio`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`
+                "Authorization": `Bearer ${HealthCare.token}`
             },
             body: JSON.stringify(CPFormData)
         })
@@ -76,22 +78,6 @@ export default function CreatePatientD() {
                 Togglesuccesstxt.classList.remove("Display_none")
                 SetIsLoaded(false)
             })
-
-
-        // if (SituationContainer === "Record has been created Successfully") {
-            fetch(`http://localhost:5000/api/v1/healthcare/firebase/HealthID_Created`, {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${localStorage.getItem("HealthCare_TOKEN")}`,
-                    "health_id": `${localStorage.getItem("Health_Id")}`
-                }
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    console.log("Log Bio Data Viewed Updated")
-                })
-        // }
     }
 
     function clickmeTO() {
@@ -152,7 +138,7 @@ export default function CreatePatientD() {
                             <input type="number" className="PDContainer" name="aadharNumber" placeholder="Aaddhar Number" required onChange={OnChangeCPRData} /><br></br>
 
                             <label>Primary From</label><br></br>
-                            <input type="text" className="PDContainer" name="Plocation" placeholder="Primary From" required onChange={OnChangeCPRData} /><br></br>
+                            <input type="text" className="PDContainer" name="Primarylocation" placeholder="Primary From" required onChange={OnChangeCPRData} /><br></br>
 
                             <label>Siblings ?</label><br></br>
                             <Select className="Siblings PDC" options={sibling} name="Siblings" onChange={OnChangeSelectPDC}></Select>

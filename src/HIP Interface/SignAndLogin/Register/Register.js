@@ -8,7 +8,7 @@ export default function Register() {
 
     // This is Showing Current status of Register page Register button is CLicked
     const [Status, SetStatus] = useState("Validating...")
-    const [FormData, SetFormData] = useState({})
+    const [FormData, SetFormData] = useState()
 
     document.addEventListener('click', () => {
         document.querySelector('.StatusAfterSubmitBtn').classList.add("DiplayNone")
@@ -27,7 +27,7 @@ export default function Register() {
     }
 
 
-    function RegisterAPIGOESHere(e) {
+    async function RegisterAPIGOESHere(e) {
         e.preventDefault();
 
 
@@ -45,29 +45,27 @@ export default function Register() {
         document.querySelector('.StatusAfterSubmitBtn').classList.remove("DiplayNone")
 
         // Fetching Data From Backend Servers !!
-        fetch('http://localhost:5000/api/v1/healthcareauth/register', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'Application/json'
-            },
-            body: JSON.stringify(FormData)
-        })
-            .then((result) => result.json())
-            .then((data) => {
-                console.log(data)
-                if (data.message) {
-                    SetStatus(data.message)
-                    console.log(data);
-                    return;
-                }
-                SetStatus("Registration Is Successfull! Please Login :)")
+        try {
+            const response = await fetch('http://localhost:5000/api/v1/healthcareauth/register', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'Application/json'
+                },
+                body: JSON.stringify(FormData)
             })
-            .catch((err) => {
-                console.log(err)
-                SetStatus("Could Not Connect To Server :(")
-            })
+            const data = await response.json()
+            if (response.ok) {
+                SetStatus("Registration Successfull! Please Login :)")
+            } else if (response.status == 400) {
+                SetStatus("Seems Like Anyne else already Registered With Given Email Or HealthID")
+            }else{
+                SetStatus(data.message)
+                console.log(response);
+            }
+        } catch (err) {
+            alert("Could Not Connect to Server...🙄")
+        }
     }
-
 
     return (
         <>
@@ -78,7 +76,8 @@ export default function Register() {
                         <p><span><strong>Note</strong></span> : After Successfull Registration <br></br> You have to Login for Dashboard.</p>
                     </div>
                     <div className="RegisterBox">
-                        <p className="WelcomeGreetings">Welcome To Registration Portal</p>
+                        <p className="WelcomeGreetings">Welcome To Health Care Registration Portal</p>
+
                         <form onSubmit={RegisterAPIGOESHere}>
                             <label>Health Care Name :</label>
                             <input type="text" placeholder="Enter Health Care Name" name="healthcareName" onChange={OnclickChange} required />
@@ -87,17 +86,50 @@ export default function Register() {
                             <input type="number" placeholder="Enter Health Care Number" name="healthcareId" onChange={OnclickChange} required />
                             <br></br>
                             <label>License Number :</label>
-                            <input type="number" placeholder="Enter License Number" name="healthcarelicense" onChange={OnclickChange} required />
+                            <input type="number" placeholder="Same As Your HealthCare Number" name="healthcarelicense" onChange={OnclickChange} required />
                             <br></br>
-                            <label>Full Address :</label>
-                            <input type="text" placeholder="Enter Full Address" name="healthcare_address" onChange={OnclickChange} required />
+
+                            <label>State :</label>
+                            <input type="text" placeholder="Enter State" name="state" onChange={OnclickChange} required /><br></br>
+
+                            <label>City</label>
+                            <input type="text" placeholder="Enter City" name="city" onChange={OnclickChange} required />
                             <br></br>
+
+                            <label>Country</label>
+                            <input type="text" placeholder="Enter Country" name="country" onChange={OnclickChange} required />
+                            <br></br>
+
+                            <label>Landmark</label>
+                            <input type="text" placeholder="Enter Landmark" name="landmark" onChange={OnclickChange} required />
+                            <br></br>
+
                             <label>Email :</label>
                             <input type="email" placeholder="Enter Email" name="email" onChange={OnclickChange} required />
                             <br></br>
 
                             <label>Appointment Fee :</label>
                             <input type="number" placeholder="Enter Appointment Fee" name="appointment_fee" onChange={OnclickChange} required />
+                            <br></br>
+
+                            <label>Availability :</label>
+                            <input type="text" placeholder="Enter Availability" name="availability" onChange={OnclickChange} required />
+                            <br></br>
+
+                            <label>Total Facilites :</label>
+                            <input type="number" placeholder="Enter Total Facilites" name="total_facilities" onChange={OnclickChange} required />
+                            <br></br>
+
+                            <label>Total MBBS Doctors :</label>
+                            <input type="number" placeholder="Enter Total MBBS Doctors" name="total_mbbs_doc" onChange={OnclickChange} required />
+                            <br></br>
+
+                            <label>Total Workers :</label>
+                            <input type="number" placeholder="Enter Total Workers" name="total_worker" onChange={OnclickChange} required />
+                            <br></br>
+
+                            <label>No. Of Beds :</label>
+                            <input type="number" placeholder="Enter No. Of Beds" name="no_of_beds" onChange={OnclickChange} required />
                             <br></br>
 
                             <div className="registerHealthCaretextareaContainer">
@@ -117,11 +149,7 @@ export default function Register() {
                             </div>
 
                         </form>
-
-                        <div>
-                            <p className="LoginbtnRedirect">Already Registered! <span>Login Here</span></p>
-                        </div>
-
+                        <p className="LoginbtnRedirect">Already Registered! <span>Login Here</span></p>
                     </div>
                 </div>
 
