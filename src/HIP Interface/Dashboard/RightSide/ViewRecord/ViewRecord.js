@@ -61,8 +61,7 @@ export default function ViewRecord() {
         }
         alert("Enter Correct Health ID To Fetch")
     }
-
-
+    
     return (
         <>
             <div className="ViewPR">

@@ -31,7 +31,7 @@ export default function CreatePatientRecord() {
         DisplayText.classList.add("Display_none")
         const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
         SetIsLoaded(true)
-        fetch(`http://localhost:5000/api/v1/healthcaredetails/healthcare/createpatientproblem`, {
+        fetch(`http://localhost:5000/api/v1/healthcare/createpatientproblem`, {
             method: "POST",
             headers: {
                 'content-type': "application/json",

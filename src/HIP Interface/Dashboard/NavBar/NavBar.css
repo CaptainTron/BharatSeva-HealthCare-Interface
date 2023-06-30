@@ -20,7 +20,6 @@
     box-sizing: border-box;
     height: 5vh;
     border-radius: 1vh;
-    /* background-color: red; */
 }
 
 .fa-bars {
@@ -43,12 +42,10 @@
     height: 3vh;
     border-radius: 1vh;
     justify-content: space-between;
-    /* background-color: red; */
 }
 
 .LeftSideNavBar_AccountAndNotification p:nth-child(2) {
     width: 7vw;
-    /* background-color: red; */
 }
 
 .LeftSideNavBar_AccountAndNotification p:nth-child(n):hover {
@@ -64,6 +61,8 @@
     border-radius: 1vh;
     padding: 1vh 1vw;
     width: 27vw;
+    box-shadow: 0px 1px 9px 3px black;
+    z-index: 100;
 }
 
 .HealthCare_NotificationPopOver ul {
@@ -91,7 +90,6 @@
 @keyframes blink {
     from {
         box-shadow: 0 0 1px 1px yellow;
-        /* opacity: 0; */
     }
 
     to {
@@ -106,12 +104,11 @@
     top: 7vh;
     right: 1vw;
     border-radius: 1vh;
-    /* max-height: 10vh; */
     height: 40vh;
     width: 18vw;
     background-color: rgb(34, 34, 34);
-
-    box-shadow:2px 2px 9px black;
+    box-shadow: -5px 9px 9px black;
+    z-index: 100;
 }
 
 .HealthCare_AccountPopOver ul {
@@ -138,10 +135,16 @@
 }
 .HealthCare_AccountPopOver ul li:nth-child(7){
     color: rgb(250, 57, 57);
-    /* background-color: rgba(255, 68, 68, 0.356); */
 }
 
 .HealthCare_AccountPopOver a{
     color: white;
     text-decoration: none;
+}
+
+/* Account Label Goes Here */
+.HealthcareNameLableAccount{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

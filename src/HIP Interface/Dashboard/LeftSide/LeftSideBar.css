@@ -28,7 +28,6 @@
     width: 20vw;
     height: 4vh;
     padding: 0.5vh;
-
     list-style-type: none;
 }
 
@@ -54,12 +53,9 @@
 
 /* Setting DropDown Starts From Here */
 .SettingDropDownMenu {
-    /* background-color: red; */
     height: 30vh;
 }
 .Settingpopups{
-    /* font-size: 1vh; */
-    /* background-color: rgb(66, 66, 66); */
     margin: 0 0 0 6vh;
     transition: 3s;
 }
@@ -69,7 +65,6 @@
 
 .TextContainerDownSide {
     margin: 22vh 0 0 0;
-    /* background-color: yellow; */
     width: 20vw;
     display: flex;
     flex-wrap: wrap;
@@ -81,7 +76,6 @@
     font-size: 1.5vh;
     margin: 0;
     width: 5vw;
-    /* background-color: gray; */
     text-align: center;
 }
 

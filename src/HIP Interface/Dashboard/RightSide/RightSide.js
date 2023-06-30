@@ -18,10 +18,10 @@ export default function RightSide(){
 
         {/* <Home/> */}
         {/* <CreatePatientRecord/> */}
-        {/* <ViewRecord/> */}
+        <ViewRecord/>
         {/* < ViewPatientBioData />  */}
         {/* <CreatePatientD/> */}
-        <Setting/>
+        {/* <Setting/> */}
         {/* <Appointment/> */}
 
 
