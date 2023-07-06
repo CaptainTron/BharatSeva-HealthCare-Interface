@@ -51,6 +51,12 @@
     font-size: 2vh;
     color: rgba(241, 245, 17, 0.993);
 }
+.Settingarticle{
+    border-radius: 0.5vh;
+    margin: 1vh;
+    padding: 1vh;
+    background-color: rgb(58, 58, 58);
+}
 .Settingarticle article{
     font-size: 2vh;
 }

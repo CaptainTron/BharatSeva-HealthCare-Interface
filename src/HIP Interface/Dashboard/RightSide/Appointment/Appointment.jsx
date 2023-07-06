@@ -4,7 +4,7 @@ import "./Appointment.css"
 
 
 export default function Appointment() {
-
+    var uuid = require('uuid-random');
     const [Fetched, SetFetched] = useState()
     const [IsFetched, SetIsFetched] = useState({
         IsFetched: true,
@@ -40,14 +40,14 @@ export default function Appointment() {
     let Appoinments, i = 0
     if (Fetched) {
         Appoinments = Fetched.length ? Fetched.map((data) => (
-            <div className="AppointContainer">
+            <div key={uuid()} className="AppointContainer">
                 <p key={i++}><span>Status :</span>{new Date().toISOString().split('T')[0] > data.appointment_date ? <span className="CompletedApp">Completed</span> : <span className="UpcomingApp">Upcoming</span>}</p>
                 <p key={i++}><span>Patient Name :</span>{data.name}</p>
                 <p key={i++}><span>Health ID :</span>{data.health_ID}</p>
                 <p key={i++}><span>Appointment Date :</span>{data.appointment_date}</p>
                 <p key={i++}><span>Appointment Time :</span>{data.appointment_time}</p>
                 <p key={i++}><span>Department :</span>{data.department}</p>
-                <p key={i++}><span>User Note :</span>{data.note}</p>
+                <p key={i++}><span>User Note :</span><span id="UsernnoteAppointment">{data.note}sfsaf sakfjsa fsklafj safjsafkljsaflsa fjskf slfslkfjsadf jskfsl afsfhwifjijfwiofjsdfj sdfjsoi</span></p>
             </div>
         )) : (<p className="UpcomingApp">No Appointments Till Now</p>)
     }

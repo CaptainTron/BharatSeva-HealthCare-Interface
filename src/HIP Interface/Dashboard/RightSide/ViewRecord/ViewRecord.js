@@ -1,15 +1,31 @@
 import { useEffect, useState } from "react"
 import "./ViewRecord.css"
+import Select from "react-select"
 
 
 
 export default function ViewRecord() {
+    var uuid = require('uuid-random');
 
+
+    function DisplayRecords(data) {
+        return (
+            <ul key={uuid()} className="ViewPatient_Re">
+                <li><p>Issue :</p><p>{data.p_problem}</p></li>
+                <li><p>Description :</p><p>{data.description}</p></li>
+                <li><p>Date :</p><p className="PatientRecordDate">{data.Created_At}</p></li>
+                <li><p>HealthCare :</p><p>{data.healthcareName}</p></li>
+                <li><p>Medical Severity :</p><p className={data.medical_severity === "Dangerous" ? `redLabel` : ""}>{data.medical_severity}</p></li>
+            </ul>
+        )
+    }
     const [PatientData, SetPatientData] = useState()
+    const [Filter, SetFilter] = useState([])
     const [Fetched, SetFetched] = useState({
         IsFetched: false,
         IsGood: true,
-        Isavailable: false
+        Isavailable: false,
+        Filtered: false
     })
     async function GetPatientData(HID) {
 
@@ -25,7 +41,7 @@ export default function ViewRecord() {
             })
             let response = await res.json()
             if (res.ok) {
-                SetPatientData(response)
+                SetPatientData(response.HealthUser)
                 SetFetched((p) => ({ ...p, Isavailable: true }))
             } else {
                 // alert(response.status)
@@ -37,15 +53,16 @@ export default function ViewRecord() {
         }
         SetFetched((p) => ({ ...p, IsFetched: false }))
     }
-    let Patient_data = Fetched.Isavailable ? PatientData.HealthUser.map((data) => (
-        <div className="ViewPatient_Re">
-            <div><p>Issue:</p><p>{data.p_problem}</p></div>
-            <div><p>Description:</p><p>{data.description}</p></div>
-            <div><p>Date:</p><p>{data.Created_At}</p></div>
-            <div><p>HealthCare:</p><p>{data.healthcareName}</p></div>
-            <div><p>Medical Severity:</p><p>{data.medical_severity}</p></div>
-        </div>
-    )) : (<p>Result Will Show Here...</p>)
+
+    function FilterMedicalS(e) {
+        const { label } = e
+        if (Fetched.Isavailable) {
+            const Value = (PatientData.filter((data) => label === data.medical_severity))
+            SetFilter(Value.map((data) => DisplayRecords(data)))
+            SetFetched((p) => ({ ...p, Filtered: true }))
+        }
+    }
+    let Patient_data = Fetched.Isavailable ? PatientData.map((data) => DisplayRecords(data)) : (<p>Patient Records Will Show Here...</p>)
 
     function CallVR(e) {
         if (e.which == 13) {
@@ -61,7 +78,10 @@ export default function ViewRecord() {
         }
         alert("Enter Correct Health ID To Fetch")
     }
-    
+
+    const FilterOption = [{ "label": "Dangerous" }, { "label": "High" }, { "label": "Semi-mid" }, { "label": "Low" }]
+
+
     return (
         <>
             <div className="ViewPR">
@@ -72,10 +92,14 @@ export default function ViewRecord() {
                     <input id="HID_input" type="number" name="HID" placeholder="Enter Health ID" onKeyUp={CallVR} />
                     <div className="SearchIcon" onClick={GetData}><i className="fa-solid fa-magnifying-glass"></i></div>
 
+                    <Select id="FilterPatientRecords" options={FilterOption} onChange={FilterMedicalS} />
+                    <div className={Fetched.Filtered ? "bgblue SearchIcon" : "SearchIcon"} onClick={() => SetFetched((p) => ({ ...p, Filtered: false }))}>Clear Filter</div>
+
                 </div>
 
                 <div className="FetchedPatientRecords">
-                    {Fetched.IsFetched ? (<p>Loading...</p>) : (Fetched.Isavailable ? Patient_data : Fetched.IsGood ? Patient_data : (<p>No Result Found....</p>))}
+                    {Fetched.IsFetched ? (<p>Loading...</p>) : (Fetched.Isavailable ? (Fetched.Filtered ? (Filter.length ? Filter : (<p className="redLabel">No Result Found!</p>)) : Patient_data) : Fetched.IsGood ? Patient_data : (<p>No Result Found....</p>))}
+                    {/* {PatientData} */}
                 </div>
 
             </div>

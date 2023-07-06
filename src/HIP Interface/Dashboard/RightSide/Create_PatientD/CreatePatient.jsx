@@ -48,6 +48,11 @@ export default function CreatePatientD() {
 
     function PostFetchDataForPBD(e) {
         e.preventDefault();
+        const HealthCareId = document.getElementById("healthId")
+        if (HealthCareId.value.length != 10) {
+            alert("HealthID Must Be 10 Characters Long!")
+            return
+        }
         FetchDataForPBD();
     }
 
@@ -98,7 +103,7 @@ export default function CreatePatientD() {
                     <div className="CreateContainer">
                         <form onSubmit={PostFetchDataForPBD} method="POST">
                             <label>Health ID</label><br></br>
-                            <input type="text" className="PDContainer" name="health_id" placeholder="Health ID" onChange={OnChangeCPRData} required /><br></br>
+                            <input type="text" className="PDContainer" id="healthId" name="health_id" placeholder="Health ID" onChange={OnChangeCPRData} required /><br></br>
 
                             <label>First Name</label><br></br>
                             <input type="text" className="PDContainer" name="fname" placeholder="First Name" required onChange={OnChangeCPRData} /><br></br>
@@ -147,10 +152,10 @@ export default function CreatePatientD() {
                             <Select className="Twin PDC" options={twin} name="Twin" onChange={OnChangeSelectPDC}></Select>
 
                             <label>Father Name</label><br></br>
-                            <input type="text" className="PDContainer" name="fathername" placeholder="Father Name" required onChange={OnChangeCPRData} /><br></br>
+                            <input type="text" className="PDContainer" name="fathername" placeholder="पिता श्री" required onChange={OnChangeCPRData} /><br></br>
 
                             <label>Mother Name</label><br></br>
-                            <input type="text" className="PDContainer" name="mothername" placeholder="Mother Name" required onChange={OnChangeCPRData} /><br></br>
+                            <input type="text" className="PDContainer" name="mothername" placeholder="माता श्री" required onChange={OnChangeCPRData} /><br></br>
 
                             <label>Emergency Contact Number</label><br></br>
                             <input type="text" className="PDContainer" name="emergencynumber" placeholder="Emergency Number" required onChange={OnChangeCPRData} /><br></br>

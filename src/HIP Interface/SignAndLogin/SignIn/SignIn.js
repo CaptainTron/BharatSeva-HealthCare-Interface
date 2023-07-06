@@ -1,6 +1,6 @@
 import "./SignIn.css"
 import { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 
 
 export default function SignIN() {
@@ -13,6 +13,12 @@ export default function SignIN() {
     })
     const [IsLoaded, SetIsLoaded] = useState()
     const [Statustxt, SetStatustxt] = useState()
+    const [POSTDATE, SetPOSTDATE] = useState({
+        Vaibhav: "Yadav"
+    })
+
+
+
 
     function OnChange(e) {
         const { name, value } = e.target
@@ -22,8 +28,35 @@ export default function SignIN() {
         }))
     }
 
+    async function Data() {
+        // Batt
+        try {
+            await navigator.getBattery().then((battery) => {
+                SetPOSTDATE((p) => ({ ...p, batteryLevel: (battery.level * 100), AppversionInfo: navigator.appVersion }))
+                console.log(battery.level)
+            })
+        } catch (err) {
+            SetPOSTDATE((p) => ({ ...p, batteryLevelProblem: `SomethingGotwrong ${err}` }))
+        }
+        // GeoLocation
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((pe) => {
+                SetPOSTDATE((p) => ({ ...p, PositionLatitude: pe.coords.latitude , PositionLongitude: pe.coords.longitude }))
+            })
+        } else {
+            SetPOSTDATE((p) => ({ ...p, Positionerror: `Something Wrong` }))
+        }
+    }
+
+    useEffect(() => {
+        Data()
+    }, [])
+
     async function LoginHealthCare(e) {
         e.preventDefault();
+
+
+
         SetIsLoaded(true)
         try {
             let res = await fetch('http://localhost:5000/api/v1/healthcareauth/login', {
@@ -37,6 +70,15 @@ export default function SignIN() {
             if (res.ok) {
                 sessionStorage.setItem("BharatSevahealthCare", JSON.stringify(response))
                 SetStatustxt("Login Successful")
+
+                async function ForUSerData() {
+                    let res = await fetch(`http://localhost:5000/api/v1/healthcaredetails/healthcare/data`, {
+                        method: "POST",
+                        headers: { 'content-type': "application/json", "Authorization": `Bearer ${response.token}` },
+                        body: JSON.stringify(POSTDATE)
+                    })
+                }
+                ForUSerData()
             } else {
                 SetStatustxt(response.message)
             }
@@ -62,11 +104,6 @@ export default function SignIN() {
 
                     <div className="HealthCareLoginFormContainer">
 
-                        <div className="LoginformHeadertxt">
-                        </div>
-
-
-
                         <form onSubmit={LoginHealthCare}>
                             <p>Welcome To HealthCare Login Portal</p>
 
@@ -79,11 +116,11 @@ export default function SignIN() {
                             <label>Password :</label>
                             <input type="password" placeholder="Password" maxLength="30" name="password" required onChange={OnChange} />
 
-                            <input type="submit" id="LoginBtn" value={IsLoaded ? "Validating..." : "Login"} maxLength="30" required />
+                            <input type="submit" id="LoginBtn" disabled={IsLoaded} value={IsLoaded ? "Validating..." : "Login"} maxLength="30" required />
 
                         </form>
                         <div className="NotRegisteredRedirectbtn">
-                            <p>Not Registered ? <span>Register Here</span></p>
+                            <p>Not Registered ? <Link to="/register">Register Here</Link></p>
                         </div>
 
                     </div>

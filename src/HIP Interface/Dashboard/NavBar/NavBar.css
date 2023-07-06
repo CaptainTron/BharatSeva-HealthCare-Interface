@@ -1,8 +1,8 @@
 .HomePageContainer {
     height: 100vh;
     width: 100vw;
-    color: white;
     font-size: 2.3vh;
+    color: white;
 }
 
 .HomePageNavBarContainer {
@@ -34,7 +34,7 @@
     cursor: pointer;
 }
 
-.LeftSideNavBar_AccountAndNotification p:nth-child(n) {
+.LeftSideNavBar_AccountAndNotification P:nth-child(n) {
     text-align: center;
     width: 8.4vw;
     margin-right: 1vw;
@@ -42,13 +42,15 @@
     height: 3vh;
     border-radius: 1vh;
     justify-content: space-between;
+
+    border: 2px solid #434343;
 }
 
-.LeftSideNavBar_AccountAndNotification p:nth-child(2) {
+.LeftSideNavBar_AccountAndNotification P:nth-child(2) {
     width: 7vw;
 }
 
-.LeftSideNavBar_AccountAndNotification p:nth-child(n):hover {
+.LeftSideNavBar_AccountAndNotification P:nth-child(n):hover {
     background-color: rgb(71, 71, 71);
     cursor: pointer;
 }
@@ -114,16 +116,18 @@
 .HealthCare_AccountPopOver ul {
     list-style-type: none;
     padding: 0;
-    margin: 2vh 3vh 0 1vh; 
+    margin: 2vh 3vh 0 1vh;
 
 }
-.HealthCare_AccountPopOver ul li:nth-child(n){
+
+.HealthCare_AccountPopOver ul li:nth-child(n) {
     /* margin: 1vh; */
     padding: 0.4vh 1vw;
     border-radius: 1vh;
-    
+
 }
-.HealthCare_AccountPopOver ul li:nth-child(n+3):hover{
+
+.HealthCare_AccountPopOver ul li:nth-child(n+3):hover {
     background-color: rgb(66, 66, 66);
     cursor: pointer;
 }
@@ -133,18 +137,24 @@
 .HealthCare_AccountPopOver ul li:nth-child(2) {
     text-align: left;
 }
-.HealthCare_AccountPopOver ul li:nth-child(7){
+
+.HealthCare_AccountPopOver ul li:nth-child(7) {
     color: rgb(250, 57, 57);
 }
 
-.HealthCare_AccountPopOver a{
+.HealthCare_AccountPopOver a {
     color: white;
     text-decoration: none;
 }
 
 /* Account Label Goes Here */
-.HealthcareNameLableAccount{
+.HealthcareNameLableAccount {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/* Account Section */
+.classACcountBharatseva {
+    width: 1vw;
 }

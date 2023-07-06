@@ -27,6 +27,7 @@
 }
 .AppointContainer p{
     margin: 1vh;
+    display: flex;
 }
 .CompletedApp{
     color: lime;
@@ -36,4 +37,8 @@
 }
 .NotConnected{
     color: red;
+}
+#UsernnoteAppointment{
+    width: 45vw;
+    font-style: italic;
 }

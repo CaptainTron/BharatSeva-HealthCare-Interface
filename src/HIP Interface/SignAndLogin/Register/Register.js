@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import "./Register.css"
-
+import React from "react"
+import { Link } from "react-router-dom"
 
 export default function Register() {
     let PasswordStatus = document.querySelector("#RegisterPasswordStatus")
+    let Disableback = document.querySelector(".RegisterOuterContainerHealthCare")
 
 
     // This is Showing Current status of Register page Register button is CLicked
@@ -11,8 +13,8 @@ export default function Register() {
     const [FormData, SetFormData] = useState()
 
     document.addEventListener('click', () => {
-        document.querySelector('.StatusAfterSubmitBtn').classList.add("DiplayNone")
-        document.querySelector('.HIP_RegisterContainer').classList.remove("DisplayOpacity")
+        // document.querySelector('.StatusAfterSubmitBtn').classList.add("DiplayNone")
+        // document.querySelector('.HIP_RegisterContainer').classList.remove("DisplayOpacity")
         SetStatus("Validating...")
     })
 
@@ -36,7 +38,6 @@ export default function Register() {
             PasswordStatus.textContent = "Password Do Not Match :("
             PasswordStatus.classList.remove("DiplayNone")
             PasswordStatus.style.color = "red";
-            // console.log(document.querySelector("#Registration_Password").value, document.querySelector("#Registration_CheckPassword").value)
             return;
         }
         PasswordStatus.classList.add("DiplayNone")
@@ -57,8 +58,8 @@ export default function Register() {
             if (response.ok) {
                 SetStatus("Registration Successfull! Please Login :)")
             } else if (response.status == 400) {
-                SetStatus("Seems Like Anyne else already Registered With Given Email Or HealthID")
-            }else{
+                SetStatus("Seems Like Anyne else already Registered With Given Email Or HealthCareID :(")
+            } else {
                 SetStatus(data.message)
                 console.log(response);
             }
@@ -82,8 +83,9 @@ export default function Register() {
                             <label>Health Care Name :</label>
                             <input type="text" placeholder="Enter Health Care Name" name="healthcareName" onChange={OnclickChange} required />
                             <br></br>
-                            <label>Health Care ID :</label>
-                            <input type="number" placeholder="Enter Health Care Number" name="healthcareId" onChange={OnclickChange} required />
+                            <label>Health Care ID : <span className="HelptextinRegister">(HealthCare ID Should Be Unique)</span></label>
+                            <input type="number" placeholder="Unique ID to Identify You" name="healthcareId" onChange={OnclickChange} required />
+                            {/* <p className="HelptextinRegister">HealthCare ID Shoudl Be Unique</p> */}
                             <br></br>
                             <label>License Number :</label>
                             <input type="number" placeholder="Same As Your HealthCare Number" name="healthcarelicense" onChange={OnclickChange} required />
@@ -105,7 +107,7 @@ export default function Register() {
                             <br></br>
 
                             <label>Email :</label>
-                            <input type="email" placeholder="Enter Email" name="email" onChange={OnclickChange} required />
+                            <input type="email" placeholder="Email Must Be Unique" name="email" onChange={OnclickChange} required />
                             <br></br>
 
                             <label>Appointment Fee :</label>
@@ -145,11 +147,12 @@ export default function Register() {
                             <p id="RegisterPasswordStatus" className="DiplayNone"></p>
 
                             <div className="Registerbtn DisplayFlexjustifyAlignitem">
-                                <button>Register</button>
+                                <button>Register*</button>
+                                <p className="TermsandConditions">*By Clicking On Register You Agree To Our Terms and Conditions!</p>
                             </div>
 
                         </form>
-                        <p className="LoginbtnRedirect">Already Registered! <span>Login Here</span></p>
+                        <p className="LoginbtnRedirect">Already Registered! <Link to="/login">Login</Link></p>
                     </div>
                 </div>
 

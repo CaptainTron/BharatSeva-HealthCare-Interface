@@ -1,34 +1,24 @@
 import "./HomePage.css"
-import LefSideBar from "../LeftSide/LeftSideBar"
-import NavBar from "../NavBar/NavBar"
-import RightSide from "../RightSide/RightSide"
-
+import Register from "../../SignAndLogin/Register/Register"
+import SignIN from "../../SignAndLogin/SignIn/SignIn"
+import DashComponents from "../DashboardComponents"
+import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from "react-router-dom"
 
 export default function HomePage() {
 
-    function toggleSideBar(){
-        document.querySelector(".LeftSideBarContainer").classList.toggle("ToggleTo0");
-        document.querySelector(".RightSideBar").classList.toggle("ToggleTo100");
-    }
-    
+    const route = createBrowserRouter(createRoutesFromElements(
+        <>
+            <Route path="/login" element={<SignIN />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/dashboard/*" element={<DashComponents />} />
+        </>
+
+    ))
+
     return (
         <>
-            <div className="HomePageContainer">
-
-                {/* Notification NavBar Goes Here */}
-                <NavBar toggleSideBar={toggleSideBar}/>
-
-                <div className="SideBarContainer">
-
-                {/* Toggle LeftSide Bar Goes Here */}
-                <LefSideBar />
-
-                {/* RightSide */}
-                <RightSide/>
-
-                </div>
-            </div>
+        <RouterProvider router={route}/>
         </>
     )
 
-    }
+}

@@ -1,6 +1,4 @@
 .RegisterOuterContainerHealthCare{
-    /* padding: 10vh; */
-    /* margin: 20vh; */
     height: 130vh;
 }
 
@@ -11,7 +9,6 @@
     color: white;
     padding: 1vh 4vh;
     font-size: 2.5vh;
-    /* background-color: gray; */
 }
 .RegisterLable p:nth-child(1){
     text-decoration: underline;
@@ -72,6 +69,7 @@ input:focus{
 
 .Registerbtn{
     margin: 3vh;
+    flex-direction: column;
 }
 .Registerbtn button{
     border: none;
@@ -123,7 +121,7 @@ input:focus{
 .StatusAfterSubmitBtn{
     position: absolute;
     z-index: 1000;
-    top: 50%;
+    top: 130vh;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 1.6vh;
@@ -156,14 +154,9 @@ input:focus{
     margin: 0;
 }
 .registerHealthCaretextareaContainer{
-    /* display: inline-block; */
     display: flex;
     margin: 0;
     padding: 0;
-}
-.registerHealthCaretextareaContainer label{
-    /* display: inline-block; */
-    /* background-color: yellow; */
 }
 .registerHealthCaretextarea{
     outline: none;
@@ -171,4 +164,13 @@ input:focus{
     padding: 1vh;
     font-size: 2vh;
     text-align: start;
+}
+.HelptextinRegister{
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 2vh;
+}
+.TermsandConditions{
+    color: white;
 }

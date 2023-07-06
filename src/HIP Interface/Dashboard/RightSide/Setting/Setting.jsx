@@ -6,8 +6,6 @@ import { doc, docs } from "firebase/firestore"
 
 
 export default function Setting() {
-
-    const [IsFetched, SetIsFetched] = useState()
     const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
 
     async function OnchangeData(e) {
@@ -170,7 +168,7 @@ export default function Setting() {
 
 
                 <div className="Settingarticle">
-                    <article><strong>Alert: - </strong>If You View, Change or Create a Patient Data your acitivity will be recorded.
+                    <article><strong><i className="fa-solid fa-triangle-exclamation"></i>  - </strong>Viewing and making any Patient Records, Your activity will be recorded.
                     </article>
                 </div>
             </div>

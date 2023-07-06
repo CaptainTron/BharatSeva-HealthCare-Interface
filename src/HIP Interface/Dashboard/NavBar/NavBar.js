@@ -1,5 +1,6 @@
+import { Outlet, Link } from "react-router-dom"
 import "./NavBar.css"
-
+import LefSideBar from "../LeftSide/LeftSideBar"
 
 export default function NavBar({ toggleSideBar }) {
 
@@ -18,19 +19,21 @@ export default function NavBar({ toggleSideBar }) {
 
     return (
         <>
-            <div className="HomePageNavBarContainer DisplayFlexjustifyAlignitem">
+            <div className="SideBarContainer">
+                <div className="HomePageNavBarContainer DisplayFlexjustifyAlignitem">
 
-                <div className="LeftSideNavBar DisplayFlexjustifyAlignitem">
-                    <i className="fa-solid fa-bars" onClick={() => toggleSideBar()}></i>
-                    <p>Bharat सेवा</p>
-                </div>
+                    <div className="LeftSideNavBar DisplayFlexjustifyAlignitem">
+                        <i className="fa-solid fa-bars" onClick={() => toggleSideBar()}></i>
+                        <p>Bharat सेवा</p>
+                    </div>
 
-                <div className="LeftSideNavBar_NameTag DisplayFlexjustifyAlignitem">
-                    <p><i className="fa-solid fa-user-doctor"></i> Health Care InterFace</p>
-                </div>
+                    <div className="LeftSideNavBar_NameTag DisplayFlexjustifyAlignitem">
+                        <p><i className="fa-solid fa-user-doctor"></i> Health Care InterFace</p>
+                    </div>
 
-                <div className="LeftSideNavBar_AccountAndNotification DisplayFlexjustifyAlignitem">
-                    <p className="DisplayFlexjustifyAlignitem transition4OneSecond" onClick={ToggleNotificationPopOver}><i className="fa-regular fa-bell"></i> Notification
+                    <div className="LeftSideNavBar_AccountAndNotification DisplayFlexjustifyAlignitem">
+                        <p className="DisplayFlexjustifyAlignitem transition4OneSecond" onClick={ToggleNotificationPopOver}><i className="fa-regular fa-bell"></i> Notification
+                        </p>
                         <div className="HealthCare_NotificationPopOver DisplayNone">
                             <ul>
                                 <li>Welcome to Bharat Seva HealthCare Dashboard</li>
@@ -38,26 +41,27 @@ export default function NavBar({ toggleSideBar }) {
                                 <li>Star this project!</li>
                             </ul>
                         </div>
-                    </p>
 
-                    {/* Account Section Goes here */}
-                    <p className="DisplayFlexjustifyAlignitem transition4OneSecond" onClick={HealthCare_ToggleAccountPopUp}><i className="fa-solid fa-user"></i> Account</p>
+                        {/* Account Section Goes here */}
+                        <p className="DisplayFlexjustifyAlignitem transition4OneSecond classACcountBharatseva" onClick={HealthCare_ToggleAccountPopUp}><i className="fa-solid fa-user"></i> Account</p>
 
-                    <div className="HealthCare_AccountPopOver DisplayNone">
-                        <ul>
-                            <li style={{ color: "lime" }}>Signed In As</li>
-                            <li className="HealthcareNameLableAccount">{HealthCare.name}</li>
-                            <hr></hr>
-                            <li>  <a target="__blank" href="https://github.com/CaptainTron/BharatSeva-User-Interface/discussions">Go to Discussion</a></li>
-                            <li> <a target="__blank" href="https://github.com/CaptainTron/BharatSeva-HealthCare-Interface">Star this Project ⭐</a></li>
-                            <li>API Integrations</li>
-                            <li>Log Out</li>
+                        <div className="HealthCare_AccountPopOver DisplayNone">
+                            <ul>
+                                <li style={{ color: "lime" }}>Signed In As</li>
+                                <li className="HealthcareNameLableAccount">{HealthCare.name}</li>
+                                <hr></hr>
+                                <li>  <a target="__blank" href="https://github.com/CaptainTron/BharatSeva-User-Interface/discussions">Go to Discussion</a></li>
+                                <li> <a target="__blank" href="https://github.com/CaptainTron/BharatSeva-HealthCare-Interface">Star this Project ⭐</a></li>
+                                <li>API Integrations</li>
+                                <li>Log Out</li>
 
-                        </ul>
+                            </ul>
+                        </div>
                     </div>
-                </div>
 
+                </div>
             </div>
+            <Outlet />
         </>
     )
 }

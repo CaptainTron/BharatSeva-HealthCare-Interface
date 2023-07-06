@@ -109,12 +109,11 @@
 .NotRegisteredRedirectbtn{
     font-size: 2.2vh;
 }
-.NotRegisteredRedirectbtn span{
-    color: green;
+
+.NotRegisteredRedirectbtn a{
+    color: white;
     text-decoration: underline;
     text-underline-offset: 0.4vh;
-    cursor: pointer;
-
 }
 
 

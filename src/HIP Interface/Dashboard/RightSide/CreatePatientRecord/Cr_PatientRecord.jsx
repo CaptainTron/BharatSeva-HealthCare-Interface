@@ -5,11 +5,14 @@ import Select from 'react-select'
 
 
 export default function CreatePatientRecord() {
-    let DisplayText = document.querySelector(".PatientProblemRecord_view")
 
     const [PRCreator, SetPRCreator] = useState({})
     const [IsLoading, SetIsLoading] = useState();
-    const [IsLoaded, SetIsLoaded] = useState(false);
+    const [IsLoaded, SetIsLoaded] = useState({
+        IsLoaded: false,
+        Issuetxtlimit: 20,
+        Descriptiontxtlimit: 50
+    });
 
     function OnHandleChange(e) {
         const { name, value } = e.target
@@ -30,7 +33,7 @@ export default function CreatePatientRecord() {
         e.preventDefault();
         DisplayText.classList.add("Display_none")
         const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
-        SetIsLoaded(true)
+        SetIsLoaded((p) => ({ ...p, IsLoaded: true }))
         fetch(`http://localhost:5000/api/v1/healthcare/createpatientproblem`, {
             method: "POST",
             headers: {
@@ -48,19 +51,32 @@ export default function CreatePatientRecord() {
                 SetIsLoading(err.message)
             })
             .finally(() => {
-                SetIsLoaded(false)
+                SetIsLoaded((p) => ({ ...p, IsLoaded: false }))
                 DisplayText.classList.remove("Display_none")
             })
-    
+
     }
 
     const options = [
-        { label: "Dangerous - 9/8", value: "Dangerous"},
+        { label: "Dangerous - 9/8", value: "Dangerous" },
         { label: "High - 7/6", value: "High" },
-        { label: "Mid  - 5/4", value: "Mid" },
-        { label: "Semi-Mid - 3/2", value: "Semi-Mid" },
+        { label: "Semi-Mid - 3/2", value: "Semi-mid" },
         { label: "Low - 1/0", value: "Low" },
     ]
+
+    const Issuetxt = document.getElementsByName("p_problem")
+    const Descripttxt = document.getElementsByName("description")
+
+    function DescriptiontextLimit(e) {
+        if ((Descripttxt[0].value.toString().length) <= 20) {
+            SetIsLoaded((p) => ({ ...p, Descriptiontxtlimit: (50 - (Descripttxt[0].value.length)) }))
+        }
+    }
+    function IssuetextLimit(e) {
+        if ((Issuetxt[0].value.toString().length) <= 20) {
+            SetIsLoaded((p) => ({ ...p, Issuetxtlimit: (20 - (Issuetxt[0].value.length)) }))
+        }
+    }
 
     return (
         <>
@@ -77,15 +93,20 @@ export default function CreatePatientRecord() {
                         <Select className="SelectOptions" options={options} name="medical_severity" onChange={handlechange} required></Select>
 
                         <label>Issue</label>
-                        <textarea onChange={OnHandleChange} name="p_problem" required></textarea><br></br>
+                        <textarea onChange={OnHandleChange}  name="p_problem" onKeyUp={IssuetextLimit} maxLength={20} required></textarea>
+                        <p className="CreateRecordsTxtlimit">Length of Issue Should Not Be More Than {IsLoaded.Issuetxtlimit}</p>
+                        <br></br>
+
 
                         <label>Description</label>
-                        <textarea onChange={OnHandleChange} name="description" required></textarea><br></br>
+                        <textarea onChange={OnHandleChange}  onKeyUp={DescriptiontextLimit} name="description" maxLength={50} required></textarea>
+                        <p className="CreateRecordsTxtlimit">Length of Description Should Not Be More Than {IsLoaded.Descriptiontxtlimit}</p>
+                        <br></br>
 
-                        <button id="CreateRecordBtn">{IsLoaded ? "Validating...." : "Create"}</button>
+                        <button id="CreateRecordBtn">{IsLoaded.IsLoaded ? "Validating...." : "Create"}</button>
                     </form>
 
-                    <p className="WarningCr_patient"><strong>Note : </strong> Only One Record Can Be Created at a Time!</p>
+                    <p className="WarningCr_patient"><strong>Note : </strong> Limited Number of Records Can Be Created !</p>
                 </div>
             </div>
 

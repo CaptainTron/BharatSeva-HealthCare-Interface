@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import "./Home.css"
 
 export default function Home() {
-
+    var uuid = require('uuid-random');
     const [hip, Sethip] = useState();
     const [stats, Setstats] = useState();
 
@@ -11,7 +11,7 @@ export default function Home() {
 
     const FetcheDetails_Stats = async () => {
         try {
-            let res = await fetch(`http://localhost:5000/api/v1/healthcaredetails/stats/${HealthCare.healthcareId}`, {
+            let res = await fetch(`http://localhost:5000/api/v1/healthcaredetails/stats`, {
                 method: "GET",
                 headers: {
                     "content-type": "application/json",
@@ -21,7 +21,7 @@ export default function Home() {
             let data = await res.json()
             if (res.ok) {
                 Setstats(data.stats)
-                console.log(data)
+
             } else {
                 alert("Something Went Wrong!")
             }
@@ -32,7 +32,7 @@ export default function Home() {
     }
     const FetcheDetails = async () => {
         try {
-            let res = await fetch(`http://localhost:5000/api/v1/healthcare/get/${HealthCare.healthcareId}`, {
+            let res = await fetch(`http://localhost:5000/api/v1/healthcaredetails/getdetails`, {
                 method: "GET",
                 headers: {
                     "content-type": "application/json",
@@ -62,10 +62,13 @@ export default function Home() {
 
     if (hip && stats) {
         Hipsarrays = (
-            <ul className="HomeContainer_UL Home_ContainerUL">
-                <li><p>Name: </p>{hip.name}</li>
-                <li><p>Address: </p>{hip.address}</li>
-                <li><p>Type: </p>{hip.type}</li>
+            <ul key={uuid()} className="HomeContainer_UL Home_ContainerUL">
+                <li><p>HealthCare ID: </p>{hip.healthcareId} (Unique ID to Identity You on this Platform)</li>
+                <li><p>Name: </p>{hip.healthcareName}</li>
+                <li><p>Landmark: </p>{hip.address.landmark}</li>
+                <li><p>City: </p>{hip.address.city}</li>
+                <li><p>State: </p>{hip.address.state}</li>
+                <li><p>Country: </p>{hip.address.country}</li>
                 <li><p>Availability: </p>{hip.availability}</li>
                 <li><p>Total Facilities: </p>{hip.total_facilities}</li>
                 <li><p>Total MBBS Doc. :</p>{hip.total_mbbs_doc}</li>
@@ -76,7 +79,7 @@ export default function Home() {
             </ul>
         )
         hipTotalRecords = (
-            <ul className="HomeContainer_UL Health_ServicesRecords_UL">
+            <ul key={uuid()} className="HomeContainer_UL Health_ServicesRecords_UL">
                 <li><p>Records Created: </p>{stats.RecordsCreated}</li>
                 <li><p>Bio Data Created: </p>{stats.HealthID_Created}</li>
                 <li><p>Records Viewed: </p>{stats.RecordsViewed}</li>
@@ -94,7 +97,7 @@ export default function Home() {
             {hip && stats ? (<div className="HomeContainer">
                 <div>
 
-                    <h2>About</h2>
+                    <h2>About Me 🏥</h2>
                     <hr></hr>
                     <div className="AboutMe ">
                         {Hipsarrays}

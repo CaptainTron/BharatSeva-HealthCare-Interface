@@ -14,12 +14,11 @@
 
 
 .RightSideBar{
+    display: inline;
     width: 80vw;
     background-color: rgb(75, 74, 74);
     height: 94vh;
     transition: 0.2s linear;
-
-
     overflow-y: scroll;
 }
 .ToggleTo100{
