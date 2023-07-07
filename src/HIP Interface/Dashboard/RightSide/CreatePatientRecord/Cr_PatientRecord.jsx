@@ -6,6 +6,8 @@ import Select from 'react-select'
 
 export default function CreatePatientRecord() {
 
+    const DisplayText = document.querySelector(".PatientProblemRecord_view")
+
     const [PRCreator, SetPRCreator] = useState({})
     const [IsLoading, SetIsLoading] = useState();
     const [IsLoaded, SetIsLoaded] = useState({
@@ -110,7 +112,7 @@ export default function CreatePatientRecord() {
                 </div>
             </div>
 
-            <div className="PatientProblemRecord_view Display_none">
+            <div className="PatientProblemRecord_view">
                 <p>{IsLoading}</p>
             </div>
         </>

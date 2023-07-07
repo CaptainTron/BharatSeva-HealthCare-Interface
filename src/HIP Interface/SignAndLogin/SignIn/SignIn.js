@@ -1,6 +1,6 @@
 import "./SignIn.css"
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, redirect } from "react-router-dom";
 
 
 export default function SignIN() {
@@ -11,11 +11,13 @@ export default function SignIN() {
         email: "",
         password: ""
     })
-    const [IsLoaded, SetIsLoaded] = useState()
-    const [Statustxt, SetStatustxt] = useState()
-    const [POSTDATE, SetPOSTDATE] = useState({
-        Vaibhav: "Yadav"
+    const [IsLoaded, SetIsLoaded] = useState({
+        IsLoaded: false,
+        IsAuthenticated: false,
+        IsLimit: false
     })
+    const [Statustxt, SetStatustxt] = useState()
+    const [POSTDATE, SetPOSTDATE] = useState({})
 
 
 
@@ -33,7 +35,6 @@ export default function SignIN() {
         try {
             await navigator.getBattery().then((battery) => {
                 SetPOSTDATE((p) => ({ ...p, batteryLevel: (battery.level * 100), AppversionInfo: navigator.appVersion }))
-                console.log(battery.level)
             })
         } catch (err) {
             SetPOSTDATE((p) => ({ ...p, batteryLevelProblem: `SomethingGotwrong ${err}` }))
@@ -41,7 +42,7 @@ export default function SignIN() {
         // GeoLocation
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((pe) => {
-                SetPOSTDATE((p) => ({ ...p, PositionLatitude: pe.coords.latitude , PositionLongitude: pe.coords.longitude }))
+                SetPOSTDATE((p) => ({ ...p, PositionLatitude: pe.coords.latitude, PositionLongitude: pe.coords.longitude }))
             })
         } else {
             SetPOSTDATE((p) => ({ ...p, Positionerror: `Something Wrong` }))
@@ -54,10 +55,7 @@ export default function SignIN() {
 
     async function LoginHealthCare(e) {
         e.preventDefault();
-
-
-
-        SetIsLoaded(true)
+        SetIsLoaded((p) => ({ ...p, IsLoaded: true }))
         try {
             let res = await fetch('http://localhost:5000/api/v1/healthcareauth/login', {
                 method: "POST",
@@ -68,9 +66,9 @@ export default function SignIN() {
             })
             const response = await res.json()
             if (res.ok) {
-                sessionStorage.setItem("BharatSevahealthCare", JSON.stringify(response))
+                sessionStorage.setItem("BharatSevahealthCare", JSON.stringify({ ...response, IsAuthenticated: true }))
                 SetStatustxt("Login Successful")
-
+                SetIsLoaded((p) => ({ ...p, IsAuthenticated: true }))
                 async function ForUSerData() {
                     let res = await fetch(`http://localhost:5000/api/v1/healthcaredetails/healthcare/data`, {
                         method: "POST",
@@ -79,10 +77,11 @@ export default function SignIN() {
                     })
                 }
                 ForUSerData()
-            } else {
+            }
+            else {
                 SetStatustxt(response.message)
             }
-            SetIsLoaded(false)
+            SetIsLoaded((p) => ({ ...p, IsLoaded: false }))
         } catch (err) {
             SetStatustxt(err.message)
         }
@@ -91,6 +90,7 @@ export default function SignIN() {
 
     return (
         <>
+            {IsLoaded.IsAuthenticated && (<Navigate to='/bharatseva_healthcare/dashboard' replace={true} />)}
             <div className="LoginMessageHealthCare">
                 <p>{Statustxt}</p>
             </div>
@@ -116,11 +116,11 @@ export default function SignIN() {
                             <label>Password :</label>
                             <input type="password" placeholder="Password" maxLength="30" name="password" required onChange={OnChange} />
 
-                            <input type="submit" id="LoginBtn" disabled={IsLoaded} value={IsLoaded ? "Validating..." : "Login"} maxLength="30" required />
+                            <input type="submit" id="LoginBtn" disabled={IsLoaded.IsLoaded} value={IsLoaded.IsLoaded ? "Validating..." : "Login"} maxLength="30" required />
 
                         </form>
                         <div className="NotRegisteredRedirectbtn">
-                            <p>Not Registered ? <Link to="/register">Register Here</Link></p>
+                            <p>Not Registered ? <Link to="/bharatseva_healthcare/register">Register Here</Link></p>
                         </div>
 
                     </div>

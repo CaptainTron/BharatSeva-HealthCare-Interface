@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Navigate, redirect } from "react-router-dom";
 import "./Appointment.css"
 
 
@@ -8,7 +9,8 @@ export default function Appointment() {
     const [Fetched, SetFetched] = useState()
     const [IsFetched, SetIsFetched] = useState({
         IsFetched: true,
-        IsGood: true
+        IsGood: true,
+        Directed: false
     })
 
     async function fetchdata() {
@@ -26,7 +28,12 @@ export default function Appointment() {
             if (response.ok) {
                 SetFetched(res.appointments)
                 SetIsFetched((p) => ({ ...p, IsFetched: true }))
+            } else if (response.status === 405) {
+                alert("Request Limit Reached!")
+                SetIsFetched((p) => ({ ...p, Directed: true }))
+                return
             }
+            console.log(response)
         } catch (err) {
             alert("Could Not Connect To Server")
             SetIsFetched((p) => ({ ...p, IsGood: false, IsFetched: true }))
@@ -56,6 +63,7 @@ export default function Appointment() {
 
 
     return (<>
+        {IsFetched.Directed && <Navigate to="/bharatseva_healthcare/login" replace={true} />}
         <div className="appointmentSectionOutercontainer">
             <div className="BharatSevaHealthCareAppointmentContainer">
                 <h2>Appointment Section</h2>

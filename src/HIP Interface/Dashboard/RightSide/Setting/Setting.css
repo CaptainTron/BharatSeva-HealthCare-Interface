@@ -2,6 +2,10 @@
     width: 50vw;
 
 }
+.CouldnotConnect{
+    color: red;
+    text-align: center;
+}
 .SettingContainer h2::after {
     content: '';
     position: relative;

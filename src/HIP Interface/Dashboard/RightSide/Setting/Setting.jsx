@@ -1,15 +1,19 @@
 import "./Setting.css"
-import Hospitals from "./Firebase/Service"
 import { useEffect, useState } from 'react'
-import { doc, docs } from "firebase/firestore"
+import { Navigate } from "react-router-dom";
 
 
 
 export default function Setting() {
     const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
+    const [Fetched, SetFetched] = useState({
+        IsGood: true,
+        IsLimit: false
+    })
 
     async function OnchangeData(e) {
         const { name, value } = e.target;
+        SetFetched((p) => ({ ...p, IsFetched: false }))
         try {
             let res = await fetch('http://localhost:5000/api/v1/healthcaredetails/healthcare/changepreferance', {
                 method: "POST",
@@ -26,14 +30,16 @@ export default function Setting() {
         } catch (err) {
             alert("Could Not Connect To server... :(")
         }
+        SetFetched((p) => ({ ...p, IsFetched: true }))
 
     }
     useEffect(() => {
         GetData();
     }, [])
 
-    async function GetData() {
 
+
+    async function GetData() {
         try {
             const Data = await fetch('http://localhost:5000/api/v1/healthcaredetails/healthcare/getpreferance', {
                 method: "GET",
@@ -46,11 +52,20 @@ export default function Setting() {
             if (Data.ok) {
                 CheckForRadioButton(Dataas)
             }
+            else if (Data.status === 405) {
+                alert("Request Limit Reached")
+                SetFetched((p) => ({ ...p, IsLimit: true }))
+            }
         } catch (err) {
+            console.log(err)
             alert("Could Not Connect to Server... :(")
+            SetFetched((p) => ({ ...p, IsGood: false }))
         }
+
     }
 
+
+    // CheckForRadioButton();
     function CheckForRadioButton(Dataas) {
         const GetRadioButton = document.getElementsByName("available")
         if (Dataas.available === "true") {
@@ -69,9 +84,6 @@ export default function Setting() {
         else {
             GetRadioButton_Email[0].checked = true
         }
-
-        console.log(Dataas)
-
         const Deletebtn = document.querySelector(".AccountDeleteBtn")
         if (Dataas.Acccount_Deletion) {
             Deletebtn.classList.add("AccountDeleted")
@@ -79,8 +91,6 @@ export default function Setting() {
         }
 
     }
-
-    // CheckForRadioButton();
 
     async function DeleteMyAccount() {
         let txt = "Are You Sure!"
@@ -108,69 +118,71 @@ export default function Setting() {
 
     return (
         <>
+            {Fetched.IsLimit && (<Navigate to="/bharatseva_healthcare/login" replace={true} />)}
             <div className="settcontain">
 
-                <div className="SettingContainer">
+                {(Fetched.IsGood ? (
+                    <>
+                        <div className="SettingContainer">
 
-                    {true ?
-
-                        (<div>
-                            <header>
-                                <h2>Setting</h2>
-                            </header>
+                            <div>
+                                <header>
+                                    <h2>Setting</h2>
+                                </header>
 
 
-                            <div className="availableYesOrNo">
-                                <h3 className="textDecoration">Availability</h3>
-                                <div className="SettingAvailable">
+                                <div className="availableYesOrNo">
+                                    <h3 className="textDecoration">Availability</h3>
+                                    <div className="SettingAvailable">
+                                        <form onChange={OnchangeData}>
+                                            <label>Is Your Facility Available To NearBy ?</label><br />
+                                            <input type="radio" name="available" value="true" />
+                                            <label>Yes (Recommended)</label><br />
+
+                                            <input type="radio" name="available" value="false" />
+                                            <label>No</label>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div className="SettingPreferances">
+                                    <h3 className="textDecoration">Email Preferances</h3>
                                     <form onChange={OnchangeData}>
-                                        <label>Is Your Facility Available To NearBy ?</label><br />
-                                        <input type="radio" name="available" value="true" />
-                                        <label for="yes">Yes (Recommended)</label><br />
+                                        <label>Receive Email Regarding Health Care ?</label><br />
 
-                                        <input type="radio" name="available" value="false" />
-                                        <label for="no">No</label>
+                                        <input type="radio" value="Everytime" name="email" />
+                                        <label>Every Events (Recommended)</label><br />
+
+                                        <input type="radio" value="Weekly" name="email" />
+                                        <label >Weekly</label><br />
+
+                                        <input type="radio" value="Rare" name="email" />
+                                        <label >Rarely</label>
+
                                     </form>
                                 </div>
-                            </div>
 
-                            <div className="SettingPreferances">
-                                <h3 className="textDecoration">Email Preferances</h3>
-                                <form onChange={OnchangeData}>
-                                    <label>Receive Email Regarding Health Care ?</label><br />
+                                <div className="SettingAccountDeleting">
+                                    <h3 className="textDecoration">Danger Zone</h3>
+                                    <div className="DeleteAccountContainer">
+                                        <p>Be Aware, this action cannot be Undone !</p>
+                                        <div onClick={DeleteMyAccount} className="AccountDeleteBtn">Request To Delete My Account</div>
+                                    </div>
 
-                                    <input type="radio" value="Everytime" name="email" />
-                                    <label for="Everytime">Every Events (Recommended)</label><br />
-
-                                    <input type="radio" value="Weekly" name="email" />
-                                    <label for="Weekly">Weekly</label><br />
-
-                                    <input type="radio" value="Rare" name="email" />
-                                    <label for="Rare">Rarely</label>
-
-                                </form>
-                            </div>
-
-                            <div className="SettingAccountDeleting">
-                                <h3 className="textDecoration">Danger Zone</h3>
-                                <div className="DeleteAccountContainer">
-                                    <p>Be Aware, this action cannot be Undone !</p>
-                                    <div onClick={DeleteMyAccount} className="AccountDeleteBtn">Request To Delete My Account</div>
                                 </div>
 
                             </div>
 
-                        </div>) :
-
-                        (<p>Connecting to Server....</p>)}
-
-                </div>
+                        </div>
 
 
-                <div className="Settingarticle">
-                    <article><strong><i className="fa-solid fa-triangle-exclamation"></i>  - </strong>Viewing and making any Patient Records, Your activity will be recorded.
-                    </article>
-                </div>
+                        <div className="Settingarticle">
+                            <article><strong><i className="fa-solid fa-triangle-exclamation"></i>  - </strong>Viewing and making any Patient Records, Your activity will be recorded.
+                            </article>
+                        </div>
+                    </>
+                ) : <p className="CouldnotConnect">Could Not Connect To Server...🙄</p>)}
+
             </div>
         </>
     )

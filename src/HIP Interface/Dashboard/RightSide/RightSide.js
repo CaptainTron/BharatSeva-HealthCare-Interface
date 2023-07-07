@@ -7,23 +7,25 @@ import Setting from "./Setting/Setting"
 import ViewRecord from "./ViewRecord/ViewRecord"
 import ViewPatientBioData from "./View_PatientBioData/ViewPatientBioData"
 import { Routes, Route, useLocation } from "react-router-dom"
+import IsNavBarAuthenticated from "../../IsNavBarAuthenticated"
 
 
 export default function RightSide() {
     const location = useLocation()
-    console.log(location)
 
     return (
         <>
             <div className="RightSideBar DisplayFlexJustify">
                 <Routes>
-                    <Route path="home" element={<Home />} />
-                    <Route path="viewrecords" element={<ViewRecord />} />
-                    <Route path="createrecords" element={<CreatePatientRecord />} />
-                    <Route path="viewpatientbiodata" element={< ViewPatientBioData />} />
-                    <Route path="createpatientbiodata" element={<CreatePatientD />} />
-                    <Route path="setting" element={<Setting />} />
-                    <Route path="appointment" element={<Appointment />} />
+                    <Route element={<IsNavBarAuthenticated />}>
+                        <Route index element={<Home />} />
+                        <Route path="viewrecords" element={<ViewRecord />} />
+                        <Route path="createrecords" element={<CreatePatientRecord />} />
+                        <Route path="viewpatientbiodata" element={< ViewPatientBioData />} />
+                        <Route path="createpatientbiodata" element={<CreatePatientD />} />
+                        <Route path="setting" element={<Setting />} />
+                        <Route path="appointment" element={<Appointment />} />
+                    </Route>
                 </Routes>
             </div>
         </>

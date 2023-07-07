@@ -152,7 +152,7 @@ export default function Register() {
                             </div>
 
                         </form>
-                        <p className="LoginbtnRedirect">Already Registered! <Link to="/login">Login</Link></p>
+                        <p className="LoginbtnRedirect">Already Registered! <Link to="/bharatseva_healthcare/login">Login</Link></p>
                     </div>
                 </div>
 

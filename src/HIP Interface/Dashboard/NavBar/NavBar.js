@@ -1,4 +1,4 @@
-import { Outlet, Link } from "react-router-dom"
+import { Outlet, Link, NavLink } from "react-router-dom"
 import "./NavBar.css"
 import LefSideBar from "../LeftSide/LeftSideBar"
 
@@ -16,7 +16,6 @@ export default function NavBar({ toggleSideBar }) {
 
     // This Will Get the Hopital Name
     const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
-
     return (
         <>
             <div className="SideBarContainer">
@@ -24,11 +23,11 @@ export default function NavBar({ toggleSideBar }) {
 
                     <div className="LeftSideNavBar DisplayFlexjustifyAlignitem">
                         <i className="fa-solid fa-bars" onClick={() => toggleSideBar()}></i>
-                        <p>Bharat सेवा</p>
+                        <p className="CompanyName">Bharat सेवा</p>
                     </div>
 
                     <div className="LeftSideNavBar_NameTag DisplayFlexjustifyAlignitem">
-                        <p><i className="fa-solid fa-user-doctor"></i> Health Care InterFace</p>
+                        <p className="HealthcareNameUser"><i className="fa-solid fa-user-doctor"></i> Health Care InterFace</p>
                     </div>
 
                     <div className="LeftSideNavBar_AccountAndNotification DisplayFlexjustifyAlignitem">
@@ -53,7 +52,7 @@ export default function NavBar({ toggleSideBar }) {
                                 <li>  <a target="__blank" href="https://github.com/CaptainTron/BharatSeva-User-Interface/discussions">Go to Discussion</a></li>
                                 <li> <a target="__blank" href="https://github.com/CaptainTron/BharatSeva-HealthCare-Interface">Star this Project ⭐</a></li>
                                 <li>API Integrations</li>
-                                <li>Log Out</li>
+                                <li onClick={() => sessionStorage.clear()}><NavLink to='/bharatseva_healthcare/login' className="LogoutHealthcare" >Log Out</NavLink></li>
 
                             </ul>
                         </div>

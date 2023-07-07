@@ -67,9 +67,9 @@
     top: 7vh;
     right: 2vw;
     box-shadow: 5px 5px 9px black;
-    /* opacity: 0; */
     animation: Patient_Record 10s ease-in 1;
     animation-fill-mode: forwards;
+    max-width: 40vw;
 
 }
 .Display_none{

@@ -1,4 +1,14 @@
-.LeftSide_textContainer ul > a{
+.LeftSide_textContainer ul .IsActive {
+    color: rgb(250 120 120);
+    text-decoration: none;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgb(243, 48, 48), 0 0 10px rgb(255 0 0);
+    letter-spacing: 0.1vh;
+    display: inline-block;
+    background-color: rgb(71, 71, 71);
+}
+
+.LeftSide_textContainer ul>a {
     color: white;
     text-decoration: none;
 }
@@ -54,18 +64,20 @@
 
 .settinghealthcaredown {
     display: inline-block;
-    margin-right: 7.5vw;
+    margin-right: 5vw;
 }
 
 /* Setting DropDown Starts From Here */
 .SettingDropDownMenu {
     height: 30vh;
 }
-.Settingpopups{
+
+.Settingpopups {
     margin: 0 0 0 6vh;
     transition: 3s;
     color: rgb(150, 150, 150);
 }
+
 .DisplayToggleSetting {
     display: none;
 }

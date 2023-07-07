@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
+import { Navigate } from "react-router-dom";
 import "./Home.css"
 
 export default function Home() {
     var uuid = require('uuid-random');
     const [hip, Sethip] = useState();
     const [stats, Setstats] = useState();
+    const [IsLimit, SetLimit] = useState(false);
 
     const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
 
@@ -22,7 +24,11 @@ export default function Home() {
             if (res.ok) {
                 Setstats(data.stats)
 
-            } else {
+            } else if (res.status === 405) {
+                alert("Request Limit Reached!")
+                SetLimit(true)
+            }
+            else {
                 alert("Something Went Wrong!")
             }
         } catch (err) {
@@ -42,6 +48,9 @@ export default function Home() {
             let data = await res.json()
             if (res.ok) {
                 Sethip(data.HealthCare)
+                console.log(res)
+            } else if (res.status === 405) {
+                SetLimit(true)
             } else {
                 alert("Something Went Wrong!")
             }
@@ -94,6 +103,7 @@ export default function Home() {
 
     return (
         <>
+            {IsLimit && <Navigate to="/bharatseva_healthcare/login" replace={true} />}
             {hip && stats ? (<div className="HomeContainer">
                 <div>
 
