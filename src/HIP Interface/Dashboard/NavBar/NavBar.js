@@ -23,7 +23,7 @@ export default function NavBar({ toggleSideBar }) {
 
                     <div className="LeftSideNavBar DisplayFlexjustifyAlignitem">
                         <i className="fa-solid fa-bars" onClick={() => toggleSideBar()}></i>
-                        <p className="CompanyName">Bharat सेवा</p>
+                        <p className="CompanyName">Bharat सेवा+</p>
                     </div>
 
                     <div className="LeftSideNavBar_NameTag DisplayFlexjustifyAlignitem">

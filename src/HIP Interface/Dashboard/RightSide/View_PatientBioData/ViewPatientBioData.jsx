@@ -1,41 +1,32 @@
 import { useEffect, useState } from "react"
 import "./ViewPatientBioData.css"
-
+import { FetchData } from "../../../LoadData"
+import { Navigate } from "react-router-dom"
 
 export default function ViewPatientBioData() {
 
     const [Pat_BioData, SetPat_BioData] = useState()
-    const [Isloading, SetIsloading] = useState()
+    const [Isloading, SetIsloading] = useState({
+        IsFetched: false,
+        IsRedirect: false
+    })
     const [IsFetched, SetIsFetched] = useState()
 
 
 
 
-    function GetPatientBioData(HID) {
-        const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
-        SetIsloading(true)
-        fetch(`http://localhost:5000/api/v1/healthcare/getuserBiodata/${HID}`, {
-            method: "GET",
-            headers: {
-                'content-type': "application/json",
-                "Authorization": `Bearer ${HealthCare.token}`
-            }
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                SetPat_BioData(data.User)
-                console.log(data)
-                SetIsFetched(true)
-            })
-            .catch((err) => {
-                SetPat_BioData(null)
-                alert(err)
-                SetIsFetched(false)
-                console.log(err)
-            })
-            .finally(() => {
-                SetIsloading(false)
-            })
+    async function GetPatientBioData(HID) {
+        SetIsloading((p) => ({ ...p, IsFetched: true }))
+        try {
+            const { data, res } = await FetchData(`http://localhost:5000/api/v1/healthcare/getuserBiodata/${HID}`)
+            SetPat_BioData(data.User)
+            SetIsFetched(true)
+            if (res.status === 405) { SetIsloading((p) => ({ ...p, IsRedirect: true })) }
+        } catch (err) {
+            console.log(err)
+            alert("Could Not Connect to Server...")
+        }
+        SetIsloading((p) => ({ ...p, IsFetched: false }))
     }
 
 
@@ -56,8 +47,6 @@ export default function ViewPatientBioData() {
     let Patient_Biodata
     if (Pat_BioData) {
         if ((Pat_BioData)) {
-            //    Object.entries(Pat_BioData.Data).map(data =>
-            // console.log(data[1]) 
             Patient_Biodata =
                 (
                     <div className="ViewPatient_BiO PatientBioData">
@@ -96,6 +85,7 @@ export default function ViewPatientBioData() {
 
     return (
         <>
+            {Isloading.IsRedirect && (<Navigate to='/bharatseva_healthcare/login' replace={true} />)}
             <div className="ViewPR">
                 <h2>View Patient Bio Data</h2>
 
@@ -106,7 +96,7 @@ export default function ViewPatientBioData() {
 
                 </div>
 
-                {Isloading ? "Loading..." :
+                {Isloading.IsFetched ? "Loading..." :
 
                     IsFetched ? (<div>{Patient_Biodata}</div>) : "Records Will Show Up Here"
 

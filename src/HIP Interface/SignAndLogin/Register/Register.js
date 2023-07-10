@@ -63,6 +63,15 @@ export default function Register() {
                     <div className="RegisterLable">
                         <p>HealthCare Registration 🩺</p>
                         <p><span><strong>Note</strong></span> : After Successfull Registration <br></br> You have to Login for Dashboard.</p>
+
+                        <ul className="RegisterPagetxt">
+                            <li>Healthcare ID Must be 10 Characters Long.</li>
+                            <li>Keep License Number Same as Healthcare ID for the shake of simplicity.</li>
+                            <li>All the inputs have limits try to avoid them. </li>
+                            <li>If you have any feedback or you Encountered Unusual Error you can simply <a href="mailto:21vaibhav11@gmail.com">Mail</a> Me</li>
+                            <li>If you are Flutter developer or want to build your own project and want to use my API you can <a href="mailto:21vaibhav11@gmail.com">Mail</a> Me regarding this. I'm happy to help 😊</li>
+                        </ul>
+
                     </div>
                     <div className="RegisterBox">
                         <p className="WelcomeGreetings">Welcome To Health Care Registration Portal</p>

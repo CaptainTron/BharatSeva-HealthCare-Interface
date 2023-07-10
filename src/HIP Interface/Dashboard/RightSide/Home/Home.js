@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { Navigate } from "react-router-dom";
 import "./Home.css"
+import { FetchData } from "../../../LoadData";
+
 
 export default function Home() {
     var uuid = require('uuid-random');
@@ -13,21 +15,11 @@ export default function Home() {
 
     const FetcheDetails_Stats = async () => {
         try {
-            let res = await fetch(`http://localhost:5000/api/v1/healthcaredetails/stats`, {
-                method: "GET",
-                headers: {
-                    "content-type": "application/json",
-                    "Authorization": `Bearer ${HealthCare.token}`
-                }
-            })
-            let data = await res.json()
+
+            const { data, res } = await FetchData(`http://localhost:5000/api/v1/healthcaredetails/stats`)
             if (res.ok) {
                 Setstats(data.stats)
-
-            } else if (res.status === 405) {
-                alert("Request Limit Reached!")
-                SetLimit(true)
-            }
+            } else if (res.status === 405) { SetLimit(true) }
             else {
                 alert("Something Went Wrong!")
             }
@@ -48,11 +40,8 @@ export default function Home() {
             let data = await res.json()
             if (res.ok) {
                 Sethip(data.HealthCare)
-                console.log(res)
             } else if (res.status === 405) {
                 SetLimit(true)
-            } else {
-                alert("Something Went Wrong!")
             }
         } catch (err) {
             alert("Could Not Connect To Server!")

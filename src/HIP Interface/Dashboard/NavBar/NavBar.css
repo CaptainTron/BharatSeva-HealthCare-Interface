@@ -14,17 +14,14 @@
 }
 
 .LeftSideNavBar {
-    width: 10vw;
+    width: 12vw;
     justify-content: space-between;
-    padding: 1vh;
+    padding: 2vh;
     box-sizing: border-box;
-    /* height: 5vh; */
     border-radius: 1vh;
 }
 
 .fa-bars {
-    /* width: 1vw; */
-    /* padding: 1vh; */
     border-radius: 1vh;
     transition: 0.5s linear;
 }
@@ -47,10 +44,6 @@
     justify-content: space-between;
     font-size: 2vh;
     border: 2px solid #434343;
-}
-
-.LeftSideNavBar_AccountAndNotification P:nth-child(2) {
-    width: 7vw;
 }
 
 .LeftSideNavBar_AccountAndNotification P:nth-child(n):hover {
@@ -124,7 +117,6 @@
 }
 
 .HealthCare_AccountPopOver ul li:nth-child(n) {
-    /* margin: 1vh; */
     padding: 0.4vh 1vw;
     border-radius: 1vh;
 
@@ -166,7 +158,6 @@
     display: inline-block;
     font-weight: bolder;
     color: red;
-    /* background-color: gray; */
 }
 .HealthcareNameUser{
     font-size: 2vh;

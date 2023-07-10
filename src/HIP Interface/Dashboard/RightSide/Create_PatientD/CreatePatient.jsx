@@ -1,13 +1,17 @@
 import "./CreatePatient.css"
 import Select from 'react-select'
 import { useState } from "react"
-
+import { PostData } from "../../../LoadData"
+import { Navigate } from "react-router-dom"
 export default function CreatePatientD() {
     const Togglesuccesstxt = document.querySelector(".CreatePatient_viewAfterSuccess")
 
 
     const [SituationContainer, SetSituationContainer] = useState();
-    const [IsLoaded, SetIsLoaded] = useState();
+    const [IsLoaded, SetIsLoaded] = useState({
+        IsLoaded: false,
+        IsRedirected: false
+    });
     const [CPFormData, SetDPFormData] = useState({
         health_id: "",
         fname: "",
@@ -58,45 +62,31 @@ export default function CreatePatientD() {
 
     async function FetchDataForPBD() {
         Togglesuccesstxt.classList.add("Display_none")
-        SetIsLoaded(true)
-        const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
-        fetch(`http://localhost:5000/api/v1/healthcaredetails/createuserBio`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${HealthCare.token}`
-            },
-            body: JSON.stringify(CPFormData)
-        })
-            .then((data) => data.json())
-            .then((res) => {
-                console.log("Response Goes Here", res);
-                SetSituationContainer(res.message)
-                // alert(res.message)
-            })
-            .catch((err) => {
-                console.log(err)
-                alert(err.message)
-                SetSituationContainer(err.message)
-            })
-            .finally(() => {
-                Togglesuccesstxt.classList.remove("Display_none")
-                SetIsLoaded(false)
-            })
+        SetIsLoaded((p) => ({ ...p, IsLoaded: true }))
+
+        try {
+            const { data, res, err } = await PostData(`http://localhost:5000/api/v1/healthcaredetails/createuserBio`, CPFormData)
+            if (res.status === 405) { SetIsLoaded((p) => ({ ...p, IsRedirected: true })) }
+
+            SetSituationContainer(data.message)
+            console.log(data)
+        } catch (error) {
+            SetSituationContainer(err.message)
+        }
+        Togglesuccesstxt.classList.remove("Display_none")
+        SetIsLoaded((p) => ({ ...p, IsLoaded: false }))
     }
 
-    function clickmeTO() {
-        Togglesuccesstxt.classList.toggle("DiplayCreate_ViewAfterSuccess")
-    }
 
     const twin = [{ "label": "Yes", "value": "Yes", "name": "twin" }, { "label": "No", "value": "No", "name": "twin" }]
     const sibling = [{ "label": "Yes", "value": "Yes", "name": "sibling" }, { "label": "No", "value": "No", "name": "sibling" }]
     const sex = [{ "label": "☕", "value": "☕", "name": "sex" }, { "label": "😎", "value": "😎", "name": "sex" }, { "label": "🙄", "value": "🙄", "name": "sex" }]
     const Marriage = [{ "label": "Single", "value": "Single", "name": "MarriageStatus" }, { "label": "Dharti Ka Bhoj", "value": "Dharti Ka Bhoj", "name": "MarriageStatus" }]
+    
     return (
         <>
+            {IsLoaded.IsRedirected && (<Navigate to='/bharatseva_healthcare/login' replace={true} />)}
             <div className="CreatePatientContainer">
-
 
                 <div className="CreatePatient">
                     <h2>Create Patient Data</h2>
@@ -160,7 +150,7 @@ export default function CreatePatientD() {
                             <label>Emergency Contact Number</label><br></br>
                             <input type="text" className="PDContainer" name="emergencynumber" placeholder="Emergency Number" required onChange={OnChangeCPRData} /><br></br>
 
-                            <input type="submit" id="SubmitBtnPDC" value={IsLoaded ? "Validating.." : "Create"} />
+                            <input type="submit" id="SubmitBtnPDC" disabled={IsLoaded.IsLoaded} value={IsLoaded.IsLoaded ? "Validating.." : "Create"} />
                         </form>
                     </div>
                 </div>

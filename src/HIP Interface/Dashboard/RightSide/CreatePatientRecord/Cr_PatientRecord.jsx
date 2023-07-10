@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react"
 import "./Cr_PatientRecord.css"
 import Select from 'react-select'
+import { PostData } from "../../../LoadData"
+import { Navigate } from "react-router-dom"
 
 
 
@@ -13,7 +15,8 @@ export default function CreatePatientRecord() {
     const [IsLoaded, SetIsLoaded] = useState({
         IsLoaded: false,
         Issuetxtlimit: 20,
-        Descriptiontxtlimit: 50
+        Descriptiontxtlimit: 50,
+        IsRedirected: false
     });
 
     function OnHandleChange(e) {
@@ -31,32 +34,22 @@ export default function CreatePatientRecord() {
         }))
     }
 
-    function Putdata(e) {
+    async function Putdata(e) {
         e.preventDefault();
         DisplayText.classList.add("Display_none")
-        const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
-        SetIsLoaded((p) => ({ ...p, IsLoaded: true }))
-        fetch(`http://localhost:5000/api/v1/healthcare/createpatientproblem`, {
-            method: "POST",
-            headers: {
-                'content-type': "application/json",
-                "Authorization": `Bearer ${HealthCare.token}`
-            },
-            body: JSON.stringify(PRCreator)
-        })
-            .then((data) => data.json())
-            .then(res => {
-                SetIsLoading(res.message)
-            })
-            .catch((err) => {
-                // alert(err)
-                SetIsLoading(err.message)
-            })
-            .finally(() => {
-                SetIsLoaded((p) => ({ ...p, IsLoaded: false }))
-                DisplayText.classList.remove("Display_none")
-            })
 
+        SetIsLoaded((p) => ({ ...p, IsLoaded: true }))
+        try {
+            const { data, res } = await PostData(`http://localhost:5000/api/v1/healthcare/createpatientproblem`, PRCreator)
+            SetIsLoading(data.message)
+            if (res.status === 405) { SetIsLoaded((p) => ({ ...p, IsRedirected: true })) }
+            SetIsLoaded((p) => ({ ...p, IsLoaded: false }))
+            DisplayText.classList.remove("Display_none")
+        } catch (err) {
+            SetIsLoading(err.message)
+        }
+        SetIsLoaded((p) => ({ ...p, IsLoaded: false }))
+        DisplayText.classList.remove("Display_none")
     }
 
     const options = [
@@ -82,6 +75,7 @@ export default function CreatePatientRecord() {
 
     return (
         <>
+            {IsLoaded.IsRedirected && (<Navigate to='/bharatseva_healthcare/login' replace={true} />)}
             <div className="PatientProblemRecord">
                 <div className="PatientProblemRecordCreator">
                     <h2>Create Patient Record</h2>
@@ -95,17 +89,17 @@ export default function CreatePatientRecord() {
                         <Select className="SelectOptions" options={options} name="medical_severity" onChange={handlechange} required></Select>
 
                         <label>Issue</label>
-                        <textarea onChange={OnHandleChange}  name="p_problem" onKeyUp={IssuetextLimit} maxLength={20} required></textarea>
+                        <textarea onChange={OnHandleChange} name="p_problem" onKeyUp={IssuetextLimit} maxLength={20} required></textarea>
                         <p className="CreateRecordsTxtlimit">Length of Issue Should Not Be More Than {IsLoaded.Issuetxtlimit}</p>
                         <br></br>
 
 
                         <label>Description</label>
-                        <textarea onChange={OnHandleChange}  onKeyUp={DescriptiontextLimit} name="description" maxLength={50} required></textarea>
+                        <textarea onChange={OnHandleChange} onKeyUp={DescriptiontextLimit} name="description" maxLength={50} required></textarea>
                         <p className="CreateRecordsTxtlimit">Length of Description Should Not Be More Than {IsLoaded.Descriptiontxtlimit}</p>
                         <br></br>
 
-                        <button id="CreateRecordBtn">{IsLoaded.IsLoaded ? "Validating...." : "Create"}</button>
+                        <button id="CreateRecordBtn" disabled={IsLoaded.IsLoaded} >{IsLoaded.IsLoaded ? "Validating...." : "Create"}</button>
                     </form>
 
                     <p className="WarningCr_patient"><strong>Note : </strong> Limited Number of Records Can Be Created !</p>

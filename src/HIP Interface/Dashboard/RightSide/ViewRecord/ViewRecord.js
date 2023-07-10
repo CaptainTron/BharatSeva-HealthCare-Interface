@@ -25,7 +25,8 @@ export default function ViewRecord() {
         IsFetched: false,
         IsGood: true,
         Isavailable: false,
-        Filtered: false
+        Filtered: false,
+        IsRedirect: false
     })
     async function GetPatientData(HID) {
 
@@ -43,10 +44,12 @@ export default function ViewRecord() {
             if (res.ok) {
                 SetPatientData(response.HealthUser)
                 SetFetched((p) => ({ ...p, Isavailable: true }))
-            } else {
-                // alert(response.status)
-                SetFetched((p) => ({ ...p, Isavailable: false, IsGood: false }))
+            }
 
+            else if (res.status === 405) { SetFetched((p) => ({ ...p, IsRedirect: true })) }
+
+            else {
+                SetFetched((p) => ({ ...p, Isavailable: false, IsGood: false }))
             }
         } catch (err) {
             alert(err)
@@ -84,6 +87,7 @@ export default function ViewRecord() {
 
     return (
         <>
+            {Fetched.IsRedirect && (<Navigate to='/bharatseva_healthcare/login' replace={true} />)}
             <div className="ViewPR">
                 <h2>View Patient Record</h2>
 

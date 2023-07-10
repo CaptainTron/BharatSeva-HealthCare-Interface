@@ -125,6 +125,16 @@ export default function SignIN() {
 
                     </div>
 
+                    <div className="LoginHealthcarebelowtxt">
+                        <p>Points to note :</p>
+                        <ul>
+                            <li>This WebApp is still underdevelopment some functionalities may not work as expected !</li>
+                            <li>Only 50 requests can be made from one account.</li>
+                            <li>We may occasionally delete accounts in order to improve the platform.</li>
+                            <li>All Your activity will be logged in case you made or view patient data.</li>
+                        </ul>
+                    </div>
+
                 </div>
 
 
