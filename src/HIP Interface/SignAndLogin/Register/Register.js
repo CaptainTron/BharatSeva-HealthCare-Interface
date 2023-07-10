@@ -1,25 +1,17 @@
 import { useState } from "react"
 import "./Register.css"
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 
 export default function Register() {
     let PasswordStatus = document.querySelector("#RegisterPasswordStatus")
-    let Disableback = document.querySelector(".RegisterOuterContainerHealthCare")
-
-
-    // This is Showing Current status of Register page Register button is CLicked
     const [Status, SetStatus] = useState("Validating...")
-    const [FormData, SetFormData] = useState()
-
-    document.addEventListener('click', () => {
-        // document.querySelector('.StatusAfterSubmitBtn').classList.add("DiplayNone")
-        // document.querySelector('.HIP_RegisterContainer').classList.remove("DisplayOpacity")
-        SetStatus("Validating...")
+    const [Fetched, SetIsFetched] = useState({
+        IsFetched: false,
+        IsGood: false,
+        IsRedirect: false
     })
-
-
-
+    const [FormData, SetFormData] = useState()
     function OnclickChange(e) {
         const { name, value } = e.target
         SetFormData(prev => ({
@@ -31,9 +23,6 @@ export default function Register() {
 
     async function RegisterAPIGOESHere(e) {
         e.preventDefault();
-
-
-
         if (document.querySelector("#Registration_Password").value != document.querySelector("#Registration_CheckPassword").value) {
             PasswordStatus.textContent = "Password Do Not Match :("
             PasswordStatus.classList.remove("DiplayNone")
@@ -42,10 +31,8 @@ export default function Register() {
         }
         PasswordStatus.classList.add("DiplayNone")
 
-        document.querySelector('.HIP_RegisterContainer').classList.add("DisplayOpacity")
-        document.querySelector('.StatusAfterSubmitBtn').classList.remove("DiplayNone")
-
-        // Fetching Data From Backend Servers !!
+        SetIsFetched((p) => ({ ...p, IsFetched: true }))
+        SetStatus("Loading...")
         try {
             const response = await fetch('http://localhost:5000/api/v1/healthcareauth/register', {
                 method: "POST",
@@ -57,12 +44,13 @@ export default function Register() {
             const data = await response.json()
             if (response.ok) {
                 SetStatus("Registration Successfull! Please Login :)")
+                SetIsFetched((p) => ({ ...p, IsRedirect: true }))
             } else if (response.status == 400) {
-                SetStatus("Seems Like Anyne else already Registered With Given Email Or HealthCareID :(")
+                SetStatus("Seems Like Anyone else already Registered With Given Email Or HealthCareID :(")
             } else {
                 SetStatus(data.message)
-                console.log(response);
             }
+            SetIsFetched((p) => ({ ...p, IsGood: true }))
         } catch (err) {
             alert("Could Not Connect to Server...🙄")
         }
@@ -71,7 +59,7 @@ export default function Register() {
     return (
         <>
             <div className="RegisterOuterContainerHealthCare">
-                <div className="HIP_RegisterContainer DisplayFlexjustifyAlignitem">
+                <div className={`HIP_RegisterContainer DisplayFlexjustifyAlignitem ${Fetched.IsFetched ? "DisplayOpacity" : ""}`}>
                     <div className="RegisterLable">
                         <p>HealthCare Registration 🩺</p>
                         <p><span><strong>Note</strong></span> : After Successfull Registration <br></br> You have to Login for Dashboard.</p>
@@ -156,12 +144,21 @@ export default function Register() {
                     </div>
                 </div>
 
-                <div className="StatusAfterSubmitBtn DiplayNone DisplayFlexjustifyAlignitem">
-                    <h1>{Status}</h1>
-                </div>
+
 
             </div>
+
+            {/* This One For PopBox In register */}
+            {Fetched.IsFetched && (
+                <div className="Popoverdropbox displayFlexWithR">
+                    <div className="PopOvercontainerBoxregisterpage displayFlexWithR">
+                        <h1>{Status}</h1>
+                        {Fetched.IsRedirect ? (<NavLink to='/bharatseva_healthcare/login'>Login</NavLink>) : (Fetched.IsGood && (<button id="AtregisterPage" onClick={() => SetIsFetched((p) => ({ IsGood: false, IsFetched: false }))}>Continue</button>))}
+                    </div>
+                </div>
+            )}
 
         </>
     )
 }
+// (<button id="AtregisterPage" onClick={() => SetIsFetched((p) => ({ IsGood: false, IsFetched: false }))}>Continue</button>)
