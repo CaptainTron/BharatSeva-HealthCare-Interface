@@ -1,7 +1,7 @@
 import "./Setting.css"
 import { useEffect, useState } from 'react'
 import { Navigate } from "react-router-dom";
-import { PostData } from "../../../LoadData";
+import { FetchData, PostData } from "../../../LoadData";
 
 
 
@@ -34,18 +34,12 @@ export default function Setting() {
 
     async function GetData() {
         try {
-            const Data = await fetch('http://localhost:5000/api/v1/healthcaredetails/healthcare/getpreferance', {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${HealthCare.token}`
-                }
-            })
-            const Dataas = await Data.json()
-            if (Data.ok) {
-                CheckForRadioButton(Dataas)
+
+            const { data, res } = await FetchData('http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcaredetails/healthcare/getpreferance')
+            if (res.ok) {
+                CheckForRadioButton(data)
             }
-            else if (Data.status === 405) {
+            else if (res.status === 405) {
                 alert("Request Limit Reached")
                 SetFetched((p) => ({ ...p, IsLimit: true }))
             }
