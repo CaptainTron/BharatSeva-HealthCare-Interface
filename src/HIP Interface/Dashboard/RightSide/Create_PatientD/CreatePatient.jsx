@@ -65,7 +65,7 @@ export default function CreatePatientD() {
         SetIsLoaded((p) => ({ ...p, IsLoaded: true }))
 
         try {
-            const { data, res, err } = await PostData(`http://localhost:5000/api/v1/healthcaredetails/createuserBio`, CPFormData)
+            const { data, res, err } = await PostData(`http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcaredetails/createuserBio`, CPFormData)
             if (res.status === 405) { SetIsLoaded((p) => ({ ...p, IsRedirected: true })) }
 
             SetSituationContainer(data.message)

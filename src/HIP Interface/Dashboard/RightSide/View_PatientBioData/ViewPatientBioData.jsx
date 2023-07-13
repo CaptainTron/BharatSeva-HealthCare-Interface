@@ -18,7 +18,7 @@ export default function ViewPatientBioData() {
     async function GetPatientBioData(HID) {
         SetIsloading((p) => ({ ...p, IsFetched: true }))
         try {
-            const { data, res } = await FetchData(`http://localhost:5000/api/v1/healthcare/getuserBiodata/${HID}`)
+            const { data, res } = await FetchData(`http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcare/getuserBiodata/${HID}`)
             SetPat_BioData(data.User)
             SetIsFetched(true)
             if (res.status === 405) { SetIsloading((p) => ({ ...p, IsRedirect: true })) }

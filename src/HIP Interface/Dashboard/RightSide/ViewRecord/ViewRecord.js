@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import "./ViewRecord.css"
 import Select from "react-select"
+import { FetchData } from "../../../LoadData";
 
 
 
@@ -33,16 +34,10 @@ export default function ViewRecord() {
         const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
         SetFetched((p) => ({ ...p, IsFetched: true }))
         try {
-            let res = await fetch(`http://localhost:5000/api/v1/healthcare/getpatientrecords?healthId=${HID}`, {
-                method: "GET",
-                headers: {
-                    'content-type': "application/json",
-                    "Authorization": `Bearer ${HealthCare.token}`
-                }
-            })
-            let response = await res.json()
+
+            const { data, res } = await FetchData(`http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcare/getpatientrecords?healthId=${HID}`)
             if (res.ok) {
-                SetPatientData(response.HealthUser)
+                SetPatientData(data.HealthUser)
                 SetFetched((p) => ({ ...p, Isavailable: true }))
             }
 

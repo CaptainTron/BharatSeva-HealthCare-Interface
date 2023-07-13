@@ -1,7 +1,7 @@
 import "./SignIn.css"
 import { useEffect, useState } from "react";
 import { Link, Navigate, redirect } from "react-router-dom";
-
+import { PostData } from "../../LoadData";
 
 export default function SignIN() {
 
@@ -57,7 +57,7 @@ export default function SignIN() {
         e.preventDefault();
         SetIsLoaded((p) => ({ ...p, IsLoaded: true }))
         try {
-            let res = await fetch('http://localhost:5000/api/v1/healthcareauth/login', {
+            let res = await fetch('http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcareauth/login', {
                 method: "POST",
                 headers: {
                     'Content-Type': "application/json",
@@ -70,21 +70,17 @@ export default function SignIN() {
                 SetStatustxt("Login Successful")
                 SetIsLoaded((p) => ({ ...p, IsAuthenticated: true }))
                 async function ForUSerData() {
-                    let res = await fetch(`http://localhost:5000/api/v1/healthcaredetails/healthcare/data`, {
-                        method: "POST",
-                        headers: { 'content-type': "application/json", "Authorization": `Bearer ${response.token}` },
-                        body: JSON.stringify(POSTDATE)
-                    })
+                    await PostData(`http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcaredetails/healthcare/data`, POSTDATE)
                 }
                 ForUSerData()
             }
             else {
                 SetStatustxt(response.message)
             }
-            SetIsLoaded((p) => ({ ...p, IsLoaded: false }))
         } catch (err) {
             SetStatustxt(err.message)
         }
+        SetIsLoaded((p) => ({ ...p, IsLoaded: false }))
     }
 
 

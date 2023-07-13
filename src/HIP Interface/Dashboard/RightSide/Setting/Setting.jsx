@@ -1,6 +1,7 @@
 import "./Setting.css"
 import { useEffect, useState } from 'react'
 import { Navigate } from "react-router-dom";
+import { PostData } from "../../../LoadData";
 
 
 
@@ -15,15 +16,7 @@ export default function Setting() {
         const { name, value } = e.target;
         SetFetched((p) => ({ ...p, IsFetched: false }))
         try {
-            let res = await fetch('http://localhost:5000/api/v1/healthcaredetails/healthcare/changepreferance', {
-                method: "POST",
-                headers: {
-                    "content-type": "application/json",
-                    "Authorization": `Bearer ${HealthCare.token}`
-                },
-                body: JSON.stringify({ [name]: value })
-            })
-            let response = await res.json()
+            let { data, res } = await PostData('http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcaredetails/healthcare/changepreferance', { [name]: value })
             if (res.ok) {
                 alert("Preference Successfully Changed")
             }

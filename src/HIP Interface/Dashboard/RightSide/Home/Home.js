@@ -10,13 +10,10 @@ export default function Home() {
     const [stats, Setstats] = useState();
     const [IsLimit, SetLimit] = useState(false);
 
-    const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
-
-
     const FetcheDetails_Stats = async () => {
         try {
 
-            const { data, res } = await FetchData(`http://localhost:5000/api/v1/healthcaredetails/stats`)
+            const { data, res } = await FetchData(`http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcaredetails/stats`)
             if (res.ok) {
                 Setstats(data.stats)
             } else if (res.status === 405) { SetLimit(true) }
@@ -30,14 +27,7 @@ export default function Home() {
     }
     const FetcheDetails = async () => {
         try {
-            let res = await fetch(`http://localhost:5000/api/v1/healthcaredetails/getdetails`, {
-                method: "GET",
-                headers: {
-                    "content-type": "application/json",
-                    "Authorization": `Bearer ${HealthCare.token}`
-                }
-            })
-            let data = await res.json()
+            const { data, res } = await FetchData(`http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcaredetails/getdetails`)
             if (res.ok) {
                 Sethip(data.HealthCare)
             } else if (res.status === 405) {

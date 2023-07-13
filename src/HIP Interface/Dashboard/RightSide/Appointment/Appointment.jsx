@@ -17,7 +17,7 @@ export default function Appointment() {
         const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
         SetIsFetched((p) => ({ ...p, IsFetched: false }))
         try {
-            let response = await fetch(`http://localhost:5000/api/v1/healthcaredetails/healthcare/appointment`, {
+            let response = await fetch(`http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcaredetails/healthcare/appointment`, {
                 method: "GET",
                 headers: {
                     'content-type': 'application/json',

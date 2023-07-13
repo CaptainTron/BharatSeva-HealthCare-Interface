@@ -40,7 +40,7 @@ export default function CreatePatientRecord() {
 
         SetIsLoaded((p) => ({ ...p, IsLoaded: true }))
         try {
-            const { data, res } = await PostData(`http://localhost:5000/api/v1/healthcare/createpatientproblem`, PRCreator)
+            const { data, res } = await PostData(`http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcare/createpatientproblem`, PRCreator)
             SetIsLoading(data.message)
             if (res.status === 405) { SetIsLoaded((p) => ({ ...p, IsRedirected: true })) }
             SetIsLoaded((p) => ({ ...p, IsLoaded: false }))
