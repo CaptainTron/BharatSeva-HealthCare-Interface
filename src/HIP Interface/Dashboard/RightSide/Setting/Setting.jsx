@@ -16,7 +16,7 @@ export default function Setting() {
         const { name, value } = e.target;
         SetFetched((p) => ({ ...p, IsFetched: false }))
         try {
-            let { data, res } = await PostData('http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcaredetails/healthcare/changepreferance', { [name]: value })
+            let { data, res } = await PostData('/api/v1/healthcaredetails/healthcare/changepreferance', { [name]: value })
             if (res.ok) {
                 alert("Preference Successfully Changed")
             }
@@ -35,7 +35,7 @@ export default function Setting() {
     async function GetData() {
         try {
 
-            const { data, res } = await FetchData('http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcaredetails/healthcare/getpreferance')
+            const { data, res } = await FetchData('/api/v1/healthcaredetails/healthcare/getpreferance')
             if (res.ok) {
                 CheckForRadioButton(data)
             }

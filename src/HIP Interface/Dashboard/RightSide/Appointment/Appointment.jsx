@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Navigate, redirect } from "react-router-dom";
 import "./Appointment.css"
+import { FetchData } from "../../../LoadData";
 
 
 
@@ -17,23 +18,15 @@ export default function Appointment() {
         const HealthCare = JSON.parse(sessionStorage.getItem("BharatSevahealthCare"))
         SetIsFetched((p) => ({ ...p, IsFetched: false }))
         try {
-            let response = await fetch(`http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcaredetails/healthcare/appointment`, {
-                method: "GET",
-                headers: {
-                    'content-type': 'application/json',
-                    "Authorization": `Bearer ${HealthCare.token}`
-                }
-            })
-            let res = await response.json()
-            if (response.ok) {
-                SetFetched(res.appointments)
+            let { data, res } = await FetchData(`/api/v1/healthcaredetails/healthcare/appointment`)
+            if (res.ok) {
+                SetFetched(data.appointments)
                 SetIsFetched((p) => ({ ...p, IsFetched: true }))
-            } else if (response.status === 405) {
+            } else if (res.status === 405) {
                 alert("Request Limit Reached!")
                 SetIsFetched((p) => ({ ...p, Directed: true }))
                 return
             }
-            console.log(response)
         } catch (err) {
             alert("Could Not Connect To Server")
             SetIsFetched((p) => ({ ...p, IsGood: false, IsFetched: true }))

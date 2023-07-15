@@ -34,7 +34,7 @@ export default function Register() {
         SetIsFetched((p) => ({ ...p, IsFetched: true }))
         SetStatus("Loading...")
         try {
-            const response = await fetch('http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcareauth/register', {
+            const response = await fetch(`http://bharatsevaplus.ap-south-1.elasticbeanstalk.com/api/v1/healthcareauth/register`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'Application/json'

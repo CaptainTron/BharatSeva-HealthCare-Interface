@@ -13,7 +13,7 @@ export default function Home() {
     const FetcheDetails_Stats = async () => {
         try {
 
-            const { data, res } = await FetchData(`http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcaredetails/stats`)
+            const { data, res } = await FetchData(`/api/v1/healthcaredetails/stats`)
             if (res.ok) {
                 Setstats(data.stats)
             } else if (res.status === 405) { SetLimit(true) }
@@ -27,7 +27,7 @@ export default function Home() {
     }
     const FetcheDetails = async () => {
         try {
-            const { data, res } = await FetchData(`http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcaredetails/getdetails`)
+            const { data, res } = await FetchData(`/api/v1/healthcaredetails/getdetails`)
             if (res.ok) {
                 Sethip(data.HealthCare)
             } else if (res.status === 405) {

@@ -19,9 +19,6 @@ export default function SignIN() {
     const [Statustxt, SetStatustxt] = useState()
     const [POSTDATE, SetPOSTDATE] = useState({})
 
-
-
-
     function OnChange(e) {
         const { name, value } = e.target
         SetFormData((prev) => ({
@@ -57,7 +54,7 @@ export default function SignIN() {
         e.preventDefault();
         SetIsLoaded((p) => ({ ...p, IsLoaded: true }))
         try {
-            let res = await fetch('http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcareauth/login', {
+            let res = await fetch('http://bharatsevaplus.ap-south-1.elasticbeanstalk.com/api/v1/healthcareauth/login', {
                 method: "POST",
                 headers: {
                     'Content-Type': "application/json",
@@ -70,7 +67,7 @@ export default function SignIN() {
                 SetStatustxt("Login Successful")
                 SetIsLoaded((p) => ({ ...p, IsAuthenticated: true }))
                 async function ForUSerData() {
-                    await PostData(`http://bharatsevaplus-env.eba-buh5payn.ap-south-1.elasticbeanstalk.com/api/v1/healthcaredetails/healthcare/data`, POSTDATE)
+                    await PostData(`/api/v1/healthcaredetails/healthcare/data`, POSTDATE)
                 }
                 ForUSerData()
             }
