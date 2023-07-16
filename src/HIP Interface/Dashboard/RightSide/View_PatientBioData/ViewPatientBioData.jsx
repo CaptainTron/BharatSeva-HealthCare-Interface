@@ -85,7 +85,7 @@ export default function ViewPatientBioData() {
 
     return (
         <>
-            {Isloading.IsRedirect && (<Navigate to='/bharatseva_healthcare/login' replace={true} />)}
+            {Isloading.IsRedirect && (<Navigate to='/healthcare/login' replace={true} />)}
             <div className="ViewPR">
                 <h2>View Patient Bio Data</h2>
 

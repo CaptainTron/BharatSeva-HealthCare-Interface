@@ -82,7 +82,7 @@ export default function Home() {
 
     return (
         <>
-            {IsLimit && <Navigate to="/bharatseva_healthcare/login" replace={true} />}
+            {IsLimit && <Navigate to="/healthcare/login" replace={true} />}
             {hip && stats ? (<div className="HomeContainer">
                 <div>
 

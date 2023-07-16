@@ -149,7 +149,7 @@ export default function Register() {
                             </div>
 
                         </form>
-                        <p className="LoginbtnRedirect">Already Registered! <Link to="/bharatseva_healthcare/login">Login</Link></p>
+                        <p className="LoginbtnRedirect">Already Registered! <Link to="/healthcare/login">Login</Link></p>
                     </div>
                 </div>
 
@@ -162,7 +162,7 @@ export default function Register() {
                 <div className="Popoverdropbox displayFlexWithR">
                     <div className="PopOvercontainerBoxregisterpage displayFlexWithR">
                         <h1>{Status}</h1>
-                        {Fetched.IsRedirect ? (<NavLink to='/bharatseva_healthcare/login'>Login</NavLink>) : (Fetched.IsGood && (<button id="AtregisterPage" onClick={() => SetIsFetched((p) => ({ IsGood: false, IsFetched: false }))}>Continue</button>))}
+                        {Fetched.IsRedirect ? (<NavLink to='/healthcare/login'>Login</NavLink>) : (Fetched.IsGood && (<button id="AtregisterPage" onClick={() => SetIsFetched((p) => ({ IsGood: false, IsFetched: false }))}>Continue</button>))}
                     </div>
                 </div>
             )}

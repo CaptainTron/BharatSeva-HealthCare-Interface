@@ -83,7 +83,7 @@ export default function SignIN() {
 
     return (
         <>
-            {IsLoaded.IsAuthenticated && (<Navigate to='/bharatseva_healthcare/dashboard' replace={true} />)}
+            {IsLoaded.IsAuthenticated && (<Navigate to='/healthcare/dashboard' replace={true} />)}
             <div className="LoginMessageHealthCare">
                 <p>{Statustxt}</p>
             </div>
@@ -113,7 +113,7 @@ export default function SignIN() {
 
                         </form>
                         <div className="NotRegisteredRedirectbtn">
-                            <p>Not Registered ? <Link to="/bharatseva_healthcare/register">Register Here</Link></p>
+                            <p>Not Registered ? <Link to="/healthcare/register">Register Here</Link></p>
                         </div>
 
                     </div>

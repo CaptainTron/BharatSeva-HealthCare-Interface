@@ -7,7 +7,7 @@ export default function NotFound() {
         <>
             <div className="NotFound">
                 <h2>Page You Are Looking For Does Not Exists 🙄</h2>
-                <Link to='/bharatseva_healthcare/dashboard'>Go To Dashboard</Link>
+                <Link to='/healthcare/dashboard'>Go To Dashboard</Link>
             </div>
         </>
     )

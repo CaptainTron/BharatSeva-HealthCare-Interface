@@ -7,12 +7,13 @@ import ErrorElements from "../ErrorElement"
 import IsAuthenticated from "../../IsAuthenticated"
 
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from "react-router-dom"
-
+import IndexPage from "../IndexPage"
 export default function HomePage() {
 
     const route = createBrowserRouter(createRoutesFromElements(
         <>
-            <Route path="/bharatseva_healthcare" errorElement={<ErrorElements />}>
+            <Route path="/" element={<IndexPage />} />
+            <Route path="/healthcare" errorElement={<ErrorElements />}>
                 <Route path="register" element={<Register />} />
                 <Route path="login" element={<SignIN />} />
                 <Route element={<IsAuthenticated />}>

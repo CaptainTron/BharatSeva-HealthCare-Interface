@@ -56,7 +56,7 @@ export default function Appointment() {
 
 
     return (<>
-        {IsFetched.Directed && <Navigate to="/bharatseva_healthcare/login" replace={true} />}
+        {IsFetched.Directed && <Navigate to="/healthcare/login" replace={true} />}
         <div className="appointmentSectionOutercontainer">
             <div className="BharatSevaHealthCareAppointmentContainer">
                 <h2>Appointment Section</h2>

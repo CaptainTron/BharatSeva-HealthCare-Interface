@@ -52,7 +52,7 @@ export default function NavBar({ toggleSideBar }) {
                                 <li>  <a target="__blank" href="https://github.com/CaptainTron/BharatSeva-User-Interface/discussions">Go to Discussion</a></li>
                                 <li> <a target="__blank" href="https://github.com/CaptainTron/BharatSeva-HealthCare-Interface">Star this Project ⭐</a></li>
                                 <li>API Integrations</li>
-                                <li onClick={() => sessionStorage.clear()}><NavLink to='/bharatseva_healthcare/login' className="LogoutHealthcare" >Log Out</NavLink></li>
+                                <li onClick={() => sessionStorage.clear()}><NavLink to='/healthcare/login' className="LogoutHealthcare" >Log Out</NavLink></li>
 
                             </ul>
                         </div>

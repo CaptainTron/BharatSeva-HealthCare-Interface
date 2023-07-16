@@ -75,7 +75,7 @@ export default function CreatePatientRecord() {
 
     return (
         <>
-            {IsLoaded.IsRedirected && (<Navigate to='/bharatseva_healthcare/login' replace={true} />)}
+            {IsLoaded.IsRedirected && (<Navigate to='/healthcare/login' replace={true} />)}
             <div className="PatientProblemRecord">
                 <div className="PatientProblemRecordCreator">
                     <h2>Create Patient Record</h2>

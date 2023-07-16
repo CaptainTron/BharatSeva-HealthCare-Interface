@@ -82,7 +82,7 @@ export default function ViewRecord() {
 
     return (
         <>
-            {Fetched.IsRedirect && (<Navigate to='/bharatseva_healthcare/login' replace={true} />)}
+            {Fetched.IsRedirect && (<Navigate to='/healthcare/login' replace={true} />)}
             <div className="ViewPR">
                 <h2>View Patient Record</h2>
 

@@ -85,7 +85,7 @@ export default function CreatePatientD() {
     
     return (
         <>
-            {IsLoaded.IsRedirected && (<Navigate to='/bharatseva_healthcare/login' replace={true} />)}
+            {IsLoaded.IsRedirected && (<Navigate to='/healthcare/login' replace={true} />)}
             <div className="CreatePatientContainer">
 
                 <div className="CreatePatient">

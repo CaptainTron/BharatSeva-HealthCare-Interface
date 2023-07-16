@@ -105,7 +105,7 @@ export default function Setting() {
 
     return (
         <>
-            {Fetched.IsLimit && (<Navigate to="/bharatseva_healthcare/login" replace={true} />)}
+            {Fetched.IsLimit && (<Navigate to="/healthcare/login" replace={true} />)}
             <div className="settcontain">
 
                 {(Fetched.IsGood ? (

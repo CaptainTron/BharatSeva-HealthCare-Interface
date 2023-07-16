@@ -14,7 +14,7 @@ export default function IsNavBarAuthenticated() {
         }
     } catch (err) {
         alert("Something Got Wrong With Your Session! Please Login Again!")
-        return <Navigate to='/bharatseva_healthcare/login' />
+        return <Navigate to='/healthcare/login' />
 
     }
     return (<Outlet />)
