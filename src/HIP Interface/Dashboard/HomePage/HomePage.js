@@ -11,7 +11,7 @@ import IndexPage from "../IndexPage"
 export default function HomePage() {
 
     const route = createBrowserRouter(createRoutesFromElements(
-        <>
+        <Route>
             <Route path="/" element={<IndexPage />} />
             <Route path="/healthcare" errorElement={<ErrorElements />}>
                 <Route path="register" element={<Register />} />
@@ -21,8 +21,7 @@ export default function HomePage() {
                 </Route>
             </Route>
             <Route path="*" element={<NotFound />} />
-        </>
-
+        </Route>
     ))
 
     return (

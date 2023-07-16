@@ -2,6 +2,7 @@ import "./SignIn.css"
 import { useEffect, useState } from "react";
 import { Link, Navigate, redirect } from "react-router-dom";
 import { PostData } from "../../LoadData";
+import InsecureContent from "../InsecureContent/InsecureContent";
 
 export default function SignIN() {
 
@@ -144,6 +145,9 @@ export default function SignIN() {
 
                 </div>
             </div>
+
+
+            <InsecureContent />
         </>
     )
 }

@@ -2,6 +2,9 @@ import { useState } from "react"
 import "./Register.css"
 import React from "react"
 import { Link, NavLink } from "react-router-dom"
+import InsecureContent from "../InsecureContent/InsecureContent"
+
+
 
 export default function Register() {
     let PasswordStatus = document.querySelector("#RegisterPasswordStatus")
@@ -166,6 +169,8 @@ export default function Register() {
                     </div>
                 </div>
             )}
+
+            <InsecureContent />
 
         </>
     )
