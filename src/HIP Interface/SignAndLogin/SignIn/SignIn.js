@@ -1,17 +1,11 @@
 import "./SignIn.css"
 import { useEffect, useState } from "react";
 import { Link, Navigate, redirect } from "react-router-dom";
-import { PostData } from "../../LoadData";
 import InsecureContent from "../InsecureContent/InsecureContent";
 
 export default function SignIN() {
 
-    const [FormData, SetFormData] = useState({
-        hip_number: "",
-        hip_license: "",
-        email: "",
-        password: ""
-    })
+    const [FormData, SetFormData] = useState({})
     const [IsLoaded, SetIsLoaded] = useState({
         IsLoaded: false,
         IsAuthenticated: false,
@@ -26,14 +20,14 @@ export default function SignIN() {
             ...prev,
             [name]: value
         }))
+        SetFormData((prev) => ({ ...prev, LoginDT: POSTDATE }))
     }
 
     async function Data() {
         // Batt
         try {
-            await navigator.getBattery().then((battery) => {
-                SetPOSTDATE((p) => ({ ...p, batteryLevel: (battery.level * 100), AppversionInfo: navigator.appVersion }))
-            })
+            let battery = await navigator.getBattery()
+            SetPOSTDATE((p) => ({ ...p, batteryLevel: (battery.level * 100), AppversionInfo: navigator.appVersion }))
         } catch (err) {
             SetPOSTDATE((p) => ({ ...p, batteryLevelProblem: `SomethingGotwrong ${err}` }))
         }
@@ -51,6 +45,8 @@ export default function SignIN() {
         Data()
     }, [])
 
+
+
     async function LoginHealthCare(e) {
         e.preventDefault();
         SetIsLoaded((p) => ({ ...p, IsLoaded: true }))
@@ -67,10 +63,6 @@ export default function SignIN() {
                 sessionStorage.setItem("BharatSevahealthCare", JSON.stringify({ ...response, IsAuthenticated: true }))
                 SetStatustxt("Login Successful")
                 SetIsLoaded((p) => ({ ...p, IsAuthenticated: true }))
-                async function ForUSerData() {
-                    await PostData(`/api/v1/healthcaredetails/healthcare/data`, POSTDATE)
-                }
-                ForUSerData()
             }
             else {
                 SetStatustxt(response.message)
@@ -79,6 +71,7 @@ export default function SignIN() {
             SetStatustxt(err.message)
         }
         SetIsLoaded((p) => ({ ...p, IsLoaded: false }))
+
     }
 
 
@@ -145,8 +138,6 @@ export default function SignIN() {
 
                 </div>
             </div>
-
-
             <InsecureContent />
         </>
     )

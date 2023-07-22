@@ -1,10 +1,10 @@
 .HomeContainer {
     background-color: rgb(97, 96, 96);
     margin: 1.3vh 4vh;
-    padding: 1vh 5vh;
+    padding: 0vh 6vh;
     border-radius: 1vh;
     width: 60vw;
-    height: 112vh;
+    height: 117vh;
 }
 
 .HomeContainer h2 {

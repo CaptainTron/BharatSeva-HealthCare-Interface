@@ -12,7 +12,7 @@ export default function LefSideBar() {
             <div className="LeftSideBarContainer ToggleTo0">
                 <div className="LeftSide_textContainer">
                     <ul>
-                        <NavLink className={({ isActive }) => isActive ? "IsActive" : ""} to='/bharatseva_healthcare/dashboard' end> <li><i className="fa-solid fa-house"></i>Home</li></NavLink>
+                        <NavLink className={({ isActive }) => isActive ? "IsActive" : ""} to='/healthcare/dashboard' end> <li><i className="fa-solid fa-house"></i>Home</li></NavLink>
                         <NavLink className={({ isActive }) => isActive ? "IsActive" : ""} to='viewpatientbiodata'> <li><i className="fa-solid fa-hospital-user"></i>View Bio-Data</li></NavLink>
                         <NavLink className={({ isActive }) => isActive ? "IsActive" : ""} to='viewrecords'>  <li><i className="fa-regular fa-paste"></i>View Records</li></NavLink>
 

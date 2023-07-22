@@ -12,13 +12,13 @@ export default function Home() {
 
     const FetcheDetails_Stats = async () => {
         try {
-
             const { data, res } = await FetchData(`/api/v1/healthcaredetails/stats`)
+
             if (res.ok) {
                 Setstats(data.stats)
             } else if (res.status === 405) { SetLimit(true) }
             else {
-                alert("Something Went Wrong!")
+                console.log(data)
             }
         } catch (err) {
             alert("Could Not Connect To Server!")
@@ -72,6 +72,7 @@ export default function Home() {
                 <li><p>Bio Data Created: </p>{stats.HealthID_Created}</li>
                 <li><p>Records Viewed: </p>{stats.RecordsViewed}</li>
                 <li><p>BioData Viewed: </p>{stats.Biodata_Viewed}</li>
+                <li><p>Request Remaining: </p>{stats.Total_request} <span className="GoToSitePage">Your Remaining Request Quota</span></li>
             </ul>
 
         )
