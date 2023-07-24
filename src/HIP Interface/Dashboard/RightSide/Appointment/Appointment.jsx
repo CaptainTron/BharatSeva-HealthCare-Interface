@@ -47,7 +47,7 @@ export default function Appointment() {
                 <p key={i++}><span>Appointment Date :</span>{data.appointment_date}</p>
                 <p key={i++}><span>Appointment Time :</span>{data.appointment_time}</p>
                 <p key={i++}><span>Department :</span>{data.department}</p>
-                <p key={i++}><span>User Note :</span><span id="UsernnoteAppointment">{data.note}sfsaf sakfjsa fsklafj safjsafkljsaflsa fjskf slfslkfjsadf jskfsl afsfhwifjijfwiofjsdfj sdfjsoi</span></p>
+                <p key={i++}><span>User Note :</span><span id="UsernnoteAppointment">{data.note}</span></p>
             </div>
         )) : (<p className="UpcomingApp">No Appointments Till Now</p>)
     }
