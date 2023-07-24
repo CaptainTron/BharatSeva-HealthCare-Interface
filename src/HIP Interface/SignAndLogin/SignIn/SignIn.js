@@ -2,7 +2,8 @@ import "./SignIn.css"
 import { useEffect, useState } from "react";
 import { Link, Navigate, redirect } from "react-router-dom";
 import InsecureContent from "../InsecureContent/InsecureContent";
-
+import GoogleOAuth from "../GoogleAuthentication/OAuth";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 export default function SignIN() {
 
     const [FormData, SetFormData] = useState({})
@@ -11,7 +12,7 @@ export default function SignIN() {
         IsAuthenticated: false,
         IsLimit: false
     })
-    const [Statustxt, SetStatustxt] = useState()
+    const [Statustxt, SetStatustxt] = useState("👋")
     const [POSTDATE, SetPOSTDATE] = useState({})
 
     function OnChange(e) {
@@ -92,7 +93,7 @@ export default function SignIN() {
                     <div className="HealthCareLoginFormContainer">
 
                         <form onSubmit={LoginHealthCare}>
-                            <p>Welcome To HealthCare Login Portal</p>
+                            <p className="Healthcarebannertxt">Welcome To HealthCare Login Portal</p>
 
                             <label>Health Care Number :</label>
                             <input type="number" placeholder="Health Care Number" name="healthcareId" onChange={OnChange} required />
@@ -104,7 +105,8 @@ export default function SignIN() {
                             <input type="password" placeholder="Password" maxLength="30" name="password" required onChange={OnChange} />
 
                             <input type="submit" id="LoginBtn" disabled={IsLoaded.IsLoaded} value={IsLoaded.IsLoaded ? "Validating..." : "Login"} maxLength="30" required />
-
+                            <h5 style={{ textAlign: 'center', margin: 0}}>Or</h5>
+                            <div className="GoogleAuthContainer"><GoogleOAuthProvider clientId="476285565826-8smpt7q2bh9o1ace0iqn8lcmn52maele.apps.googleusercontent.com"><GoogleOAuth /></GoogleOAuthProvider></div>
                         </form>
                         <div className="NotRegisteredRedirectbtn">
                             <p>Not Registered ? <Link to="/healthcare/register">Register Here</Link></p>
