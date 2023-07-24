@@ -46,7 +46,7 @@ function GoogleOAuth() {
         <>
             {IsStatus.Authenticated && (<Navigate to='/healthcare/dashboard' replace={true} />)}
             <div id='GoogleDesign' className={`statustxt`}>
-                <p onClick={() => { login(); SetIsStatus((p) => ({ ...p, showtxt: true, statustxt: "Authorization Flow Started !" })) }}>Sign Up With <img alt='googlelogo' src={download} /></p>
+                <p onClick={() => { login(); SetIsStatus((p) => ({ ...p, showtxt: true, statustxt: "Authorization Flow Started !" })) }}>Sign In With <img alt='googlelogo' src={download} /></p>
             </div>
 
             <div className={`${IsStatus.showtxt ? "OAuthstatustxt" : "DisplayNone"}`}>
